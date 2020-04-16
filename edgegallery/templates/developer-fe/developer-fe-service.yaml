@@ -1,0 +1,21 @@
+{{- if .Values.developer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: developer-fe-svc
+  labels:
+    svc: developer-fe-svc
+spec:
+  {{- if eq .Values.expose.type "nodePort" }}
+  type: NodePort
+  {{- end }}
+  ports:
+    - port: {{ .Values.expose.nodePort.developer_fe.port }}
+      targetPort: 8080
+      protocol: TCP
+      {{- if eq .Values.expose.type "nodePort" }}
+      nodePort: {{ .Values.expose.nodePort.developer_fe.nodePort }}
+      {{- end }}
+  selector:
+    app: developer-fe
+{{- end }}

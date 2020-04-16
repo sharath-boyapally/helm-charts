@@ -1,0 +1,63 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mecm-meo-fe-configmap
+data:
+  application.yaml: |
+    zuul:
+      routes:
+        mec-developer: /mec-developer/**
+      sensitive-headers:
+
+    # disable netflix eurkea since it's not used for service discovery
+    ribbon:
+      eureka:
+        enabled: false
+
+    server:
+      port: 8080
+      servlet:
+        session:
+          timeout: 1200
+      session:
+        cookie:
+          name: MEOSESSIONID
+
+    APPLICATION_ID: openMec
+    service_description:
+      # name of the declaring microservice
+      name: mecm-meo-fe
+      version: 1.0.0
+      environment: development
+    servicecomb:
+      service:
+        registry:
+          address: http://service-center:30100
+        rest:
+          address: 0.0.0.0:8080
+          servlet:
+            urlPattern: /cse/*
+      tracing:
+        enabled: false
+
+    {{- if eq .Values.expose.type "ingress" }}
+    auth_server: {{ if .Values.expose.ingress.tls.enabled }}https{{- else  }}http{{- end  }}://{{ .Values.expose.ingress.hosts.auth }}
+    {{- end  }}
+    {{- if eq .Values.expose.type "nodePort" }}
+    auth_server: http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.user_mgmt.nodePort }}
+    {{- end  }}
+
+    security:
+      oauth2:
+        sso:
+          login-path: /login
+        client:
+          client-id: mecm-meo-fe
+          client-secret: 123456
+          user-authorization-uri: ${auth_server}/oauth/authorize
+          access-token-uri: ${auth_server}/oauth/token
+        resource:
+          jwt:
+            key-uri: ${auth_server}/oauth/token_key
+{{- end }}

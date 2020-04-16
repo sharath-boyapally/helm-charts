@@ -1,0 +1,15 @@
+{{- if and .Values.developer.enabled .Values.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: developer-be-workspace-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+  selector:
+    matchLabels:
+      pv: developer-be-workspace-pv
+{{- end }}

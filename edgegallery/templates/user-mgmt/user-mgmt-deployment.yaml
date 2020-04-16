@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-mgmt
+  namespace: default
+  labels:
+    app: user-mgmt
+spec:
+  selector:
+    matchLabels:
+      app: user-mgmt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-mgmt
+    spec:
+      initContainers:
+        - name: init-service-center
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+        - name: init-postgres
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-postgres-svc; do echo waiting for postgres; sleep 2; done"]
+        - name: init-redis
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-redis-svc; do echo waiting for redis; sleep 2; done"]
+      containers:
+        - name: user-mgmt
+          image: edgegallery/user-mgmt:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8067
+          env:
+            - name: LOG_DIR
+              value: /var/log/usermgmt
+          volumeMounts:
+            - name: user-mgmt-config
+              mountPath: /usr/app/application.properties
+              subPath: application.properties
+            - mountPath: /var/log/usermgmt
+              name: usermgmt-log
+            - name: jwt-key-secret-vol
+              mountPath: /usr/app/keystore.jks
+              subPath: keystore.jks
+              readOnly: true
+      volumes:
+        - name: user-mgmt-config
+          configMap:
+            name: user-mgmt-configmap
+            items:
+              - key: application.properties
+                path: application.properties
+        - name: usermgmt-log
+          hostPath:
+            path: /edgegallery_datas/usermgmt/log
+        - name: jwt-key-secret-vol
+          secret:
+            secretName: user-mgmt-jwt-secret
+            items:
+              - key: keystore.jks
+                path: keystore.jks

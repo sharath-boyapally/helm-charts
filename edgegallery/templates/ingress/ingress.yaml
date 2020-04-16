@@ -1,0 +1,55 @@
+{{- if eq .Values.expose.type "ingress" }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: edgegallery-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  {{- if .Values.expose.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.expose.ingress.hosts.auth }}
+        - {{ .Values.expose.ingress.hosts.developer }}
+        - {{ .Values.expose.ingress.hosts.appstore }}
+      secretName: edgegallery-ingress-secret
+  {{- end }}
+  rules:
+    - host: {{ .Values.expose.ingress.hosts.auth }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: user-mgmt-svc
+              servicePort: 8067
+    - host: {{ .Values.expose.ingress.hosts.developer }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: developer-fe-svc
+              servicePort: 8080
+    - host: {{ .Values.expose.ingress.hosts.appstore }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: appstore-fe-svc
+              servicePort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: edgegallery-ingress-mecm
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: {{ .Values.expose.ingress.hosts.mecm }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: mecm-meo-fe-svc
+              servicePort: 8080
+{{- end }}

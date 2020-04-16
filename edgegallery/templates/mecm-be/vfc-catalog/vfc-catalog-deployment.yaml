@@ -1,0 +1,54 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: vfc-catalog
+  name: vfc-catalog
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: vfc-catalog
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: vfc-catalog
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: root123
+        - name: ESR_PORT
+          value: "8181"
+        - name: AUTH_MOD_IP
+          value: 159.138.61.155
+        - name: AUTH_MOD_PORT
+          value: "8067"
+        image: {{ if eq .Values.arch "arm64" }}{{ .Values.images.mecm_catalog.arm64 }}{{- else  }}{{.Values.images.mecm_catalog.x86}}{{- end  }}
+        name: meccatalog-container
+        ports:
+        - containerPort: 8806
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: vfc-catalog-claim0
+      restartPolicy: Always
+      securityContext:
+        supplementalGroups:
+        - 999
+      volumes:
+      - name: vfc-catalog-claim0
+        persistentVolumeClaim:
+          claimName: vfc-catalog-claim0
+status: {}
+{{- end }}
