@@ -1,0 +1,56 @@
+{{- if .Values.appstore.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: appstore-be-postgres
+spec:
+  serviceName: "appstore-be-postgres-svc"
+  selector:
+    matchLabels:
+      app: appstore-be-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: appstore-be-postgres
+    spec:
+      containers:
+        - name: appstore-be-postgres
+          image: postgres:9.6.15
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: SECRET_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: appstore-postgres-secret
+                  key: POSTGRES_USER
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: appstore-postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - mountPath: /var/lib/postgresql/data
+              name: appstore-be-postgres-pvc
+            {{- end }}
+            - mountPath: /docker-entrypoint-initdb.d
+              name: appstore-be-postgres-initdb
+      volumes:
+        - name: appstore-be-postgres-initdb
+          configMap:
+            name: appstore-be-postgres-initdb-configmap
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: appstore-be-postgres-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 5Gi
+  {{- end }}
+{{- end }}

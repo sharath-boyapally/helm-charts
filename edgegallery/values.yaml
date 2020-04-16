@@ -1,0 +1,62 @@
+arch: x86
+persistence:
+  enabled: false
+  type: nfs
+  nfs:
+    server:
+    path: /nfs/data
+expose:
+  type: ingress
+  ingress:
+    tls:
+      enabled: true
+    hosts:
+      auth: auth.edgegallery.org
+      developer: developer.edgegallery.org
+      appstore: appstore.edgegallery.org
+      mecm: mecm.edgegallery.org
+  nodePort:
+    ip:
+    appstore_fe:
+      port: 8080
+      nodePort: 30091
+    developer_fe:
+      port: 8080
+      nodePort: 30092
+    mecm_fe:
+      port: 8080
+      nodePort: 30093
+    user_mgmt:
+      port: 8067
+      nodePort: 30067
+images:
+  api_handler_infra:
+    x86: edgegallery/api-handler-infra:withoutservicecomb
+    arm64: gauravagrawal/edgegallery-arm-meo-api-handler-infra:latest
+  meo_bpmn_infra:
+    x86: edgegallery/bpmn-infra:withoutservicecomb
+    arm64: gauravagrawal/edgegallery-arm-meo-bpmn-infra:latest
+  meo_catalog_db_adapter:
+    x86: edgegallery/catalog-db-adapter:withoutservicecomb
+    arm64: gauravagrawal/edgegallery-arm-meo-catalog-db-adapter:latest
+  mecm_esr:
+    x86: edgegallery/mecm-esr:withoutservicecomb
+    arm64: gauravagrawal/edgegallery-arm-esr:latest
+  meo_request_db_adapter:
+    x86: edgegallery/request-db-adapter:withoutservicecomb
+    arm64: gauravagrawal/edgegallery-arm-meo-request-db-adapter:latest
+  mecm_catalog:
+    x86: edgegallery/mecm-catalog:withoutservicecomb
+    arm64: gauravagrawal/edgegallery-arm-mecm-catalog:latest
+  nginx_ingress_controller:
+    x86: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.0
+    arm64: quay.io/kubernetes-ingress-controller/nginx-ingress-controller-arm64:0.25.0
+  service_center:
+    x86: servicecomb/service-center:latest
+    arm64: edgegallery/service-center-arm64:latest
+mecm:
+  enabled: true
+appstore:
+  enabled: true
+developer:
+  enabled: true

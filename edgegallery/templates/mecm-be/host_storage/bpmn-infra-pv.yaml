@@ -1,0 +1,16 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: bpmn-infra-pv
+  labels:
+    type: local
+spec:
+  storageClassName: bpmn-infra-pv
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/volumes/so/config/bpmn-infra/onapheat"
+{{- end }}

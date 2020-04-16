@@ -1,0 +1,16 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: docker-sock
+  labels:
+    type: local
+spec:
+  storageClassName: docker-sock-pv
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/run/docker.sock"
+{{- end }}

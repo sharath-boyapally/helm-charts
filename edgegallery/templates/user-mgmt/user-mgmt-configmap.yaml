@@ -1,0 +1,160 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-mgmt-configmap
+data:
+  application.properties: |
+    redis.password=UserMgmt
+    redis.ip=user-mgmt-redis-svc
+    redis.port=6379
+    redis.timeout=1800
+    redis.verificationTimeout=900
+    redis.maxTotal=1000
+    redis.maxIdle=50
+    redis.maxWaitMillis=100000
+    redis.maxWaitMillis=100000
+
+    postgres.ip=user-mgmt-postgres-svc
+    postgres.port=5432
+    postgres.username=usermgmt
+    postgres.password=edgegallery
+
+    servicecenter.ip=service-center
+    servicecenter.port=30100
+
+    sms.url=https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1
+    sms.appKey=zES2FDR1z0sOM8jT8uFs0uUzP4Wl
+    sms.appSecret=WBGhdH3JlQyu9JjX9wENW5flB7Gg
+    sms.sender=8820031341626
+    sms.templateId=3f08b042a9d44cb8ad3c71c44e0f1cf8
+    sms.signature=MEC
+    sms.statusCallBack=
+
+    sso.keyStore.password=mec_pass
+    sso.keyStore.path=/usr/app/keystore.jks
+    sso.key.alias=mec_key_pair
+
+    http.pool.maxTotal=200
+    http.pool.defaultMaxPerRoute=100
+    http.pool.connectTimeout=10000
+    http.pool.connectionRequestTimeout=500
+    http.pool.socketTimeout=15000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usermgmt-postgres-initdb-configmap
+data:
+  postgres.sql: |
+    CREATE DATABASE "usermgmtdb";
+
+    \c usermgmtdb;
+
+    CREATE TABLE if not exists tbl_tenant (
+      	TENANTID            VARCHAR(100)      PRIMARY KEY NOT NULL,
+      	USERNAME            VARCHAR(50)       NOT NULL,
+      	PASSWORD            VARCHAR(100)      NOT NULL,
+      	COMPANY             VARCHAR(50)       NULL,
+      	TELEPHONENUMBER     VARCHAR(20)       NOT NULL,
+      	GENDER              VARCHAR(10)       NULL,
+      	CONSTRAINT USERNAME UNIQUE (username),
+      	CONSTRAINT TELEPHONENUMBER UNIQUE (telephonenumber)
+
+    );
+
+    CREATE TABLE if not exists tbl_tenant_role (
+     	  TENANTID            VARCHAR(100)      NOT NULL,
+      	ROLEID              INTEGER           NOT NULL
+    );
+
+    CREATE TABLE if not exists tbl_admin (
+      	TENANTID            VARCHAR(100)      PRIMARY KEY NOT NULL,
+      	USERNAME            VARCHAR(50)       NOT NULL,
+      	PASSWORD            VARCHAR(100)      NOT NULL,
+      	COMPANY             VARCHAR(50)       NULL,
+      	TELEPHONENUMBER     VARCHAR(20)       NOT NULL,
+      	GENDER              VARCHAR(10)       NULL,
+      	PERMISSIONS         VARCHAR(500)      NULL
+    );
+
+    insert into tbl_admin (tenantid, username, password, company, telephonenumber, gender, permissions)
+    values ('f8c3d4fa-6bb0-4a2b-8d6c-17dd8aac9039', 'admin', '-ssmh4d4lfnrt911dtq2m88uk82ej1b3f303mh3lfo4gql5reln8', 'huawei', '15512345678', 'male',
+    '[{"platform":"ONAPaaS","role":"ADMIN","pageIds":["0","0.0","0.1","0.2","0.3"]}]');
+
+    CREATE TABLE if not exists tbl_role (
+        ID                   INTEGER                PRIMARY KEY NOT NULL,
+    	  PLATFORM             VARCHAR(50)            NOT NULL,
+    	  ROLE		             VARCHAR(50)            NOT NULL,
+    	  PAGE_IDS             VARCHAR(200)           NOT NULL
+    );
+
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(10, 'ONAPaaS', 'GUEST', '1');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(11, 'ONAPaaS', 'TENANT', '1,1.0,1.1,1.2');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(12, 'ONAPaaS', 'ADMIN', '1,1.0,1.1,1.2,0,0.0,0.1,0.2,0.3');
+
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(20, 'MEC_APP', 'GUEST', '2,2.1');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(21, 'MEC_APP', 'TENANT', '2,2.1,2.1.0,2.1.1,2.1.2,2.1.3,2.1.4,2.1.5');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(22, 'MEC_APP', 'DEVELOPER', '2,2.1,2.1.0,2.1.1,2.1.2,2.1.3,2.1.4,2.1.5');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(23, 'MEC_APP', 'ADMIN', '0,0.0,0.1,0.2,0.3,2,2.1,2.1.0,2.1.1,2.1.2,2.1.3,2.1.4,2.1.5');
+
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(30, 'MEC_DEVELOPER', 'GUEST', '2,2.2');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(31, 'MEC_DEVELOPER', 'DEVELOPER', '2,2.2,2.2.0,2.2.1,2.2.1.1,2.2.1.2,2.2.1.3,2.2.2,2.2.2.1,2.2.2.2,2.2.2.3,2.2.3,2.2.3.1,2.2.3.2,2.2.3.3,2.2.4');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(32, 'MEC_DEVELOPER', 'ADMIN', '0,0.0,0.1,0.2,0.3,2,2.2,2.2.0,2.2.1,2.2.1.1,2.2.1.2,2.2.1.3,2.2.2,2.2.2.1,2.2.2.2,2.2.2.3,2.2.3,2.2.3.1,2.2.3.2,2.2.3.3,2.2.4');
+
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(40, 'MEO', 'GUEST', '2,2.0');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(41, 'MEO', 'TENANT', '2,2.0,2.0.0,2.0.1,2.0.2,2.0.3,2.0.4,2.0.5,2.0.6,2.0.7,2.0.8,2.0.9,2.0.10,2.0.11,2.0.12');
+    insert into tbl_role (ID, PLATFORM, ROLE, PAGE_IDS) values(42, 'MEO', 'ADMIN', '0,0.0,0.1,0.2,0.3,2,2.0,2.0.0,2.0.1,2.0.2,2.0.3,2.0.4,2.0.5,2.0.6,2.0.7,2.0.8,2.0.9,2.0.10,2.0.11,2.0.12');
+
+    CREATE TABLE IF NOT EXISTS oauth_client_details(
+        client_id VARCHAR(256) PRIMARY KEY,
+        resource_ids VARCHAR(256),
+        client_secret VARCHAR(256),
+        scope VARCHAR(256),
+        authorized_grant_types VARCHAR(256),
+        web_server_redirect_uri VARCHAR(256),
+        authorities VARCHAR(256),
+        access_token_validity INTEGER,
+        refresh_token_validity INTEGER,
+        additional_information VARCHAR(4096),
+        autoapprove VARCHAR(256)
+    );
+
+    INSERT INTO oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
+    {{- if eq .Values.expose.type "ingress" }}
+    {{- if .Values.expose.ingress.tls.enabled }}
+    VALUES ('appstore-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token', 'https://{{ .Values.expose.ingress.hosts.appstore }}/login', '{"logout_url":"https://{{ .Values.expose.ingress.hosts.appstore }}/logout"}', 'true');
+    {{- else  }}
+    VALUES ('appstore-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token', 'http://{{ .Values.expose.ingress.hosts.appstore }}/login', '{"logout_url":"http://{{ .Values.expose.ingress.hosts.appstore }}/logout"}', 'true');
+    {{- end  }}
+    {{- end  }}
+    {{- if eq .Values.expose.type "nodePort" }}
+    VALUES ('appstore-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token', 'http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.appstore_fe.nodePort }}/login', '{"logout_url":"http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.appstore_fe.nodePort }}/logout"}', 'true');
+    {{- end  }}
+
+    INSERT INTO oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
+    {{- if eq .Values.expose.type "ingress" }}
+    {{- if .Values.expose.ingress.tls.enabled }}
+    VALUES ('developer-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token','https://{{ .Values.expose.ingress.hosts.developer }}/login', '{"logout_url":"https://{{ .Values.expose.ingress.hosts.developer }}/logout"}', 'true');
+    {{- else  }}
+    VALUES ('developer-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token','http://{{ .Values.expose.ingress.hosts.developer }}/login', '{"logout_url":"http://{{ .Values.expose.ingress.hosts.developer }}/logout"}', 'true');
+    {{- end  }}
+    {{- end  }}
+    {{- if eq .Values.expose.type "nodePort" }}
+    VALUES ('developer-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token','http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.developer_fe.nodePort }}/login', '{"logout_url":"http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.developer_fe.nodePort }}/logout"}', 'true');
+    {{- end  }}
+
+    INSERT INTO oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
+    {{- if eq .Values.expose.type "ingress" }}
+    VALUES ('mecm-meo-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token', 'http://{{ .Values.expose.ingress.hosts.mecm }}/login', '{"logout_url":"http://{{ .Values.expose.ingress.hosts.mecm }}/logout"}', 'true');
+    {{- end  }}
+    {{- if eq .Values.expose.type "nodePort" }}
+    VALUES ('mecm-meo-fe', '$2a$10$548/srs3y35mEWjebe7oWuw.g8oOvIndmYz0juQwrsuvnXibCfdai', 'all', 'authorization_code,refresh_token', 'http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.mecm_fe.nodePort }}/login', '{"logout_url":"http://{{ .Values.expose.nodePort.ip }}:{{ .Values.expose.nodePort.mecm_fe.nodePort }}/logout"}', 'true');
+    {{- end  }}
+
+    CREATE USER usermgmt WITH PASSWORD 'edgegallery';
+    GRANT ALL PRIVILEGES ON DATABASE usermgmtdb TO usermgmt;
+    GRANT SELECT ON all tables in schema public TO usermgmt;
+    GRANT INSERT ON all tables in schema public TO usermgmt;
+    GRANT DELETE ON all tables in schema public TO usermgmt;
+    GRANT UPDATE ON all tables in schema public TO usermgmt;

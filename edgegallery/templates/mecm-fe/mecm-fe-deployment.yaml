@@ -1,0 +1,40 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mecm-meo-fe
+  namespace: default
+  labels:
+    app: mecm-meo-fe
+spec:
+  selector:
+    matchLabels:
+      app: mecm-meo-fe
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mecm-meo-fe
+    spec:
+      initContainers:
+        - name: init-usermgmt
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
+      containers:
+        - name: mecm-meo-fe
+          image: edgegallery/mecm-meo-fe:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: mecm-meo-fe-config
+              mountPath: /usr/app/configs/application.yaml
+              subPath: application.yaml
+      volumes:
+        - name: mecm-meo-fe-config
+          configMap:
+            name: mecm-meo-fe-configmap
+            items:
+              - key: application.yaml
+                path: application.yaml
+{{- end }}

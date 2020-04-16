@@ -1,0 +1,16 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: api-handler-infra-pv
+  labels:
+    type: local
+spec:
+  storageClassName: api-handler-infra-pv
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/volumes/so/config/api-handler-infra/onapheat"
+{{- end }}

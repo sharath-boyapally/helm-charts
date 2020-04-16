@@ -1,0 +1,21 @@
+{{- if .Values.appstore.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: appstore-fe-svc
+  labels:
+    svc: appstore-fe-svc
+spec:
+  {{- if eq .Values.expose.type "nodePort" }}
+  type: NodePort
+  {{- end }}
+  ports:
+    - port: {{ .Values.expose.nodePort.appstore_fe.port }}
+      targetPort: 8080
+      protocol: TCP
+      {{- if eq .Values.expose.type "nodePort" }}
+      nodePort: {{ .Values.expose.nodePort.appstore_fe.nodePort }}
+      {{- end }}
+  selector:
+    app: appstore-fe
+{{- end }}

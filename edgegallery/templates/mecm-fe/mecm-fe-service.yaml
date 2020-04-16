@@ -1,0 +1,21 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mecm-meo-fe-svc
+  labels:
+    svc: mecm-meo-fe-svc
+spec:
+  {{- if eq .Values.expose.type "nodePort" }}
+  type: NodePort
+  {{- end }}
+  ports:
+    - port: {{ .Values.expose.nodePort.mecm_fe.port }}
+      targetPort: 8080
+      protocol: TCP
+      {{- if eq .Values.expose.type "nodePort" }}
+      nodePort: {{ .Values.expose.nodePort.mecm_fe.nodePort }}
+      {{- end }}
+  selector:
+    app: mecm-meo-fe
+{{- end }}

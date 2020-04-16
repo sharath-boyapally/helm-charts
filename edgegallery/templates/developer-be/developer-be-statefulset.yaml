@@ -1,0 +1,56 @@
+{{- if .Values.developer.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: developer-be-postgres
+spec:
+  serviceName: "developer-be-postgres-svc"
+  selector:
+    matchLabels:
+      app: developer-be-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-be-postgres
+    spec:
+      containers:
+        - name: developer-be-postgres
+          image: postgres:9.6.15
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: SECRET_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: developer-postgres-secret
+                  key: POSTGRES_USER
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: developer-postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - mountPath: /var/lib/postgresql/data
+              name: developer-be-postgres-pvc
+            {{- end }}
+            - mountPath: /docker-entrypoint-initdb.d
+              name: developer-be-postgres-initdb
+      volumes:
+        - name: developer-be-postgres-initdb
+          configMap:
+            name: developer-be-postgres-initdb-configmap
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: developer-be-postgres-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 1Gi
+  {{- end }}
+{{- end }}

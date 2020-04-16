@@ -1,0 +1,17 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: bpmn-infra-claim1
+  name: bpmn-infra-claim1
+spec:
+  storageClassName: bpmn-infra-pv
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
+{{- end }}

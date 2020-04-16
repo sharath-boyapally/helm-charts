@@ -1,0 +1,60 @@
+{{- if .Values.developer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: developer-be
+  namespace: default
+  labels:
+    app: developer-be
+spec:
+  selector:
+    matchLabels:
+      app: developer-be
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-be
+    spec:
+      initContainers:
+        - name: init-service-center
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+        - name: init-postgres
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup developer-be-postgres-svc; do echo waiting for developer-be-postgres-svc; sleep 2; done"]
+      containers:
+        - name: developer-be
+          image: edgegallery/developer-be:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9080
+          env:
+            - name: LOG_DIR
+              value: /var/log/developer-be
+          volumeMounts:
+            - name: developer-config
+              mountPath: /usr/app/application.properties
+              subPath: application.properties
+            - name: developer-log
+              mountPath: /var/log/developer-be
+            {{- if .Values.persistence.enabled }}
+            - name: developer-file
+              mountPath: /home/mec-developer/
+            {{- end }}
+      volumes:
+        - name: developer-config
+          configMap:
+            name: developer-configmap
+            items:
+              - key: application.properties
+                path: application.properties
+        - name: developer-log
+          hostPath:
+            path: /edgegallery_datas/developer-be/log
+        {{- if .Values.persistence.enabled }}
+        - name: developer-file
+          persistentVolumeClaim:
+            claimName: developer-be-workspace-pvc
+        {{- end }}
+{{- end }}

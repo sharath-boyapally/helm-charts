@@ -1,0 +1,40 @@
+{{- if .Values.developer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: developer-fe
+  namespace: default
+  labels:
+    app: developer-fe
+spec:
+  selector:
+    matchLabels:
+      app: developer-fe
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-fe
+    spec:
+      initContainers:
+        - name: init-usermgmt
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
+      containers:
+        - name: developer-fe
+          image: edgegallery/developer-fe:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: developer-fe-config
+              mountPath: /usr/app/configs/application.yaml
+              subPath: application.yaml
+      volumes:
+        - name: developer-fe-config
+          configMap:
+            name: developer-fe-configmap
+            items:
+              - key: application.yaml
+                path: application.yaml
+{{- end }}

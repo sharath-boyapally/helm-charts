@@ -1,0 +1,37 @@
+{{- if .Values.mecm.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mecesr
+  name: mecesr
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: mecesr
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mecesr
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_PASSWD
+          value: root123
+        - name: AUTH_MODULE_ENDPOINT
+          value: 159.138.61.155:8067
+        image: {{ if eq .Values.arch "arm64" }}{{ .Values.images.mecm_esr.arm64 }}{{- else  }}{{.Values.images.mecm_esr.x86}}{{- end  }}
+        name: mecesr-container
+        ports:
+        - containerPort: 8181
+        resources: {}
+      restartPolicy: Always
+status: {}
+{{- end }}
