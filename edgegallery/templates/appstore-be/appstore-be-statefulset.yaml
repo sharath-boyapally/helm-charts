@@ -53,4 +53,69 @@ spec:
           requests:
             storage: 5Gi
   {{- end }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: appstore-be
+spec:
+  serviceName: "appstore-be-svc"
+  selector:
+    matchLabels:
+      app: appstore-be
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: appstore-be
+    spec:
+      initContainers:
+        - name: init-service-center
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+        - name: init-postgres
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup appstore-be-postgres-svc; do echo waiting for appstore-be-postgres-svc; sleep 2; done"]
+      containers:
+        - name: appstore-be
+          image: edgegallery/appstore-be:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8099
+          env:
+            - name: LOG_DIR
+              value: /var/log/appstore-be
+          volumeMounts:
+            - name: appstore-config
+              mountPath: /usr/app/application.properties
+              subPath: application.properties
+            {{- if .Values.persistence.enabled }}
+            - name: appstore-log
+              mountPath: /var/log/appstore-be
+            - name: appstore-be-workspace-pvc
+              mountPath: /home/appstore
+            {{- end }}
+      volumes:
+        - name: appstore-config
+          configMap:
+            name: appstore-configmap
+            items:
+              - key: application.properties
+                path: application.properties
+        {{- if .Values.persistence.enabled }}
+        - name: appstore-log
+          hostPath:
+            path: /edgegallery_datas/appstore-be/log
+        {{- end }}
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: appstore-be-workspace-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 5Gi
+  {{- end }}
 {{- end }}

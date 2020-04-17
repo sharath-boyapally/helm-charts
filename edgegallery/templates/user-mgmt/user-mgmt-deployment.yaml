@@ -38,8 +38,10 @@ spec:
             - name: user-mgmt-config
               mountPath: /usr/app/application.properties
               subPath: application.properties
+            {{- if .Values.persistence.enabled }}
             - mountPath: /var/log/usermgmt
               name: usermgmt-log
+            {{- end }}
             - name: jwt-key-secret-vol
               mountPath: /usr/app/keystore.jks
               subPath: keystore.jks
@@ -51,9 +53,11 @@ spec:
             items:
               - key: application.properties
                 path: application.properties
+        {{- if .Values.persistence.enabled }}
         - name: usermgmt-log
           hostPath:
             path: /edgegallery_datas/usermgmt/log
+        {{- end }}
         - name: jwt-key-secret-vol
           secret:
             secretName: user-mgmt-jwt-secret
