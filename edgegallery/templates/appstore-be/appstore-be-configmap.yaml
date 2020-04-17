@@ -31,8 +31,6 @@ data:
 
     \c marketplacedb;
 
-    DROP TABLE IF EXISTS catalog_package_table;
-
     CREATE TABLE catalog_package_table (
     	VERSIONID                VARCHAR(200)       NOT NULL,
     	PACKAGEADDRESS           VARCHAR(200)       NULL,
@@ -52,8 +50,6 @@ data:
     	CONSTRAINT csar_package_table_pkey PRIMARY KEY (VERSIONID)
     );
 
-    DROP TABLE IF EXISTS APP_TABLE;
-
     CREATE TABLE APP_TABLE (
     	APPID                    VARCHAR(200)       NOT NULL,
     	APPNAME                  VARCHAR(100)       NULL,
@@ -70,8 +66,6 @@ data:
       SCORE                    NUMERIC(2,1)       NULL,
     	CONSTRAINT app_table_pkey PRIMARY KEY (APPID)
     );
-
-    DROP TABLE IF EXISTS CSAR_PACKAGE_SCORE;
 
     CREATE TABLE CSAR_PACKAGE_SCORE (
         COMMENTID                serial,
