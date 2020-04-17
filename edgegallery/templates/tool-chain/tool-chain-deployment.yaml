@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toolchain
+  namespace: default
+  labels:
+    app: toolchain
+spec:
+  selector:
+    matchLabels:
+      app: toolchain
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: toolchain
+    spec:
+      containers:
+        - name: toolchain
+          image: edgegallery/toolchain:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8059
+          volumeMounts:
+            - name: toolchain-log
+              mountPath: /var/log/toolchain
+      volumes:
+        - name: toolchain-log
+          hostPath:
+            path: /edgegallery_datas/toolchain/log

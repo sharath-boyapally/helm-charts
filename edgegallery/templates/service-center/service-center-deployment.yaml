@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: service-center
-          image: {{ if eq .Values.arch "arm64" }}{{ .Values.images.service_center.arm64 }}{{- else  }}{{.Values.images.service_center.x86}}{{- end  }}
+          image: edgegallery/service-center:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30100
