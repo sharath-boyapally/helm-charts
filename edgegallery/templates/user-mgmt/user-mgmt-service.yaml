@@ -1,3 +1,4 @@
+{{- if .Values.user_mgmt.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -48,3 +49,4 @@ spec:
       protocol: TCP
   selector:
     app: user-mgmt-redis
+{{- end }}

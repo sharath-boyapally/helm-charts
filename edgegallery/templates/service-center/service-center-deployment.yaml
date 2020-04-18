@@ -1,3 +1,4 @@
+{{- if .Values.service_center.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,3 +33,4 @@ spec:
           ports:
             - containerPort: 30103
         {{- end  }}
+{{- end }}
