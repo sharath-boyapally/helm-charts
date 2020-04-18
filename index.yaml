@@ -3,11 +3,11 @@ entries:
   edgegallery:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-17T17:23:50.088532425+08:00"
+    created: "2020-04-18T14:26:43.346989+08:00"
     description: A Helm chart for Kubernetes
-    digest: b795050369755e84fa551b7fe7611e3439490f049714b4d963eb0854432975b9
+    digest: 0e9d1f16c526a3f7cc891a7e3bf282507e1a2a4f96b52a960c7737b0ecd3030f
     name: edgegallery
     urls:
     - https://edgegallery.github.io/helm-charts/edgegallery-0.1.0.tgz
     version: 0.1.0
-generated: "2020-04-17T17:23:50.086241477+08:00"
+generated: "2020-04-18T14:26:43.345131456+08:00"
