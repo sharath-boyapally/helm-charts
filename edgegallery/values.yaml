@@ -54,3 +54,10 @@ appstore:
   enabled: true
 developer:
   enabled: true
+tool_chain:
+  enabled: true
+# Modules that must be selected
+user_mgmt:
+  enabled: true
+service_center:
+  enabled: true
