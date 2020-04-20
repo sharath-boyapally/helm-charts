@@ -5,6 +5,7 @@ metadata:
   name: edgegallery-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.expose.ingress.annotations.body_size }}
 spec:
   {{- if .Values.expose.ingress.tls.enabled }}
   tls:
@@ -12,7 +13,7 @@ spec:
         - {{ .Values.expose.ingress.hosts.auth }}
         - {{ .Values.expose.ingress.hosts.developer }}
         - {{ .Values.expose.ingress.hosts.appstore }}
-      secretName: edgegallery-ingress-secret
+      secretName: {{ .Values.expose.ingress.tls.secretName }}
   {{- end }}
   rules:
     - host: {{ .Values.expose.ingress.hosts.auth }}
