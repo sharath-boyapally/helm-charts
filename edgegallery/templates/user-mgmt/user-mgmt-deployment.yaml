@@ -43,7 +43,7 @@ spec:
             - mountPath: /var/log/usermgmt
               name: usermgmt-log
             {{- end }}
-            - name: jwt-key-secret-vol
+            - name: jwt-key-secret
               mountPath: /usr/app/keystore.jks
               subPath: keystore.jks
               readOnly: true
@@ -59,7 +59,7 @@ spec:
           hostPath:
             path: /edgegallery_datas/usermgmt/log
         {{- end }}
-        - name: jwt-key-secret-vol
+        - name: jwt-key-secret
           secret:
             secretName: user-mgmt-jwt-secret
             items:

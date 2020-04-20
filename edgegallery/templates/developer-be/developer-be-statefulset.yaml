@@ -29,7 +29,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
-              name: developer-be-postgres-vol
+              name: developer-be-postgres-pvc
             {{- end }}
             - mountPath: /docker-entrypoint-initdb.d
               name: developer-be-postgres-initdb
@@ -40,7 +40,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: developer-be-postgres-vol
+        name: developer-be-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
@@ -87,8 +87,8 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: developer-log
               mountPath: /var/log/developer-be
-            - name: developer-be-workspace-vol
-              mountPath: /home/mec-developer/
+            - name: developer-be-workspace-pvc
+              mountPath: /home/mec-developer/user
             {{- end }}
       volumes:
         - name: developer-config
@@ -105,7 +105,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: developer-be-workspace-vol
+        name: developer-be-workspace-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"

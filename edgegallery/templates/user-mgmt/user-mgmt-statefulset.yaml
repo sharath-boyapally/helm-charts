@@ -29,7 +29,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
-              name: usermgmt-postgres-vol
+              name: usermgmt-postgres-pvc
             {{- end }}
             - mountPath: /docker-entrypoint-initdb.d
               name: usermgmt-postgres-initdb
@@ -40,7 +40,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: usermgmt-postgres-vol
+        name: usermgmt-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
@@ -66,7 +66,7 @@ spec:
     spec:
       containers:
         - name: user-mgmt-redis
-          image: redis:alpine
+          image: redis
           imagePullPolicy: IfNotPresent
           lifecycle:
             postStart:
@@ -76,13 +76,13 @@ spec:
             - containerPort: 6379
           {{- if .Values.persistence.enabled }}
           volumeMounts:
-            - mountPath: /var/lib/redis/data
-              name: usermgmt-redis-vol
+            - mountPath: /data
+              name: usermgmt-redis-pvc
           {{- end }}
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: usermgmt-redis-vol
+        name: usermgmt-redis-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"

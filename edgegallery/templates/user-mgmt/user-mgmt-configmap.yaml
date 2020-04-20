@@ -23,13 +23,14 @@ data:
     servicecenter.ip=service-center
     servicecenter.port=30100
 
-    sms.url=https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1
-    sms.appKey=zES2FDR1z0sOM8jT8uFs0uUzP4Wl
-    sms.appSecret=WBGhdH3JlQyu9JjX9wENW5flB7Gg
-    sms.sender=8820031341626
-    sms.templateId=3f08b042a9d44cb8ad3c71c44e0f1cf8
-    sms.signature=MEC
-    sms.statusCallBack=
+    sms.enabled={{ .Values.user_mgmt.sms.enabled }}
+    sms.url={{ .Values.user_mgmt.sms.url }}
+    sms.appKey={{ .Values.user_mgmt.sms.app_key }}
+    sms.appSecret={{ .Values.user_mgmt.sms.app_secret }}
+    sms.sender={{ .Values.user_mgmt.sms.sender }}
+    sms.templateId={{ .Values.user_mgmt.sms.template_id }}
+    sms.signature={{ .Values.user_mgmt.sms.signature }}
+    sms.statusCallBack={{ .Values.user_mgmt.sms.status_call_back }}
 
     sso.keyStore.password=mec_pass
     sso.keyStore.path=/usr/app/keystore.jks

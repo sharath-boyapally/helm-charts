@@ -29,7 +29,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
-              name: appstore-be-postgres-vol
+              name: appstore-be-postgres-pvc
             {{- end }}
             - mountPath: /docker-entrypoint-initdb.d
               name: appstore-be-postgres-initdb
@@ -40,7 +40,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: appstore-be-postgres-vol
+        name: appstore-be-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
@@ -87,7 +87,7 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: appstore-log
               mountPath: /var/log/appstore-be
-            - name: appstore-be-workspace-vol
+            - name: appstore-be-workspace-pvc
               mountPath: /home/appstore
             {{- end }}
       volumes:
@@ -105,7 +105,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: appstore-be-workspace-vol
+        name: appstore-be-workspace-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
