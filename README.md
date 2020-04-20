@@ -54,6 +54,7 @@ their default values. See values.yaml for all available options.
 | `developer.enabled`                     | Whether to deploy mecm                                  | `true`                      |
 | `tool_chain.enabled`                    | Whether to deploy tool_chain                            | `true`                      |
 | `user_mgmt.enabled`                     | Whether to deploy user_mgmt                             | `true`                      |
+| `user_mgmt.sms.enabled`                 | Whether to use sms (need to buy huawei cloud service)   | `false`                     |
 | `service_center.enabled`                | Whether to deploy service_center                        | `true`                      |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to

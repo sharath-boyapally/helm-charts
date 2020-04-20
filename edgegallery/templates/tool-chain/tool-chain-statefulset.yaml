@@ -1,4 +1,4 @@
-{{- if .Values.developer.enabled }}
+{{- if .Values.tool_chain.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -29,31 +29,31 @@ spec:
             - name: toolchain-log
               mountPath: /var/log/toolchain
             {{- end }}
-            - name: tool-chain-vol
+            - name: tool-chain-pvc
               mountPath: /opt/portadv/portadmin
         - name: porting-advisor
-            image: edgegallery/porting-advisor:latest
-            imagePullPolicy: Always
-            ports:
-              - containerPort: 8084
-            securityContext:
-              privileged: true
-            volumeMounts:
-              - name: tool-chain-vol
-                mountPath: /opt/portadv/portadmin
+          image: edgegallery/porting-advisor:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8084
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: tool-chain-pvc
+              mountPath: /opt/portadv/portadmin
       volumes:
         {{- if .Values.persistence.enabled }}
-        - name: developer-log
+        - name: toolchain-log
           hostPath:
-            path: /edgegallery_datas/developer-be/log
+            path: /edgegallery_datas/tool-chain/log
         {{- else}}
-        - name: tool-chain-vol
+        - name: tool-chain-pvc
           emptyDir: {}
         {{- end }}
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: tool-chain-vol
+        name: tool-chain-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
