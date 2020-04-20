@@ -9,7 +9,10 @@ expose:
   type: ingress
   ingress:
     tls:
-      enabled: true
+      enabled: false
+      secretName: edgegallery-ingress-secret
+    annotations:
+      body_size: 20m
     hosts:
       auth: auth.edgegallery.org
       developer: developer.edgegallery.org

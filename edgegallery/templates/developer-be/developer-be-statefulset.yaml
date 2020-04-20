@@ -21,12 +21,7 @@ spec:
           ports:
             - containerPort: 5432
           env:
-            - name: SECRET_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: developer-postgres-secret
-                  key: POSTGRES_USER
-            - name: SECRET_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: developer-postgres-secret
@@ -34,7 +29,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
-              name: developer-be-postgres-pvc
+              name: developer-be-postgres-vol
             {{- end }}
             - mountPath: /docker-entrypoint-initdb.d
               name: developer-be-postgres-initdb
@@ -45,7 +40,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: developer-be-postgres-pvc
+        name: developer-be-postgres-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
@@ -92,7 +87,7 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: developer-log
               mountPath: /var/log/developer-be
-            - name: developer-be-workspace-pvc
+            - name: developer-be-workspace-vol
               mountPath: /home/mec-developer/
             {{- end }}
       volumes:
@@ -110,7 +105,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: developer-be-workspace-pvc
+        name: developer-be-workspace-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"

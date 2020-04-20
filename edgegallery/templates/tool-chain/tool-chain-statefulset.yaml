@@ -1,0 +1,64 @@
+{{- if .Values.developer.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: toolchain
+spec:
+  serviceName: "toolchain-svc"
+  selector:
+    matchLabels:
+      app: toolchain
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: toolchain
+    spec:
+      initContainers:
+        - name: init-service-center
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+      containers:
+        - name: toolchain
+          image: edgegallery/toolchain:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8059
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: toolchain-log
+              mountPath: /var/log/toolchain
+            {{- end }}
+            - name: tool-chain-vol
+              mountPath: /opt/portadv/portadmin
+        - name: porting-advisor
+            image: edgegallery/porting-advisor:latest
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8084
+            securityContext:
+              privileged: true
+            volumeMounts:
+              - name: tool-chain-vol
+                mountPath: /opt/portadv/portadmin
+      volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: developer-log
+          hostPath:
+            path: /edgegallery_datas/developer-be/log
+        {{- else}}
+        - name: tool-chain-vol
+          emptyDir: {}
+        {{- end }}
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: tool-chain-vol
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 1Gi
+  {{- end }}
+{{- end }}

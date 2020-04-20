@@ -21,12 +21,7 @@ spec:
           ports:
             - containerPort: 5432
           env:
-            - name: SECRET_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: appstore-postgres-secret
-                  key: POSTGRES_USER
-            - name: SECRET_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: appstore-postgres-secret
@@ -34,7 +29,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
-              name: appstore-be-postgres-pvc
+              name: appstore-be-postgres-vol
             {{- end }}
             - mountPath: /docker-entrypoint-initdb.d
               name: appstore-be-postgres-initdb
@@ -45,7 +40,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: appstore-be-postgres-pvc
+        name: appstore-be-postgres-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
@@ -92,7 +87,7 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: appstore-log
               mountPath: /var/log/appstore-be
-            - name: appstore-be-workspace-pvc
+            - name: appstore-be-workspace-vol
               mountPath: /home/appstore
             {{- end }}
       volumes:
@@ -110,7 +105,7 @@ spec:
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
-        name: appstore-be-workspace-pvc
+        name: appstore-be-workspace-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
