@@ -47,7 +47,7 @@ data:
     	APPID                    VARCHAR(100)       NULL,
     	USERID                   VARCHAR(100)       NULL,
     	USERNAME                 VARCHAR(100)       NULL,
-    	CONSTRAINT csar_package_table_pkey PRIMARY KEY (VERSIONID)
+    	CONSTRAINT catalog_package_table_pkey PRIMARY KEY (VERSIONID)
     );
 
     CREATE TABLE APP_TABLE (
