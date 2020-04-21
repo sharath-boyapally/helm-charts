@@ -6,7 +6,7 @@ persistence:
     server:
     path: /nfs/data
 expose:
-  type: ingress
+  type: none
   ingress:
     tls:
       enabled: false
@@ -14,10 +14,10 @@ expose:
     annotations:
       body_size: 20m
     hosts:
-      auth: auth.edgegallery.org
-      developer: developer.edgegallery.org
-      appstore: appstore.edgegallery.org
-      mecm: mecm.edgegallery.org
+      auth:
+      developer:
+      appstore:
+      mecm:
   nodePort:
     ip:
     appstore_fe:

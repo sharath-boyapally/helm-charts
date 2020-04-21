@@ -12,4 +12,18 @@ spec:
       protocol: TCP
   selector:
     app: toolchain
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: porting-advisor-svc
+  labels:
+    svc: porting-advisor-svc
+spec:
+  ports:
+    - port: 8084
+      targetPort: 8084
+      protocol: TCP
+  selector:
+    app: porting-advisor
 {{- end }}

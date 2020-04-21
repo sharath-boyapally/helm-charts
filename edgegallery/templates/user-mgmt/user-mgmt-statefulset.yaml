@@ -71,7 +71,7 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: [ "/bin/sh", "-c", "redis-cli config set requirepass edgegallery"]
+                command: [ "/bin/sh", "-c", "redis-cli config set requirepass edgegallery || true"]
           ports:
             - containerPort: 6379
           {{- if .Values.persistence.enabled }}
