@@ -27,12 +27,12 @@ their default values. See values.yaml for all available options.
 
 | Parameter                               | Description                                             | Default                     |
 |-----------------------------------------|---------------------------------------------------------|-----------------------------|
-| `arch`                                  | Architecture,x86 or arm64                               | `x86`                       |
+| `arch`                                  | Architecture (x86 | arm64)                              | `x86`                       |
 | `persistence.enabled`                   | Whether to use persistent storage                       | `false`                     |
 | `persistence.type`                      | Type of persistent storage                              | `nfs`                       |
 | `persistence.persistence.nfs.server`    | NFS server ip                                           | ``                          |
 | `persistence.persistence.nfs.path`      | NFS storage path                                        | ``                          |
-| `expose.type`                           | Type of expose                                          | `ingress`                   |
+| `expose.type`                           | Type of expose (ingress | nodePort | none)              | `none`                      |
 | `expose.ingress.tls`                    | Enable TLS on the ingress host                          | `false`                     |
 | `expose.ingress.secretName`             | TLS secret to use (must be manually created)            | `edgegallery-ingress-secret`|
 | `expose.ingress.annotations.body_size`  | Upload body size of ingress                             | `20m`                       |
@@ -40,7 +40,7 @@ their default values. See values.yaml for all available options.
 | `expose.ingress.hosts.developer`        | Domain name of developer                                | `developer.edgegallery.org` |
 | `expose.ingress.hosts.appstore`         | Domain name of appstore                                 | `appstore.edgegallery.org`  |
 | `expose.ingress.hosts.mecm`             | Domain name of mecm                                     | `mecm.edgegallery.org`      |
-| `expose.nodePort.ip`                    | IP of host                                              | ``                          |
+| `expose.nodePort.ip`                    | IP of host (must set it if use nodePort as expose type) | ``                          |
 | `expose.nodePort.appstore_fe.port`      | Internal port of appstore_fe                            | `8080`                      |
 | `expose.nodePort.appstore_fe.nodePort`  | NodePort of appstore_fe                                 | `30091`                     |
 | `expose.nodePort.developer_fe.port`     | Internal port of developer_fe                           | `8080`                      |
