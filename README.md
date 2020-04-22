@@ -63,7 +63,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to
 ## Installation
 
 ```shell
-helm install --name my-edgegallery -f custom.yaml edgegallery/edgegallery
+helm install my-edgegallery edgegallery/edgegallery -f custom.yaml
 ```
 
 ### Ingress
@@ -75,7 +75,7 @@ To enable ingress integration, please set `expose.type` to `ingress`
 #### Example Ingress configuration
 
 ```shell
-helm install --name my-edgegallery edgegallery/edgegallery \
+helm install my-edgegallery edgegallery/edgegallery \
   --set expose.type=ingress \
   --set expose.ingress.hosts.auth=auth.edgegallery.domain.com \
   --set expose.ingress.hosts.appstore=appstore.edgegallery.domain.com \
