@@ -28,8 +28,8 @@ spec:
           command: ['sh', '-c', "until nslookup user-mgmt-redis-svc; do echo waiting for redis; sleep 2; done"]
       containers:
         - name: user-mgmt
-          image: edgegallery/user-mgmt:latest
-          imagePullPolicy: Always
+          image: {{ .Values.images.user_mgmt.repository }}:{{ .Values.images.user_mgmt.tag }}
+          imagePullPolicy: {{ .Values.images.user_mgmt.pullPolicy }}
           ports:
             - containerPort: 8067
           env:

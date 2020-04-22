@@ -51,6 +51,38 @@ images:
   mecm_catalog:
     x86: edgegallery/mecm-catalog:withoutservicecomb
     arm64: gauravagrawal/edgegallery-arm-mecm-catalog:latest
+  appstore_be:
+    repository: edgegallery/appstore-be
+    tag: latest
+    pullPolicy: Always
+  appstore_fe:
+    repository: edgegallery/appstore-fe
+    tag: latest
+    pullPolicy: Always
+  developer_be:
+    repository: edgegallery/developer-be
+    tag: latest
+    pullPolicy: Always
+  developer_fe:
+    repository: edgegallery/developer-fe
+    tag: latest
+    pullPolicy: Always
+  mecm_fe:
+    repository: edgegallery/mecm-meo-fe
+    tag: latest
+    pullPolicy: Always
+  tool_chain:
+    repository: edgegallery/toolchain
+    tag: latest
+    pullPolicy: Always
+  porting_advisor:
+    repository: edgegallery/porting-advisor
+    tag: latest
+    pullPolicy: Always
+  user_mgmt:
+    repository: edgegallery/user-mgmt
+    tag: latest
+    pullPolicy: Always
 mecm:
   enabled: true
 appstore:

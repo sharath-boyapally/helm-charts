@@ -20,7 +20,7 @@ spec:
           command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
       containers:
         - name: toolchain
-          image: edgegallery/toolchain:latest
+          image: {{ .Values.images.tool_chain.repository }}:{{ .Values.images.tool_chain.tag }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8059
@@ -32,8 +32,8 @@ spec:
             - name: tool-chain-pvc
               mountPath: /opt/portadv/portadmin
         - name: porting-advisor
-          image: edgegallery/porting-advisor:latest
-          imagePullPolicy: Always
+          image: {{ .Values.images.porting_advisor.repository }}:{{ .Values.images.porting_advisor.tag }}
+          imagePullPolicy: {{ .Values.images.porting_advisor.pullPolicy }}
           ports:
             - containerPort: 8084
           securityContext:

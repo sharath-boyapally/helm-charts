@@ -73,8 +73,8 @@ spec:
           command: ['sh', '-c', "until nslookup developer-be-postgres-svc; do echo waiting for developer-be-postgres-svc; sleep 2; done"]
       containers:
         - name: developer-be
-          image: edgegallery/developer-be:latest
-          imagePullPolicy: Always
+          image: {{ .Values.images.developer_be.repository }}:{{ .Values.images.developer_be.tag }}
+          imagePullPolicy: {{ .Values.images.developer_be.pullPolicy }}
           ports:
             - containerPort: 9080
           env:

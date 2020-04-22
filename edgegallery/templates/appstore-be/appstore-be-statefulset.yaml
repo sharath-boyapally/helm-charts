@@ -73,8 +73,8 @@ spec:
           command: ['sh', '-c', "until nslookup appstore-be-postgres-svc; do echo waiting for appstore-be-postgres-svc; sleep 2; done"]
       containers:
         - name: appstore-be
-          image: edgegallery/appstore-be:latest
-          imagePullPolicy: Always
+          image: {{ .Values.images.appstore_be.repository }}:{{ .Values.images.appstore_be.tag }}
+          imagePullPolicy: {{ .Values.images.appstore_be.pullPolicy }}
           ports:
             - containerPort: 8099
           env:
