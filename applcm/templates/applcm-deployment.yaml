@@ -22,14 +22,14 @@ spec:
     spec:
       containers:
       - env:
-        - name: MYSQL_PASSWD
-          value: root123
-        - name: DEPLOY_TYPE
-          value: helm
-        - name: MEP_PORT
-          value: 30088
-        - name: PROMETHEUS_PORT
-          value: 30000
+          - name: MYSQL_PASSWD
+            value: root123
+          - name: DEPLOY_TYPE
+            value: helm
+          - name: MEP_PORT
+            value: 30088
+          - name: PROMETHEUS_PORT
+            value: 30000
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: applcm
