@@ -30,8 +30,8 @@ spec:
           value: 30088
         - name: PROMETHEUS_PORT
           value: 30000
-        image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
-        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: applcm
         ports:
         - containerPort: 8282
