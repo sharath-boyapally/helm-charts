@@ -22,8 +22,8 @@ spec:
           command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
       containers:
         - name: appstore-fe
-          image: edgegallery/appstore-fe:latest
-          imagePullPolicy: Always
+          image: {{ .Values.images.appstore_fe.repository }}:{{ .Values.images.appstore_fe.tag }}
+          imagePullPolicy: {{ .Values.images.appstore_fe.pullPolicy }}
           ports:
             - containerPort: 8080
           volumeMounts:

@@ -22,8 +22,8 @@ spec:
           command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
       containers:
         - name: developer-fe
-          image: edgegallery/developer-fe:latest
-          imagePullPolicy: Always
+          image: {{ .Values.images.developer_fe.repository }}:{{ .Values.images.developer_fe.tag }}
+          imagePullPolicy: {{ .Values.images.developer_fe.pullPolicy }}
           ports:
             - containerPort: 8080
           volumeMounts:

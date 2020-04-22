@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: applcm
+  name: applcm
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: applcm
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: applcm
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_PASSWD
+          value: root123
+        - name: DEPLOY_TYPE
+          value: helm
+        - name: MEP_PORT
+          value: 30088
+        - name: PROMETHEUS_PORT
+          value: 30000
+        image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        name: applcm
+        ports:
+        - containerPort: 8282
+        resources: {}
+      hostname: applcm
+      restartPolicy: Always
+status: {}
