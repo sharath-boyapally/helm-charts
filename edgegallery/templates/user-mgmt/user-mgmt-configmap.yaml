@@ -27,7 +27,7 @@ data:
     sms.url={{ .Values.user_mgmt.sms.url }}
     sms.appKey={{ .Values.user_mgmt.sms.app_key }}
     sms.appSecret={{ .Values.user_mgmt.sms.app_secret }}
-    sms.sender={{ .Values.user_mgmt.sms.sender }}
+    sms.sender={{ int .Values.user_mgmt.sms.sender }}
     sms.templateId={{ .Values.user_mgmt.sms.template_id }}
     sms.signature={{ .Values.user_mgmt.sms.signature }}
     sms.statusCallBack={{ .Values.user_mgmt.sms.status_call_back }}
