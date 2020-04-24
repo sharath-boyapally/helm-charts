@@ -4,13 +4,13 @@ persistence:
   type: nfs
   nfs:
     server:
-    path: /nfs/data
+    path:
 expose:
   type: none
   ingress:
     tls:
       enabled: false
-      secretName: edgegallery-ingress-secret
+      secretName:
     annotations:
       body_size: 20m
     hosts:
@@ -96,12 +96,12 @@ user_mgmt:
   enabled: true
   sms:
     enabled: false
-    url: https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1
-    app_key: zES2FDR1z0sOM8jT8uFs0uUzP4Wl
-    app_secret: WBGhdH3JlQyu9JjX9wENW5flB7Gg
-    sender: '8820031341626'
-    template_id: 3f08b042a9d44cb8ad3c71c44e0f1cf8
-    signature: MEC
+    url:
+    app_key:
+    app_secret:
+    sender:
+    template_id:
+    signature:
     status_call_back:
 service_center:
   enabled: true
