@@ -1,24 +1,23 @@
 apiVersion: v1
 entries:
   applcm:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2020-04-24T16:56:43.716818413+08:00"
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-04-26T23:06:03.33171478+08:00"
     description: A Helm chart for Kubernetes
-    digest: a3ce4804b2021790ee6b4857a9a5125512edae11908bc9f61fa6d33630693749
+    digest: 78dbc30b5349d5b0df4b2d863dd1c29ff4e4c5c958ec1522d2af993c4fdc7a07
     name: applcm
-    type: application
     urls:
     - https://edgegallery.github.io/helm-charts/applcm-0.1.0.tgz
     version: 0.1.0
   edgegallery:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-24T16:56:43.718841585+08:00"
+    created: "2020-04-26T23:06:03.333426175+08:00"
     description: A Helm chart for Kubernetes
-    digest: 7f8979c298a98650c96f4ffae94ba62c3e45914057685aa28ec936b8a29a680c
+    digest: c1a4f91d6748c70cf01cc1e17c74341eb3c9b5596c7ecc979e0ce02db2803bfd
     name: edgegallery
     urls:
     - https://edgegallery.github.io/helm-charts/edgegallery-0.1.0.tgz
     version: 0.1.0
-generated: "2020-04-24T16:56:43.715665172+08:00"
+generated: "2020-04-26T23:06:03.33121739+08:00"

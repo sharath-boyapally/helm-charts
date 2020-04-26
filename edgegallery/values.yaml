@@ -51,6 +51,9 @@ images:
   mecm_catalog:
     x86: edgegallery/mecm-catalog:withoutservicecomb
     arm64: gauravagrawal/edgegallery-arm-mecm-catalog:latest
+  mariadb:
+    x86: mariadb:10.1.11
+    arm64: mariadb:10.1.43
   appstore_be:
     repository: edgegallery/appstore-be
     tag: latest
