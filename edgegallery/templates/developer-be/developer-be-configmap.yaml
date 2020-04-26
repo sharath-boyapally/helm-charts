@@ -250,7 +250,8 @@ data:
       "content" text COLLATE "pg_catalog"."default" DEFAULT NULL,
       "upload_time_stamp" bigint DEFAULT NULL,
       CONSTRAINT "tbl_helm_template_yaml_pkey" PRIMARY KEY ("file_id")
-    );
+    )
+    ;
 
     CREATE TABLE IF NOT EXISTS "tbl_service_host" (
       "host_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL DEFAULT NULL::character varying,

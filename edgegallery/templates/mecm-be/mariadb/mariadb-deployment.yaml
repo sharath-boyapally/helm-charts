@@ -31,7 +31,7 @@ spec:
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: root123
-        image: mariadb:10.1.43
+        image: {{ if eq .Values.arch "arm64" }}{{ .Values.images.mariadb.arm64 }}{{- else  }}{{.Values.images.mariadb.x86}}{{- end  }}
         name: mariadb
         ports:
         - containerPort: 3306
