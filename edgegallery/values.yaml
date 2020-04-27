@@ -56,23 +56,23 @@ images:
     arm64: mariadb:10.1.43
   appstore_be:
     repository: edgegallery/appstore-be
-    tag: latest
+    tag: stable
     pullPolicy: Always
   appstore_fe:
     repository: edgegallery/appstore-fe
-    tag: latest
+    tag: stable
     pullPolicy: Always
   developer_be:
     repository: edgegallery/developer-be
-    tag: latest
+    tag: stable
     pullPolicy: Always
   developer_fe:
     repository: edgegallery/developer-fe
-    tag: latest
+    tag: stable
     pullPolicy: Always
   mecm_fe:
     repository: edgegallery/mecm-meo-fe
-    tag: latest
+    tag: stable
     pullPolicy: Always
   tool_chain:
     repository: edgegallery/toolchain
@@ -84,7 +84,7 @@ images:
     pullPolicy: Always
   user_mgmt:
     repository: edgegallery/user-mgmt
-    tag: latest
+    tag: stable
     pullPolicy: Always
 mecm:
   enabled: true
