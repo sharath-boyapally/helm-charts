@@ -84,4 +84,5 @@ data:
     GRANT INSERT ON all tables in schema public TO marketplace;
     GRANT DELETE ON all tables in schema public TO marketplace;
     GRANT UPDATE ON all tables in schema public TO marketplace;
+    GRANT USAGE, SELECT ON SEQUENCE csar_package_score_commentid_seq TO marketplace;
 {{- end }}
