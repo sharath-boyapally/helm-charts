@@ -35,6 +35,66 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/usermgmt
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: POSTGRES_PASSWORD
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: REDIS_PASSWORD
+            - name: SMS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_URL
+            - name: SMS_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_APP_KEY
+            - name: SMS_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_APP_SECRET
+            - name: SMS_SENDER
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_SENDER
+            - name: SMS_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_TEMPLATE_ID
+            - name: SMS_APP_SIGNATURE
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_APP_SIGNATURE
+            - name: SMS_STATUS_CALL_BACK
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_STATUS_CALL_BACK
+            - name: JWT_KEY_PAIR_ALIAS
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: JWT_KEY_PAIR_ALIAS
+            - name: JWT_KEY_PAIR_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: JWT_KEY_PAIR_PASSWORD
           volumeMounts:
             - name: user-mgmt-config
               mountPath: /usr/app/application.properties
@@ -43,10 +103,12 @@ spec:
             - mountPath: /var/log/usermgmt
               name: usermgmt-log
             {{- end }}
-            - name: jwt-key-secret
-              mountPath: /usr/app/keystore.jks
-              subPath: keystore.jks
+            {{- if not .Values.user_mgmt.jwt.use_auto_generated_key_pair }}
+            - name: jwt-key-pair-secret
+              mountPath: /usr/app/keyPair
+              subPath: keyPair
               readOnly: true
+            {{- end }}
       volumes:
         - name: user-mgmt-config
           configMap:
@@ -59,10 +121,12 @@ spec:
           hostPath:
             path: /edgegallery_datas/usermgmt/log
         {{- end }}
-        - name: jwt-key-secret
+        {{- if not .Values.user_mgmt.jwt.use_auto_generated_key_pair }}
+        - name: jwt-key-pair-secret
           secret:
-            secretName: user-mgmt-jwt-secret
+            secretName: {{ .Values.user_mgmt.jwt.key_pair_secret_name }}
             items:
-              - key: keystore.jks
-                path: keystore.jks
+              - key: {{ .Values.user_mgmt.jwt.key_pair_secret_key }}
+                path: keyPair
+        {{- end }}
 {{- end }}
