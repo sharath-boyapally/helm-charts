@@ -97,6 +97,11 @@ tool_chain:
 # Modules that must be selected
 user_mgmt:
   enabled: true
+  postgres:
+    username: usermgmt
+    password: edgegallery
+  redis:
+    password: edgegallery
   sms:
     enabled: false
     url:
@@ -106,5 +111,11 @@ user_mgmt:
     template_id:
     signature:
     status_call_back:
+  jwt:
+    use_auto_generated_key_pair: true
+    key_pair_secret_name: user-mgmt-jwt-secret
+    key_pair_secret_key: keystore.jks
+    key_pair_alias: mec_key_pair
+    key_pair_password: mec_pass
 service_center:
   enabled: true

@@ -24,7 +24,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: user-mgmt-postgres-secret
+                  name: user-mgmt-secret
                   key: POSTGRES_PASSWORD
           volumeMounts:
             {{- if .Values.persistence.enabled }}
@@ -71,7 +71,7 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: [ "/bin/sh", "-c", "redis-cli config set requirepass edgegallery || true"]
+                command: [ "/bin/sh", "-c", "redis-cli config set requirepass {{ .Values.user_mgmt.redis.password }} || true"]
           ports:
             - containerPort: 6379
           {{- if .Values.persistence.enabled }}
