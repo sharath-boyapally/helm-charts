@@ -35,6 +35,16 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/usermgmt
+            - name: CORS_ALLOW_ORIGINS
+              value: {{ .Values.user_mgmt.cors.allow_origins }}
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: POSTGRES_IP
+              value: user-mgmt-postgres-svc
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB_NAME
+              value: {{ .Values.user_mgmt.postgres.dbname }}
             - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -45,11 +55,38 @@ spec:
                 secretKeyRef:
                   name: user-mgmt-secret
                   key: POSTGRES_PASSWORD
+            - name: HTTP_POOL_MAX_TOTAL
+              value: {{ quote .Values.user_mgmt.postgres.httpPoolMaxTotal }}
+            - name: HTTP_POOL_DEFAULT_MAX_PER_ROUTE
+              value: {{ quote .Values.user_mgmt.postgres.httpPoolDefaultMaxPerRoute }}
+            - name: HTTP_POOL_CONNECT_TIMEOUT
+              value: {{ quote .Values.user_mgmt.postgres.httpPoolConnectTimeout }}
+            - name: HTTP_POOL_CONNECTION_REQUEST_TIMEOUT
+              value: {{ quote .Values.user_mgmt.postgres.httpPoolConnectionRequestTimeout }}
+            - name: HTTP_POOL_SOCKET_TIMEOUT
+              value: {{ quote .Values.user_mgmt.postgres.httpPoolSocketTimeout }}
+            - name: REDIS_IP
+              value: user-mgmt-redis-svc
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_TIMEOUT
+              value: {{ quote .Values.user_mgmt.redis.timeout }}
+            - name: REDIS_VERIFICATION_TIMEOUT
+              value: {{ quote .Values.user_mgmt.redis.verificationTimeout }}
+            - name: REDIS_MAX_TOTAL
+              value: {{ quote .Values.user_mgmt.redis.maxTotal }}
+            - name: REDIS_MAX_IDLE
+              value: {{ quote .Values.user_mgmt.redis.maxIdle }}
+            - name: REDIS_MAX_WAIT_MILLIS
+              value: {{ quote .Values.user_mgmt.redis.maxWaitMillis }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: user-mgmt-secret
                   key: REDIS_PASSWORD
+            - name: SMS_ENABLED
+              value: {{ quote .Values.user_mgmt.sms.enabled }}
+            {{- if .Values.user_mgmt.sms.enabled }}
             - name: SMS_URL
               valueFrom:
                 secretKeyRef:
@@ -82,9 +119,13 @@ spec:
                   key: SMS_APP_SIGNATURE
             - name: SMS_STATUS_CALL_BACK
               valueFrom:
-                secretKeyRef:
+                 secretKeyRef:
                   name: user-mgmt-secret
                   key: SMS_STATUS_CALL_BACK
+            {{- end }}
+            {{- if not .Values.user_mgmt.jwt.use_auto_generated_key_pair }}
+            - name: JWT_KEY_PAIR_PATH
+              value: /usr/app/keyPair
             - name: JWT_KEY_PAIR_ALIAS
               valueFrom:
                 secretKeyRef:
@@ -95,10 +136,8 @@ spec:
                 secretKeyRef:
                   name: user-mgmt-secret
                   key: JWT_KEY_PAIR_PASSWORD
+            {{- end }}
           volumeMounts:
-            - name: user-mgmt-config
-              mountPath: /usr/app/application.properties
-              subPath: application.properties
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/log/usermgmt
               name: usermgmt-log
@@ -110,12 +149,6 @@ spec:
               readOnly: true
             {{- end }}
       volumes:
-        - name: user-mgmt-config
-          configMap:
-            name: user-mgmt-configmap
-            items:
-              - key: application.properties
-                path: application.properties
         {{- if .Values.persistence.enabled }}
         - name: usermgmt-log
           hostPath:

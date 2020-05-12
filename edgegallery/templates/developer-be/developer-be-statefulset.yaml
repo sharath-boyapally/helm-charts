@@ -21,11 +21,18 @@ spec:
           ports:
             - containerPort: 5432
           env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_USERNAME
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: developer-postgres-secret
+                  name: developer-be-secret
                   key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: {{ .Values.developer.postgres.dbname }}
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
@@ -80,10 +87,25 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/developer-be
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: POSTGRES_IP
+              value: developer-be-postgres-svc
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB_NAME
+              value: {{ .Values.developer.postgres.dbname }}
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_PASSWORD
           volumeMounts:
-            - name: developer-config
-              mountPath: /usr/app/application.properties
-              subPath: application.properties
             {{- if .Values.persistence.enabled }}
             - name: developer-log
               mountPath: /var/log/developer-be
@@ -91,12 +113,6 @@ spec:
               mountPath: /home/mec-developer/user
             {{- end }}
       volumes:
-        - name: developer-config
-          configMap:
-            name: developer-configmap
-            items:
-              - key: application.properties
-                path: application.properties
         {{- if .Values.persistence.enabled }}
         - name: developer-log
           hostPath:

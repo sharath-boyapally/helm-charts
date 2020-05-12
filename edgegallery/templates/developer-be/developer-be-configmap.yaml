@@ -2,38 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: developer-configmap
-data:
-  application.properties: |
-    #### Spring config ####
-    # Spring port
-    spring.server.port=9081
-    #### postgreSQL config ####
-    postgres.ip=developer-be-postgres-svc
-    #postgres.ip=localhost
-    postgres.database=mecdeveloper
-    postgres.port=5433
-    postgres.username=developer
-    postgres.password=edgegallery
-
-    #### Service Center config ####
-    # ip or service name in k8s
-    servicecenter.ip=service-center
-    servicecenter.port=30100
-    servicecomb.name=mec-developer
-    ### ServiceComb ###
-    servicecomb.rest.prot=9080
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: developer-be-postgres-initdb-configmap
 data:
   postgres.sql: |
-    CREATE DATABASE "mecdeveloper";
-
-    \c mecdeveloper;
-
     -- ----------------------------
     -- plugin and app-test table start -----------------
     -- ----------------------------
@@ -277,13 +248,6 @@ data:
       "create_time" varchar(50) NOT NULL
     )
     ;
-
-    CREATE USER developer WITH PASSWORD 'edgegallery';
-    GRANT ALL PRIVILEGES ON DATABASE mecdeveloper TO developer;
-    GRANT SELECT ON all tables in schema public TO developer;
-    GRANT INSERT ON all tables in schema public TO developer;
-    GRANT DELETE ON all tables in schema public TO developer;
-    GRANT UPDATE ON all tables in schema public TO developer;
     -- workspace table end -----------------
 
     -- workspace mep capability init --
