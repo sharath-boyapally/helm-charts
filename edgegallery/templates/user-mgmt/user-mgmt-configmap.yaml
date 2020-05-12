@@ -32,9 +32,6 @@ data:
       	PERMISSIONS         VARCHAR(500)      NULL
     );
 
-    insert into tbl_admin (tenantid, username, password, company, telephonenumber, gender, permissions)
-    values ('f8c3d4fa-6bb0-4a2b-8d6c-17dd8aac9039', 'admin', '-ssmh4d4lfnrt911dtq2m88uk82ej1b3f303mh3lfo4gql5reln8', 'huawei', '15512345678', 'male',
-    '[{"platform":"ONAPaaS","role":"ADMIN","pageIds":["0","0.0","0.1","0.2","0.3"]}]');
 
     CREATE TABLE if not exists tbl_role (
         ID                   INTEGER                PRIMARY KEY NOT NULL,
