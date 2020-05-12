@@ -71,7 +71,7 @@ images:
     tag: stable
     pullPolicy: Always
   mecm_fe:
-    repository: edgegallery/mecm-meo-fe
+    repository: edgegallery/mecm-fe
     tag: stable
     pullPolicy: Always
   tool_chain:
@@ -88,10 +88,27 @@ images:
     pullPolicy: Always
 mecm:
   enabled: true
+  oauth2:
+    client_id: mecm-fe
+    client_secret: CLpn1b81
 appstore:
   enabled: true
+  postgres:
+    username: appstore
+    password: edgegallery
+    dbname: appstoredb
+  oauth2:
+    client_id: appstore-fe
+    client_secret: CLpn1b81
 developer:
   enabled: true
+  postgres:
+    username: developer
+    password: edgegallery
+    dbname: developerdb
+  oauth2:
+    client_id: developer-fe
+    client_secret: CLpn1b81
 tool_chain:
   enabled: true
 # Modules that must be selected
@@ -100,6 +117,14 @@ user_mgmt:
   postgres:
     username: usermgmt
     password: edgegallery
+    dbname: usermgmtdb
+    httpPoolMaxTotal: 200
+    httpPoolDefaultMaxPerRoute: 100
+    httpPoolConnectTimeout: 10000
+    httpPoolConnectionRequestTimeout: 500
+    httpPoolSocketTimeout: 15000
+  cors:
+    allow_origins: *
   redis:
     password: edgegallery
   sms:
@@ -113,9 +138,9 @@ user_mgmt:
     status_call_back:
   jwt:
     use_auto_generated_key_pair: true
-    key_pair_secret_name: user-mgmt-jwt-secret
-    key_pair_secret_key: keystore.jks
-    key_pair_alias: mec_key_pair
-    key_pair_password: mec_pass
+    key_pair_secret_name:
+    key_pair_secret_key:
+    key_pair_alias:
+    key_pair_password:
 service_center:
   enabled: true

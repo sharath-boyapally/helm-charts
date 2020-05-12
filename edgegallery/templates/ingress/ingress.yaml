@@ -51,6 +51,6 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: mecm-meo-fe-svc
+              serviceName: mecm-fe-svc
               servicePort: 8080
 {{- end }}

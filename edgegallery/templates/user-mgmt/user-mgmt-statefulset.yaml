@@ -21,11 +21,18 @@ spec:
           ports:
             - containerPort: 5432
           env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: POSTGRES_USERNAME
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: user-mgmt-secret
                   key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: {{ .Values.user_mgmt.postgres.dbname }}
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
@@ -68,17 +75,23 @@ spec:
         - name: user-mgmt-redis
           image: redis
           imagePullPolicy: IfNotPresent
-          lifecycle:
-            postStart:
-              exec:
-                command: [ "/bin/sh", "-c", "redis-cli config set requirepass {{ .Values.user_mgmt.redis.password }} || true"]
+          command:
+            - "redis-server"
+          args:
+            - "/etc/redis/redis.conf"
           ports:
             - containerPort: 6379
-          {{- if .Values.persistence.enabled }}
           volumeMounts:
+            - mountPath: /etc/redis
+              name: user-mgmt-redis-config
+          {{- if .Values.persistence.enabled }}
             - mountPath: /data
               name: usermgmt-redis-pvc
           {{- end }}
+      volumes:
+        - name: user-mgmt-redis-config
+          secret:
+            secretName: user-mgmt-redis-secret
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
