@@ -1,0 +1,29 @@
+images:
+  api_handler_infra:
+    repository: edgegallery/api-handler-infra
+    tag: latest
+    pullPolicy: Always
+  meo_bpmn_infra:
+    repository: edgegallery/bpmn-infra
+    tag: latest
+    pullPolicy: Always
+  meo_catalog_db_adapter:
+    repository: edgegallery/catalog-db-adapter
+    tag: latest
+    pullPolicy: Always
+  mecm_esr:
+    repository: edgegallery/mecm-esr
+    tag: latest
+    pullPolicy: Always
+  meo_request_db_adapter:
+    repository: edgegallery/request-db-adapter
+    tag: latest
+    pullPolicy: Always
+  mecm_catalog:
+    repository: edgegallery/mecm-catalog
+    tag: latest
+    pullPolicy: Always
+  mariadb:
+    repository: mariadb
+    tag: 10.1
+    pullPolicy: Always

@@ -25,8 +25,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: applcm
           env:
-            - name: MYSQL_PASSWD
-              value: root123
+            - name: LOG_DIR
+              value: /var/log/applcm
+            - name: AUTH_SERVER_ADDRESS
+              value: {{ .Values.global.security.auth_server_address }}
+            - name: CORS_ALLOW_ORIGINS
+              value: {{ quote .Values.cors.allow_origins }}
             - name: DEPLOY_TYPE
               value: helm
             - name: MEP_PORT

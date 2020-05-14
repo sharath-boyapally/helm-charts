@@ -1,0 +1,14 @@
+global:
+  security:
+    auth_server_address:
+persistence:
+  enabled: false
+  type: nfs
+images:
+  repository: edgegallery/developer-be
+  tag: stable
+  pullPolicy: Always
+postgres:
+  username: developer
+  password: edgegallery
+  dbname: developerdb

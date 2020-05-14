@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: developer-fe
+  namespace: default
+  labels:
+    app: developer-fe
+spec:
+  selector:
+    matchLabels:
+      app: developer-fe
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-fe
+    spec:
+      initContainers:
+        - name: init-usermgmt
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
+      containers:
+        - name: developer-fe
+          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LOG_DIR
+              value: /var/log/developer-fe
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: AUTH_SERVER_ADDRESS
+              value: {{ .Values.global.security.auth_server_address }}
+            - name: COOKIE_NAME
+              value: DEVELOPERSESSIONID
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: developer-fe-secret
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: developer-fe-secret
+                  key: CLIENT_SECRET
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: developer-fe-log
+              mountPath: /var/log/developer-fe
+          {{- end }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: developer-fe-log
+          hostPath:
+            path: /edgegallery_datas/developer-fe/log
+      {{- end }}

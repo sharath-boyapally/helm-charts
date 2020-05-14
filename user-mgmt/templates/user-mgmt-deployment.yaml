@@ -1,0 +1,167 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-mgmt
+  namespace: default
+  labels:
+    app: user-mgmt
+spec:
+  selector:
+    matchLabels:
+      app: user-mgmt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-mgmt
+    spec:
+      initContainers:
+        - name: init-service-center
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+        - name: init-postgres
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-postgres-svc; do echo waiting for postgres; sleep 2; done"]
+        - name: init-redis
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-redis-svc; do echo waiting for redis; sleep 2; done"]
+      containers:
+        - name: user-mgmt
+          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - containerPort: 8067
+          env:
+            - name: LOG_DIR
+              value: /var/log/usermgmt
+            - name: CORS_ALLOW_ORIGINS
+              value: {{ .Values.cors.allow_origins | quote }}
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: POSTGRES_IP
+              value: user-mgmt-postgres-svc
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB_NAME
+              value: {{ .Values.postgres.dbname }}
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: POSTGRES_PASSWORD
+            - name: HTTP_POOL_MAX_TOTAL
+              value: {{ quote .Values.postgres.httpPoolMaxTotal }}
+            - name: HTTP_POOL_DEFAULT_MAX_PER_ROUTE
+              value: {{ quote .Values.postgres.httpPoolDefaultMaxPerRoute }}
+            - name: HTTP_POOL_CONNECT_TIMEOUT
+              value: {{ quote .Values.postgres.httpPoolConnectTimeout }}
+            - name: HTTP_POOL_CONNECTION_REQUEST_TIMEOUT
+              value: {{ quote .Values.postgres.httpPoolConnectionRequestTimeout }}
+            - name: HTTP_POOL_SOCKET_TIMEOUT
+              value: {{ quote .Values.postgres.httpPoolSocketTimeout }}
+            - name: REDIS_IP
+              value: user-mgmt-redis-svc
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_TIMEOUT
+              value: {{ quote .Values.redis.timeout }}
+            - name: REDIS_VERIFICATION_TIMEOUT
+              value: {{ quote .Values.redis.verification_timeout }}
+            - name: REDIS_MAX_TOTAL
+              value: {{ quote .Values.redis.max_total }}
+            - name: REDIS_MAX_IDLE
+              value: {{ quote .Values.redis.max_idle }}
+            - name: REDIS_MAX_WAIT_MILLIS
+              value: {{ quote .Values.redis.max_wait_millis }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: REDIS_PASSWORD
+            - name: SMS_ENABLED
+              value: {{ quote .Values.sms.enabled }}
+            {{- if .Values.sms.enabled }}
+            - name: SMS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_URL
+            - name: SMS_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_APP_KEY
+            - name: SMS_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_APP_SECRET
+            - name: SMS_SENDER
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_SENDER
+            - name: SMS_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_TEMPLATE_ID
+            - name: SMS_APP_SIGNATURE
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_APP_SIGNATURE
+            - name: SMS_STATUS_CALL_BACK
+              valueFrom:
+                 secretKeyRef:
+                  name: user-mgmt-secret
+                  key: SMS_STATUS_CALL_BACK
+            {{- end }}
+            {{- if not .Values.jwt.use_auto_generated_key_pair }}
+            - name: JWT_KEY_PAIR_PATH
+              value: /usr/app/keyPair
+            - name: JWT_KEY_PAIR_ALIAS
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: JWT_KEY_PAIR_ALIAS
+            - name: JWT_KEY_PAIR_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: JWT_KEY_PAIR_PASSWORD
+            {{- end }}
+          {{- if or (.Values.persistence.enabled) (not .Values.jwt.use_auto_generated_key_pair) }}
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - mountPath: /var/log/usermgmt
+              name: usermgmt-log
+            {{- end }}
+            {{- if not .Values.jwt.use_auto_generated_key_pair }}
+            - name: jwt-key-pair-secret
+              mountPath: /usr/app/keyPair
+              subPath: keyPair
+              readOnly: true
+            {{- end }}
+          {{- end }}
+      {{- if or (.Values.persistence.enabled) (not .Values.jwt.use_auto_generated_key_pair) }}
+      volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: usermgmt-log
+          hostPath:
+            path: /edgegallery_datas/usermgmt/log
+        {{- end }}
+        {{- if not .Values.jwt.use_auto_generated_key_pair }}
+        - name: jwt-key-pair-secret
+          secret:
+            secretName: {{ .Values.jwt.key_pair_secret_name }}
+            items:
+              - key: {{ .Values.jwt.key_pair_secret_key }}
+                path: keyPair
+        {{- end }}
+      {{- end }}

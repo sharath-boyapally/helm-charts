@@ -6,16 +6,16 @@ metadata:
     kompose.version: 1.16.0 (0c01309)
   creationTimestamp: null
   labels:
-    io.kompose.service: applcm
-  name: applcm
+    io.kompose.service: vfc-catalog
+  name: vfc-catalog
 spec:
   type: NodePort
   ports:
-  - name: "8282"
-    nodePort: 30101
-    port: {{ .Values.expose.port }}
-    targetPort: {{ .Values.expose.nodePort.nodePort }}
+  - name: "8806"
+    nodePort: 30107
+    port: 8806
+    targetPort: 8806
   selector:
-    io.kompose.service: applcm
+    io.kompose.service: vfc-catalog
 status:
   loadBalancer: {}

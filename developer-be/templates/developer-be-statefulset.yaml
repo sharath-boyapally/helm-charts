@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: developer-be-postgres
+spec:
+  serviceName: "developer-be-postgres-svc"
+  selector:
+    matchLabels:
+      app: developer-be-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-be-postgres
+    spec:
+      containers:
+        - name: developer-be-postgres
+          image: postgres:9.6.15
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: {{ .Values.postgres.dbname }}
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - mountPath: /var/lib/postgresql/data
+              name: developer-be-postgres-pvc
+            {{- end }}
+            - mountPath: /docker-entrypoint-initdb.d
+              name: developer-be-postgres-initdb
+      volumes:
+        - name: developer-be-postgres-initdb
+          configMap:
+            name: developer-be-postgres-initdb-configmap
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: developer-be-postgres-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 1Gi
+  {{- end }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: developer-be
+spec:
+  serviceName: "developer-be-svc"
+  selector:
+    matchLabels:
+      app: developer-be
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-be
+    spec:
+      initContainers:
+        - name: init-service-center
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+        - name: init-postgres
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup developer-be-postgres-svc; do echo waiting for developer-be-postgres-svc; sleep 2; done"]
+      containers:
+        - name: developer-be
+          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - containerPort: 9080
+          env:
+            - name: LOG_DIR
+              value: /var/log/developer-be
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: POSTGRES_IP
+              value: developer-be-postgres-svc
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB_NAME
+              value: {{ .Values.postgres.dbname }}
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: developer-be-secret
+                  key: POSTGRES_PASSWORD
+            - name: AUTH_SERVER_ADDRESS
+              value: {{ .Values.global.security.auth_server_address }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: developer-log
+              mountPath: /var/log/developer-be
+            - name: developer-be-workspace-pvc
+              mountPath: /home/mec-developer/user
+          {{- end }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: developer-log
+          hostPath:
+            path: /edgegallery_datas/developer-be/log
+      {{- end }}
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: developer-be-workspace-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 5Gi
+  {{- end }}

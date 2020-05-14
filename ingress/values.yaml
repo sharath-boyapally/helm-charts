@@ -1,0 +1,10 @@
+tls:
+  enabled: false
+  secretName:
+annotations:
+  body_size: 20m
+hosts:
+  auth:
+  developer:
+  appstore:
+  mecm:

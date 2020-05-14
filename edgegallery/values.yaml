@@ -1,146 +1,235 @@
-arch: x86
-persistence:
-  enabled: false
-  type: nfs
-  nfs:
-    server:
-    path:
-expose:
-  type: none
+## Global configuration
+global:
+  service_center:
+    enabled: true
+  user-mgmt:
+    enabled: true
+  appstore-be:
+    enabled: true
+  appstore-fe:
+    enabled: true
+  developer-be:
+    enabled: true
+  developer-fe:
+    enabled: true
+  mecm-be:
+    enabled: true
+  mecm-fe:
+    enabled: true
+  tool-chain:
+    enabled: true
   ingress:
-    tls:
-      enabled: false
-      secretName:
-    annotations:
-      body_size: 20m
-    hosts:
-      auth:
-      developer:
-      appstore:
-      mecm:
-  nodePort:
-    ip:
-    appstore_fe:
-      port: 8080
-      nodePort: 30091
-    developer_fe:
-      port: 8080
-      nodePort: 30092
-    mecm_fe:
-      port: 8080
-      nodePort: 30093
-    user_mgmt:
-      port: 8067
-      nodePort: 30067
-images:
-  api_handler_infra:
-    x86: edgegallery/api-handler-infra:withoutservicecomb
-    arm64: gauravagrawal/edgegallery-arm-meo-api-handler-infra:latest
-  meo_bpmn_infra:
-    x86: edgegallery/bpmn-infra:withoutservicecomb
-    arm64: gauravagrawal/edgegallery-arm-meo-bpmn-infra:latest
-  meo_catalog_db_adapter:
-    x86: edgegallery/catalog-db-adapter:withoutservicecomb
-    arm64: gauravagrawal/edgegallery-arm-meo-catalog-db-adapter:latest
-  mecm_esr:
-    x86: edgegallery/mecm-esr:withoutservicecomb
-    arm64: gauravagrawal/edgegallery-arm-esr:latest
-  meo_request_db_adapter:
-    x86: edgegallery/request-db-adapter:withoutservicecomb
-    arm64: gauravagrawal/edgegallery-arm-meo-request-db-adapter:latest
-  mecm_catalog:
-    x86: edgegallery/mecm-catalog:withoutservicecomb
-    arm64: gauravagrawal/edgegallery-arm-mecm-catalog:latest
-  mariadb:
-    x86: mariadb:10.1.11
-    arm64: mariadb:10.1.43
-  appstore_be:
-    repository: edgegallery/appstore-be
-    tag: stable
-    pullPolicy: Always
-  appstore_fe:
-    repository: edgegallery/appstore-fe
-    tag: stable
-    pullPolicy: Always
-  developer_be:
-    repository: edgegallery/developer-be
-    tag: stable
-    pullPolicy: Always
-  developer_fe:
-    repository: edgegallery/developer-fe
-    tag: stable
-    pullPolicy: Always
-  mecm_fe:
-    repository: edgegallery/mecm-fe
-    tag: stable
-    pullPolicy: Always
-  tool_chain:
-    repository: edgegallery/toolchain
-    tag: latest
-    pullPolicy: Always
-  porting_advisor:
-    repository: edgegallery/porting-advisor
-    tag: latest
-    pullPolicy: Always
-  user_mgmt:
-    repository: edgegallery/user-mgmt
-    tag: stable
-    pullPolicy: Always
-mecm:
-  enabled: true
-  oauth2:
-    client_id: mecm-fe
-    client_secret: CLpn1b81
-appstore:
-  enabled: true
-  postgres:
-    username: appstore
-    password: edgegallery
-    dbname: appstoredb
-  oauth2:
-    client_id: appstore-fe
-    client_secret: CLpn1b81
-developer:
-  enabled: true
-  postgres:
-    username: developer
-    password: edgegallery
-    dbname: developerdb
-  oauth2:
-    client_id: developer-fe
-    client_secret: CLpn1b81
-tool_chain:
-  enabled: true
-# Modules that must be selected
-user_mgmt:
-  enabled: true
-  postgres:
-    username: usermgmt
-    password: edgegallery
-    dbname: usermgmtdb
-    httpPoolMaxTotal: 200
-    httpPoolDefaultMaxPerRoute: 100
-    httpPoolConnectTimeout: 10000
-    httpPoolConnectionRequestTimeout: 500
-    httpPoolSocketTimeout: 15000
-  cors:
-    allow_origins: *
-  redis:
-    password: edgegallery
-  sms:
     enabled: false
-    url:
-    app_key:
-    app_secret:
-    sender:
-    template_id:
-    signature:
-    status_call_back:
-  jwt:
-    use_auto_generated_key_pair: true
-    key_pair_secret_name:
-    key_pair_secret_key:
-    key_pair_alias:
-    key_pair_password:
-service_center:
-  enabled: true
+  security:
+    auth_server_address:
+
+# Sub charts
+## Configuration values for the service_center dependency
+##
+#service_center:
+#  arch: x86
+
+# Sub charts
+## Configuration values for the user-mgmt dependency
+##
+user-mgmt:
+#  persistence:
+#    enabled: false
+#    type: nfs
+#  images:
+#    repository: edgegallery/user-mgmt
+#    tag: stable
+#    pullPolicy: Always
+#  postgres:
+#    username: usermgmt
+#    password: edgegallery
+#    dbname: usermgmtdb
+#    httpPoolMaxTotal: 200
+#    httpPoolDefaultMaxPerRoute: 100
+#    httpPoolConnectTimeout: 10000
+#    httpPoolConnectionRequestTimeout: 500
+#    httpPoolSocketTimeout: 15000
+#  cors:
+#    allow_origins: "*"
+#  redis:
+#    password: edgegallery
+#    timeout: 1800
+#    verification_timeout: 60
+#    max_total: 1000
+#    max_idle: 50
+#    max_wait_millis: 100000
+#  sms:
+#    enabled: false
+#    url:
+#    app_key:
+#    app_secret:
+#    sender:
+#    template_id:
+#    signature:
+#    status_call_back:
+#  jwt:
+#    use_auto_generated_key_pair: true
+#    key_pair_secret_name:
+#    key_pair_secret_key:
+#    key_pair_alias:
+#    key_pair_password:
+  oauth:
+    clients:
+      - client_id: developer-fe
+        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+        client_url:
+      - client_id: appstore-fe
+        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+        client_url:
+      - client_id: mecm-fe
+        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+        client_url:
+# Sub charts
+## Configuration values for the appstore-be dependency
+##
+#appstore-be:
+#  persistence:
+#    enabled: false
+#  type: nfs
+#  images:
+#    repository: edgegallery/appstore-be
+#    tag: stable
+#    pullPolicy: Always
+#  postgres:
+#    username: appstore
+#    password: edgegallery
+#    dbname: appstoredb
+
+
+# Sub charts
+## Configuration values for the appstore-fe dependency
+##
+#appstore-fe:
+#  persistence:
+#    enabled: false
+#    oauth2:
+#      client_id: appstore-fe
+#      client_secret: CLpn1b81
+#  images:
+#    repository: edgegallery/appstore-fe
+#    tag: stable
+#    pullPolicy: Always
+#  expose:
+#    port: 8080
+#    nodePort: 30091
+
+# Sub charts
+## Configuration values for the developer-be dependency
+##
+#developer-be:
+#  persistence:
+#    enabled: false
+#    type: nfs
+#  images:
+#    repository: edgegallery/developer-be
+#    tag: stable
+#    pullPolicy: Always
+#  postgres:
+#    username: developer
+#    password: edgegallery
+#    dbname: developerdb
+
+# Sub charts
+## Configuration values for the developer-fe dependency
+##
+#developer-fe:
+#  persistence:
+#    enabled: false
+#    oauth2:
+#      client_id: developer-fe
+#      client_secret: CLpn1b81
+#  images:
+#    repository: edgegallery/developer-fe
+#    tag: stable
+#    pullPolicy: Always
+#  expose:
+#    port: 8080
+#    nodePort: 30092
+
+# Sub charts
+## Configuration values for the mecm-be dependency
+##
+#mecm-be:
+#  images:
+#    api_handler_infra:
+#      repository: edgegallery/api-handler-infra
+#      tag: latest
+#      pullPolicy: Always
+#    meo_bpmn_infra:
+#      repository: edgegallery/bpmn-infra
+#      tag: latest
+#      pullPolicy: Always
+#    meo_catalog_db_adapter:
+#      repository: edgegallery/catalog-db-adapter
+#      tag: latest
+#      pullPolicy: Always
+#    mecm_esr:
+#      repository: edgegallery/mecm-esr
+#      tag: latest
+#      pullPolicy: Always
+#    meo_request_db_adapter:
+#      repository: edgegallery/request-db-adapter
+#      tag: latest
+#      pullPolicy: Always
+#    mecm_catalog:
+#      repository: edgegallery/mecm-catalog
+#      tag: latest
+#      pullPolicy: Always
+#    mariadb:
+#      repository: mariadb
+#      tag: 10.1
+#      pullPolicy: Always
+
+# Sub charts
+## Configuration values for the mecm-fe dependency
+##
+#mecm-fe:
+#  persistence:
+#    enabled: false
+#    oauth2:
+#      client_id: mecm-fe
+#      client_secret: CLpn1b81
+#  images:
+#    repository: edgegallery/mecm-fe
+#    tag: stable
+#    pullPolicy: Always
+#  expose:
+#    port: 8080
+#    nodePort: 30093
+
+# Sub charts
+## Configuration values for the tool-chain dependency
+##
+#tool-chain:
+#  persistence:
+#    enabled: false
+#    type: nfs
+#  images:
+#    tool_chain:
+#      repository: edgegallery/toolchain
+#      tag: latest
+#      pullPolicy: Always
+#    porting_advisor:
+#      repository: edgegallery/porting-advisor
+#      tag: latest
+#      pullPolicy: Always
+
+# Sub charts
+## Configuration values for the ingress dependency
+##
+#ingress:
+#  tls:
+#    enabled: false
+#    secret_name:
+#  annotations:
+#    body_size: 20m
+#  hosts:
+#    auth:
+#    developer:
+#    appstore:
+#    mecm:

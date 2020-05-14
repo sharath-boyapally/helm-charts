@@ -1,0 +1,12 @@
+persistence:
+  enabled: false
+  type: nfs
+images:
+  tool_chain:
+    repository: edgegallery/toolchain
+    tag: latest
+    pullPolicy: Always
+  porting_advisor:
+    repository: edgegallery/porting-advisor
+    tag: latest
+    pullPolicy: Always

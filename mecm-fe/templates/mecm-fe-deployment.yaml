@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mecm-fe
+  namespace: default
+  labels:
+    app: mecm-fe
+spec:
+  selector:
+    matchLabels:
+      app: mecm-fe
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mecm-fe
+    spec:
+      initContainers:
+        - name: init-usermgmt
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
+      containers:
+        - name: mecm-fe
+          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LOG_DIR
+              value: /var/log/mecm-fe
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: AUTH_SERVER_ADDRESS
+              value: {{ .Values.global.security.auth_server_address }}
+            - name: COOKIE_NAME
+              value: MECMSESSIONID
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: mecm-fe-secret
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mecm-fe-secret
+                  key: CLIENT_SECRET
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: mecm-fe-log
+              mountPath: /var/log/mecm-fe
+          {{- end }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: mecm-fe-log
+          hostPath:
+            path: /edgegallery_datas/mecm-fe/log
+      {{- end }}

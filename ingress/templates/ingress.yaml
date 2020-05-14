@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: edgegallery-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.annotations.body_size }}
+spec:
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.hosts.auth }}
+        - {{ .Values.ingress.hosts.developer }}
+        - {{ .Values.ingress.hosts.appstore }}
+      secretName: {{ .Values.ingress.tls.secret_name }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.hosts.auth }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: user-mgmt-svc
+              servicePort: 8067
+    - host: {{ .Values.ingress.hosts.developer }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: developer-fe-svc
+              servicePort: 8080
+    - host: {{ .Values.ingress.hosts.appstore }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: appstore-fe-svc
+              servicePort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: edgegallery-ingress-mecm
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: {{ .Values.ingress.hosts.mecm }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: mecm-fe-svc
+              servicePort: 8080

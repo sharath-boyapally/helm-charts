@@ -1,3 +1,6 @@
+global:
+  security:
+    auth_server_address:
 image:
   repository: edgegallery/mecm-applcm
   tag: latest
@@ -7,3 +10,5 @@ expose:
   nodePort:
     port: 8282
     nodePort: 30101
+cors:
+  allow_origins: "*"
