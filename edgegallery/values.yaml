@@ -18,10 +18,20 @@ global:
     enabled: true
   tool-chain:
     enabled: true
-  ingress:
-    enabled: false
   security:
     auth_server_address:
+  ingress:
+    enabled: false
+#    tls:
+#      enabled: false
+#      secret_name:
+#    annotations:
+#      body_size: 20m
+#    hosts:
+#      auth:
+#      developer:
+#      appstore:
+#      mecm:
 
 # Sub charts
 ## Configuration values for the service_center dependency
@@ -75,15 +85,16 @@ user-mgmt:
 #    key_pair_password:
   oauth:
     clients:
-      - client_id: developer-fe
-        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+      - client_id:
+        client_secret:
         client_url:
-      - client_id: appstore-fe
-        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+      - client_id:
+        client_secret:
         client_url:
-      - client_id: mecm-fe
-        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+      - client_id:
+        client_secret:
         client_url:
+
 # Sub charts
 ## Configuration values for the appstore-be dependency
 ##
@@ -158,27 +169,27 @@ user-mgmt:
 #  images:
 #    api_handler_infra:
 #      repository: edgegallery/api-handler-infra
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    meo_bpmn_infra:
 #      repository: edgegallery/bpmn-infra
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    meo_catalog_db_adapter:
 #      repository: edgegallery/catalog-db-adapter
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    mecm_esr:
 #      repository: edgegallery/mecm-esr
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    meo_request_db_adapter:
 #      repository: edgegallery/request-db-adapter
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    mecm_catalog:
 #      repository: edgegallery/mecm-catalog
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    mariadb:
 #      repository: mariadb
@@ -212,24 +223,9 @@ user-mgmt:
 #  images:
 #    tool_chain:
 #      repository: edgegallery/toolchain
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
 #    porting_advisor:
 #      repository: edgegallery/porting-advisor
-#      tag: latest
+#      tag: stable
 #      pullPolicy: Always
-
-# Sub charts
-## Configuration values for the ingress dependency
-##
-#ingress:
-#  tls:
-#    enabled: false
-#    secret_name:
-#  annotations:
-#    body_size: 20m
-#  hosts:
-#    auth:
-#    developer:
-#    appstore:
-#    mecm:

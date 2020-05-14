@@ -35,7 +35,3 @@ dependencies:
     version: 1.0.0
     repository: https://edgegallery.github.io/helm-charts
     condition: global.tool-chain.enabled
-  - name: ingress
-    version: 1.0.0
-    repository: https://edgegallery.github.io/helm-charts
-    condition: global.ingress.enabled
