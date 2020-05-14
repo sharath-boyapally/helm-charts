@@ -1,0 +1,18 @@
+global:
+  security:
+    auth_server_address:
+  ingress:
+    enabled: false
+persistence:
+  enabled: false
+security:
+  oauth2:
+    client_id: appstore-fe
+    client_secret: CLpn1b81
+images:
+  repository: edgegallery/appstore-fe
+  tag: stable
+  pullPolicy: Always
+expose:
+  port: 8080
+  nodePort: 30091

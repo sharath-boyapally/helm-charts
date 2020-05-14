@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usermgmt-postgres-initdb-configmap
+data:
+  postgres.sql: |
+    CREATE TABLE if not exists tbl_tenant (
+      	TENANTID            VARCHAR(100)      PRIMARY KEY NOT NULL,
+      	USERNAME            VARCHAR(50)       NOT NULL,
+      	PASSWORD            VARCHAR(100)      NOT NULL,
+      	COMPANY             VARCHAR(50)       NULL,
+      	TELEPHONENUMBER     VARCHAR(20)       NOT NULL,
+      	GENDER              VARCHAR(10)       NULL,
+      	CONSTRAINT USERNAME UNIQUE (username),
+      	CONSTRAINT TELEPHONENUMBER UNIQUE (telephonenumber)
+
+    );
+
+    CREATE TABLE if not exists tbl_tenant_role (
+     	TENANTID            VARCHAR(100)      NOT NULL,
+      	ROLEID              INTEGER           NOT NULL
+    );
+
+    CREATE TABLE if not exists tbl_admin (
+      	TENANTID            VARCHAR(100)      PRIMARY KEY NOT NULL,
+      	USERNAME            VARCHAR(50)       NOT NULL,
+      	PASSWORD            VARCHAR(100)      NOT NULL,
+      	COMPANY             VARCHAR(50)       NULL,
+      	TELEPHONENUMBER     VARCHAR(20)       NOT NULL,
+      	GENDER              VARCHAR(10)       NULL,
+      	PERMISSIONS         VARCHAR(500)      NULL
+    );
+
+
+    CREATE TABLE if not exists tbl_role (
+        ID                   INTEGER                PRIMARY KEY NOT NULL,
+    	PLATFORM             VARCHAR(50)            NOT NULL,
+    	ROLE		         VARCHAR(50)            NOT NULL
+    );
+
+    insert into tbl_role (ID, PLATFORM, ROLE) values(1, 'APPSTORE', 'GUEST');
+    insert into tbl_role (ID, PLATFORM, ROLE) values(2, 'APPSTORE', 'TENANT');
+    insert into tbl_role (ID, PLATFORM, ROLE) values(3, 'APPSTORE', 'ADMIN');
+
+    insert into tbl_role (ID, PLATFORM, ROLE) values(4, 'DEVELOPER', 'GUEST');
+    insert into tbl_role (ID, PLATFORM, ROLE) values(5, 'DEVELOPER', 'TENANT');
+    insert into tbl_role (ID, PLATFORM, ROLE) values(6, 'DEVELOPER', 'ADMIN');
+
+    insert into tbl_role (ID, PLATFORM, ROLE) values(7, 'MECM', 'GUEST');
+    insert into tbl_role (ID, PLATFORM, ROLE) values(8, 'MECM', 'TENANT');
+    insert into tbl_role (ID, PLATFORM, ROLE) values(9, 'MECM', 'ADMIN');
+
+    CREATE TABLE IF NOT EXISTS oauth_client_details(
+        client_id VARCHAR(256) PRIMARY KEY,
+        resource_ids VARCHAR(256),
+        client_secret VARCHAR(256),
+        scope VARCHAR(256),
+        authorized_grant_types VARCHAR(256),
+        web_server_redirect_uri VARCHAR(256),
+        authorities VARCHAR(256),
+        access_token_validity INTEGER,
+        refresh_token_validity INTEGER,
+        additional_information VARCHAR(4096),
+        autoapprove VARCHAR(256)
+    );
+
+    {{- range .Values.oauth.clients }}
+    insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
+    values ('{{ .client_id }}', '{{ .client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .client_url }}/login', '{"logout_url":"{{ .client_url }}/auth/logout"}', 'true');
+    {{- end  }}

@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: request-db-adapter
+  name: request-db-adapter
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: request-db-adapter
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: request-db-adapter
+    spec:
+      containers:
+      - args:
+        - /app/wait-for.sh
+        - -q
+        - -t
+        - "300"
+        - dbhost:3306
+        - --
+        - /app/start-app.sh
+        env:
+        - name: APP
+          value: request-db-adapter
+        - name: DB_ADMIN_PASSWORD
+          value: so_Admin123
+        - name: DB_ADMIN_USERNAME
+          value: so_admin
+        - name: DB_HOST
+          value: mariadb
+        - name: DB_PASSWORD
+          value: so_Admin123
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USERNAME
+          value: so_admin
+        - name: JVM_ARGS
+          value: -Xms64m -Xmx512m
+        image: {{ .Values.images.meo_request_db_adapter.repository }}:{{ .Values.images.meo_request_db_adapter.tag }}
+        imagePullPolicy: {{ .Values.images.meo_request_db_adapter.pullPolicy }}
+        name: request-db-adapter
+        ports:
+        - containerPort: 8083
+        resources: {}
+        volumeMounts:
+        - mountPath: /app/ca-certificates
+          name: request-db-adapter-claim0
+        - mountPath: /app/config
+          name: request-db-adapter-claim1
+      hostname: request-db-adapter-so-testlab-onap-org
+      restartPolicy: Always
+      volumes:
+      - name: request-db-adapter-claim0
+        persistentVolumeClaim:
+          claimName: common-ca-certificates-pv-claim0
+      - name: request-db-adapter-claim1
+        persistentVolumeClaim:
+          claimName: request-db-adapter-claim1
+status: {}

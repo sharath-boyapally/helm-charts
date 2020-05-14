@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appstore-fe
+  namespace: default
+  labels:
+    app: appstore-fe
+spec:
+  selector:
+    matchLabels:
+      app: appstore-fe
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: appstore-fe
+    spec:
+      initContainers:
+        - name: init-usermgmt
+          image: busybox:1.28.3
+          command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
+      containers:
+        - name: appstore-fe
+          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LOG_DIR
+              value: /var/log/appstore-fe
+            - name: SC_ADDRESS
+              value: http://service-center:30100
+            - name: AUTH_SERVER_ADDRESS
+              value: {{ .Values.global.security.auth_server_address }}
+            - name: COOKIE_NAME
+              value: APPSTORESESSIONID
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: appstore-fe-secret
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: appstore-fe-secret
+                  key: CLIENT_SECRET
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: appstore-fe-log
+              mountPath: /var/log/appstore-fe
+          {{- end }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: appstore-fe-log
+          hostPath:
+            path: /edgegallery_datas/appstore-fe/log
+      {{- end }}
