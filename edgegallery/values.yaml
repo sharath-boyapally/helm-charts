@@ -85,14 +85,14 @@ user-mgmt:
 #    key_pair_password:
   oauth:
     clients:
-      - client_id:
-        client_secret:
+      - client_id: developer-fe
+        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
         client_url:
-      - client_id:
-        client_secret:
+      - client_id: appstore-fe
+        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
         client_url:
-      - client_id:
-        client_secret:
+      - client_id: mecm-fe
+        client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
         client_url:
 
 # Sub charts
