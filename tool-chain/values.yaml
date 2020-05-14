@@ -4,9 +4,9 @@ persistence:
 images:
   tool_chain:
     repository: edgegallery/toolchain
-    tag: latest
+    tag: stable
     pullPolicy: Always
   porting_advisor:
     repository: edgegallery/porting-advisor
-    tag: latest
+    tag: stable
     pullPolicy: Always

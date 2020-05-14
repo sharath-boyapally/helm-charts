@@ -3,7 +3,7 @@ global:
     auth_server_address:
 image:
   repository: edgegallery/mecm-applcm
-  tag: latest
+  tag: stable
   pullPolicy: Always
 expose:
   type: nodePort
