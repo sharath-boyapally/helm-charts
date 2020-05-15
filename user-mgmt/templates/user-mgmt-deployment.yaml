@@ -38,6 +38,10 @@ spec:
               value: {{ .Values.cors.allow_origins | quote }}
             - name: SC_ADDRESS
               value: http://service-center:30100
+            - name: SC_ADDRESS_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: POSTGRES_IP
               value: user-mgmt-postgres-svc
             - name: POSTGRES_PORT
