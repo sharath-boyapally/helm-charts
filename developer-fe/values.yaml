@@ -8,7 +8,7 @@ persistence:
 security:
   oauth2:
     client_id: developer-fe
-    client_secret: CLpn1b81
+    client_secret: Changeme_123
 images:
   repository: edgegallery/developer-fe
   tag: stable
