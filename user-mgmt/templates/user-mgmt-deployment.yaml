@@ -35,7 +35,7 @@ spec:
             - name: LOG_DIR
               value: /var/log/usermgmt
             - name: CORS_ALLOW_ORIGINS
-              value: {{ .Values.cors.allow_origins | quote }}
+              value: {{ quote .Values.cors.allow_origins }}
             - name: SC_ADDRESS
               value: http://service-center:30100
             - name: POSTGRES_IP
@@ -54,16 +54,6 @@ spec:
                 secretKeyRef:
                   name: user-mgmt-secret
                   key: POSTGRES_PASSWORD
-            - name: HTTP_POOL_MAX_TOTAL
-              value: {{ quote .Values.postgres.httpPoolMaxTotal }}
-            - name: HTTP_POOL_DEFAULT_MAX_PER_ROUTE
-              value: {{ quote .Values.postgres.httpPoolDefaultMaxPerRoute }}
-            - name: HTTP_POOL_CONNECT_TIMEOUT
-              value: {{ quote .Values.postgres.httpPoolConnectTimeout }}
-            - name: HTTP_POOL_CONNECTION_REQUEST_TIMEOUT
-              value: {{ quote .Values.postgres.httpPoolConnectionRequestTimeout }}
-            - name: HTTP_POOL_SOCKET_TIMEOUT
-              value: {{ quote .Values.postgres.httpPoolSocketTimeout }}
             - name: REDIS_IP
               value: user-mgmt-redis-svc
             - name: REDIS_PORT
