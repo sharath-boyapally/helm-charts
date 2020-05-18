@@ -1,14 +1,9 @@
-global:
-  security:
-    auth_server_address:
+jwt:
+  use_default_secret: true
 image:
   repository: edgegallery/mecm-applcm
   tag: stable
   pullPolicy: Always
 expose:
-  type: nodePort
-  nodePort:
-    port: 8282
-    nodePort: 30101
-cors:
-  allow_origins: "*"
+  port: 8282
+  nodePort: 30101
