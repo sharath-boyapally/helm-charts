@@ -3,7 +3,7 @@ entries:
   applcm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.647867547+08:00"
+    created: "2020-05-18T16:26:25.639707232+08:00"
     description: A Helm chart for Kubernetes
     digest: 142bc22537a6953d60aa2c57c45d77b3065bfddab13f4bc91bba3ad2a8f29953
     name: applcm
@@ -13,7 +13,7 @@ entries:
   appstore-be:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.648226992+08:00"
+    created: "2020-05-18T16:26:25.640054214+08:00"
     description: A Helm chart for Kubernetes
     digest: 4b4342112fb2614748cce6587e3f009c71151e3f4260f920744956f6e92bda41
     name: appstore-be
@@ -23,7 +23,7 @@ entries:
   appstore-fe:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.648542643+08:00"
+    created: "2020-05-18T16:26:25.64037368+08:00"
     description: A Helm chart for Kubernetes
     digest: 6c7f380de5ed30d9e830dcf1cc0656a2adf77e58f8f86f133819c5009026160b
     name: appstore-fe
@@ -33,7 +33,7 @@ entries:
   developer-be:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.648996493+08:00"
+    created: "2020-05-18T16:26:25.640765409+08:00"
     description: A Helm chart for Kubernetes
     digest: 0b0f0b93a82ca45756d89ef55c98b4210fb835d8a9f22e0538ba5a8e33a42657
     name: developer-be
@@ -43,7 +43,7 @@ entries:
   developer-fe:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.649289523+08:00"
+    created: "2020-05-18T16:26:25.641053347+08:00"
     description: A Helm chart for Kubernetes
     digest: 54b3c2f84e25fa5b15e97b38d1bf7378dc430d5adc3945a455c7f55436fcea48
     name: developer-fe
@@ -53,7 +53,7 @@ entries:
   edgegallery:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.653704755+08:00"
+    created: "2020-05-18T16:26:25.645052427+08:00"
     dependencies:
     - condition: global.service-center.enabled
       name: service-center
@@ -92,7 +92,7 @@ entries:
       repository: https://edgegallery.github.io/helm-charts
       version: 1.0.0
     description: A Helm chart for Kubernetes
-    digest: 3bee8167dfdc7b806cf29b5af5291576d7140241fd53a6b8a9537eb3fb5268bd
+    digest: 5aa7c796ede2f581bc6d93f84ab9015e0457b1229e3faec7507b71dcf3f6eb9e
     name: edgegallery
     urls:
     - https://edgegallery.github.io/helm-charts/edgegallery-1.0.0.tgz
@@ -100,7 +100,7 @@ entries:
   mecm-be:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.654388453+08:00"
+    created: "2020-05-18T16:26:25.645699457+08:00"
     description: A Helm chart for Kubernetes
     digest: 5e41e75eb4ed4519d204e25e2afd9ce4916e3cea34ff76e4c474d88e6dc5c256
     name: mecm-be
@@ -110,7 +110,7 @@ entries:
   mecm-fe:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.654682619+08:00"
+    created: "2020-05-18T16:26:25.645987645+08:00"
     description: A Helm chart for Kubernetes
     digest: d0b757370a06ebae96d97144ab7aa232b145db4e568f44fb9ce507faff58fa18
     name: mecm-fe
@@ -120,7 +120,7 @@ entries:
   service-center:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.654836614+08:00"
+    created: "2020-05-18T16:26:25.646153722+08:00"
     description: A Helm chart for Kubernetes
     digest: 4a1361bac8a202c0b107045c22e557968a4ebc0ec1f7cd98da2ca7f5c7d53d2c
     name: service-center
@@ -130,7 +130,7 @@ entries:
   tool-chain:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.655055562+08:00"
+    created: "2020-05-18T16:26:25.646369691+08:00"
     description: A Helm chart for Kubernetes
     digest: 15132f901ab8378689bd585d9f91b88ce712745144c67d693e8f92dc5119427c
     name: tool-chain
@@ -140,11 +140,11 @@ entries:
   user-mgmt:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-18T16:15:26.655583184+08:00"
+    created: "2020-05-18T16:26:25.64709111+08:00"
     description: A Helm chart for Kubernetes
     digest: 649ff5e4ddb54be29025b2a3ffb357b36a903c8963a7860a297a505d062e442b
     name: user-mgmt
     urls:
     - https://edgegallery.github.io/helm-charts/user-mgmt-1.0.0.tgz
     version: 1.0.0
-generated: "2020-05-18T16:15:26.647340274+08:00"
+generated: "2020-05-18T16:26:25.639226776+08:00"
