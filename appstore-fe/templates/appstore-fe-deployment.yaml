@@ -38,12 +38,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: appstore-fe-secret
-                  key: CLIENT_ID
+                  key: clientId
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: appstore-fe-secret
-                  key: CLIENT_SECRET
+                  key: clientSecret
           {{- if .Values.persistence.enabled }}
           volumeMounts:
             - name: appstore-fe-log

@@ -24,7 +24,7 @@ global:
     enabled: false
 #    tls:
 #      enabled: false
-#      secret_name:
+#      use_default_secret: true
 #    annotations:
 #      body_size: 20m
 #    hosts:
@@ -67,51 +67,20 @@ user-mgmt:
 #    signature:
 #    status_call_back:
 #  jwt:
-#    public_key: |
-#      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA00p8zLQdZG0mTdY495Et
-#      4aKDSihffzAzrD4zqa9MChEMeiOLvGbhcLSp/dlaVBNrs7so+h3OOU6yiOqt/X7o
-#      JWHDFjpw4Ob/cE2ZF1CZB4fSxKjxliC0M6d99s6vbxPIFrYNejAjRgSb4J932F8r
-#      PZPYtqosh1F3C8nAR/fssPHBErolbfL6ulUvW2FqD2+DWVIYIZsWgR80FEUmebCV
-#      kaNrceMco61kwa3KIhuqtXmKb9mlusicKR80jM5nzHt9nM6dQjkDXv5V2iNeIXnw
-#      FjtcEu+YUd2WozvXyRDez3Js22jJSKSl37ujUeeD8yM6JLhYDgHJ425O+czbr1AL
-#      eQIDAQAB
-#    private_key: |
-#      MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDTSnzMtB1kbSZN
-#      1jj3kS3hooNKKF9/MDOsPjOpr0wKEQx6I4u8ZuFwtKn92VpUE2uzuyj6Hc45TrKI
-#      6q39fuglYcMWOnDg5v9wTZkXUJkHh9LEqPGWILQzp332zq9vE8gWtg16MCNGBJvg
-#      n3fYXys9k9i2qiyHUXcLycBH9+yw8cESuiVt8vq6VS9bYWoPb4NZUhghmxaBHzQU
-#      RSZ5sJWRo2tx4xyjrWTBrcoiG6q1eYpv2aW6yJwpHzSMzmfMe32czp1COQNe/lXa
-#      I14hefAWO1wS75hR3ZajO9fJEN7PcmzbaMlIpKXfu6NR54PzIzokuFgOAcnjbk75
-#      zNuvUAt5AgMBAAECggEAR1wi5if2vVI325X8S3CW5Fu0p7kW96fZ69ReMnLn5YZ4
-#      hk+3A/xjK2N4/ikIXtjoSR1u63phie1QUvmfpbvUv7tS3hECypJ5tv4eNEeeR3LR
-#      9mVwolmNQtzQqCiKC6PMsg7uYlQbtawc0TJKkaMiwXtLd/XlcBZNdIfBDw1mvSNr
-#      uKtjI2iaZj6waf6y2InWTuFITfbfxgpOL3JcPY/Bry5so/gP0bUVRWqma10aaHh9
-#      fez/ynG/89qI8UgAvK7scs9phini3EeCX2xbb79RSf1t/pX46FWbiJBLiaY9RiAQ
-#      crq/OzRii8kSoAwjVpCjJaG3T6sNEgiuGsuDvcrkAQKBgQD4TQuY9LygJwZ3VuoX
-#      bIYXxn1/0xEd/mYBDg1/0hPXs9bNqPzCvBCDRmDtgGvpk9sIYYjfQWITMSIDxU+z
-#      owKhM0GfASEK0rwtN/7u4KVQeH9/jBuS/Hvgdf4dLNRBQJX0GVEEbdD3mxo5d3/g
-#      VLfMQzFSDkP2xmt9OvhWOBuTQQKBgQDZ16pjILCVqt3CKha26/RISgoP4kqdnXaB
-#      8/XGcFPE+uvG6Jr9ePxnaL/aIhjMeInIR4POsUTrfeTBDf1lh2oW/DVL6amBKZ65
-#      iyQN9aS0ms+X0y/QVb7vN8Sh89EExKCTpry49zDhvASwyRfpKwnQ85VasRbN5Wes
-#      KYqtp1XCOQKBgQDENb3QZLUZqT0G2Puq/usHpqZNeDCyjvF0K/Km6w8bCNXZNoxm
-#      Jc62rcqyYyTjMx+Gg+xw323s1IqYiDbvMQVG9QYJ7A58SwLAiNs/UO3RpSa7V7AC
-#      eto5CYSA8YfY+HyGo+rNoSncQAh9GN1IHCoRk5dJzFQQkcMm9o5/M183AQKBgQDE
-#      XO3+6uGiF+JLemr9OlX5r5vAU6gUyXKgk4sQ9AHexpwvsU68ewlyIW8GrsOR1HnG
-#      agh7ETnh2JqSFw06LsVHsNJN+nNLtXuZHr5CQxHTptTHs5se/ZvdwHRj1AaueJuS
-#      XLMzO8b5Q+UqgiomiSARFPClTooS0N4Rx2R1QihAqQKBgQCjrxHCQmC8SypI+rab
-#      iGoGRYs7H2MET0y7oe5Vuz3wrcRNltxvhw5yl5uNPbCQyzEUGvdb+5YLtSJcFLsP
-#      EvB8AuQ9fYwgS+H5Slcg2CBFeetG7a5QtOlHlI4F2q7AKeUIzliAMT/DVHUdMyUs
-#      xwJn7OMUq8QPecID94aKnY7aCg==
+#    use_default_secret: true
   oauth:
     clients:
-      - client_id: developer-fe
-        client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
+      appstore:
+#        client_id: appstore-fe
+#        client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
         client_url:
-      - client_id: appstore-fe
-        client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
+      developer:
+#        client_id: developer-fe
+#        client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
         client_url:
-      - client_id: mecm-fe
-        client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
+      mecm:
+#        client_id: mecm-fe
+#        client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
         client_url:
 
 # Sub charts
