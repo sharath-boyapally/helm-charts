@@ -28,6 +28,10 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/appstore-fe
+            - name: LISTEN
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
             - name: SC_ADDRESS
               value: http://service-center:30100
             - name: AUTH_SERVER_ADDRESS

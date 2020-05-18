@@ -23,6 +23,11 @@ spec:
           imagePullPolicy: {{ .Values.images.tool_chain.pullPolicy }}
           ports:
             - containerPort: 8059
+          env:
+            - name: LISTEN
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - name: toolchain-log
