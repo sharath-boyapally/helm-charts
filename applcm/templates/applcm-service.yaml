@@ -11,10 +11,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: "8282"
-    nodePort: 30101
+  - nodePort: {{ .Values.expose.nodePort }}
     port: {{ .Values.expose.port }}
-    targetPort: {{ .Values.expose.nodePort.nodePort }}
+    targetPort: 8282
   selector:
     io.kompose.service: applcm
 status:

@@ -15,11 +15,6 @@ postgres:
   username: usermgmt
   password: edgegallery
   dbname: usermgmtdb
-  httpPoolMaxTotal: 200
-  httpPoolDefaultMaxPerRoute: 100
-  httpPoolConnectTimeout: 10000
-  httpPoolConnectionRequestTimeout: 500
-  httpPoolSocketTimeout: 15000
 cors:
   allow_origins: "*"
 redis:
@@ -39,19 +34,18 @@ sms:
 #  signature:
 #  status_call_back:
 jwt:
-  use_auto_generated_key_pair: true
-#  key_pair_secret_name:
-#  key_pair_secret_key:
-#  key_pair_alias:
-#  key_pair_password:
+  use_default_secret: true
 oauth:
   clients:
-    - client_id: developer-fe
-      client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+    appstore:
+      client_id: appstore-fe
+      client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
       client_url:
-    - client_id: appstore-fe
-      client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+    developer:
+      client_id: developer-fe
+      client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
       client_url:
-    - client_id: mecm-fe
-      client_secret: 47a37d56ff1e1134d5c65d8e3a29ebfe3c1ca9c543de48b3f6ab0101c3c4621034425299e872e1ae
+    mecm:
+      client_id: mecm-fe
+      client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
       client_url:

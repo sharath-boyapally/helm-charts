@@ -20,15 +20,3 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30100
-        {{- if eq .Values.arch "arm64" }}
-            - containerPort: 30103
-        {{- else  }}
-        - name: service-center-front
-          image: servicecomb/scfrontend:latest
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: SC_ADDRESS
-              value: http://service-center:30100
-          ports:
-            - containerPort: 30103
-        {{- end  }}

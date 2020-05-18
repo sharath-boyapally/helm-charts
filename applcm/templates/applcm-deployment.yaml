@@ -27,10 +27,11 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/applcm
-            - name: AUTH_SERVER_ADDRESS
-              value: {{ .Values.global.security.auth_server_address }}
-            - name: CORS_ALLOW_ORIGINS
-              value: {{ quote .Values.cors.allow_origins }}
+            - name: JWT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: applcm-jwt-secret
+                  key: publicKey
             - name: DEPLOY_TYPE
               value: helm
             - name: MEP_PORT

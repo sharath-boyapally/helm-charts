@@ -64,7 +64,11 @@ data:
         autoapprove VARCHAR(256)
     );
 
-    {{- range .Values.oauth.clients }}
     insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
-    values ('{{ .client_id }}', '{{ .client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .client_url }}/login', '{"logout_url":"{{ .client_url }}/auth/logout"}', 'true');
-    {{- end  }}
+    values ('{{ .Values.oauth.clients.appstore.client_id }}', '{{ .Values.oauth.clients.appstore.client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.appstore.client_url }}/login', '{"logout_url":"{{ .Values.oauth.clients.appstore.client_url }}/auth/logout"}', 'true');
+
+    insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
+    values ('{{ .Values.oauth.clients.developer.client_id }}', '{{ .Values.oauth.clients.developer.client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.developer.client_url }}/login', '{"logout_url":"{{ .Values.oauth.clients.developer.client_url }}/auth/logout"}', 'true');
+
+    insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, additional_information, autoapprove)
+    values ('{{ .Values.oauth.clients.mecm.client_id }}', '{{ .Values.oauth.clients.mecm.client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.mecm.client_url }}/login', '{"logout_url":"{{ .Values.oauth.clients.mecm.client_url }}/auth/logout"}', 'true');
