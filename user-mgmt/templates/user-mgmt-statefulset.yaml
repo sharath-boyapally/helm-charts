@@ -24,12 +24,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: user-mgmt-secret
-                  key: POSTGRES_USERNAME
+                  key: postgresUsername
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: user-mgmt-secret
-                  key: POSTGRES_PASSWORD
+                  key: postgresPassword
             - name: POSTGRES_DB
               value: {{ .Values.postgres.dbname }}
           volumeMounts:
