@@ -86,12 +86,12 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/appstore-be
-            - name: LISTEN
+            - name: LISTEN_IP
                 valueFrom:
                   fieldRef:
                     fieldPath: status.podIP
             - name: SC_ADDRESS
-              value: http://service-center:30100
+              value: https://service-center:30100
             - name: POSTGRES_IP
               value: developer-be-postgres-svc
             - name: POSTGRES_PORT

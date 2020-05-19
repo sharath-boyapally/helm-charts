@@ -28,12 +28,12 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/developer-fe
-            - name: LISTEN
+            - name: LISTEN_IP
                 valueFrom:
                   fieldRef:
                     fieldPath: status.podIP
             - name: SC_ADDRESS
-              value: http://service-center:30100
+              value: https://service-center:30100
             - name: AUTH_SERVER_ADDRESS
               value: {{ .Values.global.security.auth_server_address }}
             - name: COOKIE_NAME

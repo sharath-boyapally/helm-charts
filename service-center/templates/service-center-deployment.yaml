@@ -20,3 +20,20 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30100
+          env:
+            - name: SSL_ROOT
+              value: /opt/service-center/ssl
+          volumeMounts:
+            - mountPath: /opt/service-center/start.sh
+              name: service-center-conf
+              subPath: start.sh
+            - mountPath: /opt/service-center/ssl
+              name: service-center-ssl
+      volumes:
+        - name: service-center-conf
+          configMap:
+            name: service-center-configmap
+            defaultMode: 0500
+        - name: service-center-ssl
+          secret:
+            secretName: service-center-ssl-secret
