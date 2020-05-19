@@ -29,9 +29,9 @@ spec:
             - name: LOG_DIR
               value: /var/log/appstore-fe
             - name: LISTEN_IP
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: SC_ADDRESS
               value: https://service-center:30100
             - name: AUTH_SERVER_ADDRESS
