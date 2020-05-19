@@ -37,8 +37,8 @@ spec:
             - name: CORS_ALLOW_ORIGINS
               value: {{ quote .Values.cors.allow_origins }}
             - name: SC_ADDRESS
-              value: http://service-center:30100
-            - name: LISTEN
+              value: https://service-center:30100
+            - name: LISTEN_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP

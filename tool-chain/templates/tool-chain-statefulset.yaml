@@ -42,6 +42,15 @@ spec:
             - containerPort: 8084
           securityContext:
             privileged: true
+          env:
+            - name: LOG_DIR
+              value: /var/log/tool-chain
+            - name: SC_ADDRESS
+              value: https://service-center:30100
+            - name: LISTEN_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           volumeMounts:
             - name: tool-chain-pvc
               mountPath: /opt/portadv/portadmin
