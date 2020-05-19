@@ -28,6 +28,8 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/mecm-fe
+            - name: LOG_FILE_NAME
+              value: mecm-fe
             - name: LISTEN_IP
               valueFrom:
                 fieldRef:

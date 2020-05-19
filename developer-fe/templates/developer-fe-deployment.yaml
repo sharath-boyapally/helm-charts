@@ -28,6 +28,8 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/developer-fe
+            - name: LOG_FILE_NAME
+              value: developer-fe
             - name: LISTEN_IP
               valueFrom:
                 fieldRef:
