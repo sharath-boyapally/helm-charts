@@ -28,6 +28,8 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/appstore-fe
+            - name: LOG_FILE_NAME
+              value: appstore-fe
             - name: LISTEN_IP
               valueFrom:
                 fieldRef:
