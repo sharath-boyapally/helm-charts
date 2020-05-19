@@ -27,10 +27,6 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/applcm
-            - name: LISTEN
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
             - name: JWT_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:

@@ -87,9 +87,9 @@ spec:
             - name: LOG_DIR
               value: /var/log/developer-be
             - name: LISTEN_IP
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: SC_ADDRESS
               value: https://service-center:30100
             - name: POSTGRES_IP
