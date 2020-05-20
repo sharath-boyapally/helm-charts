@@ -93,7 +93,7 @@ spec:
             - name: SC_ADDRESS
               value: https://service-center:30100
             - name: POSTGRES_IP
-              value: developer-be-postgres-svc
+              value: appstore-be-postgres-svc
             - name: POSTGRES_PORT
               value: "5432"
             - name: POSTGRES_DB_NAME
