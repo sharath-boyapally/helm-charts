@@ -22,16 +22,16 @@ global:
     auth_server_address:
   ingress:
     enabled: false
-#    tls:
-#      enabled: false
-#      use_default_secret: true
-#    annotations:
-#      body_size: 20m
-#    hosts:
-#      auth:
-#      developer:
-#      appstore:
-#      mecm:
+    tls:
+      enabled: false
+      use_default_secret: true
+    annotations:
+      body_size: 20m
+    hosts:
+      auth:
+      developer:
+      appstore:
+      mecm:
 
 # Sub charts
 ## Configuration values for the user-mgmt dependency
