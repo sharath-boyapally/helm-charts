@@ -16,36 +16,36 @@ postgres:
   password: edgegallery
   dbname: usermgmtdb
 cors:
-  allow_origins: "*"
+  allowOrigins: "*"
 redis:
   password: edgegallery
   timeout: 1800
-  verification_timeout: 60
-  max_total: 1000
-  max_idle: 50
-  max_wait_millis: 100000
+  verificationTimeout: 60
+  maxTotal: 1000
+  maxIdle: 50
+  maxWaitMillis: 100000
 sms:
   enabled: false
 #  url:
-#  app_key:
-#  app_secret:
+#  appKey:
+#  appSecret:
 #  sender:
-#  template_id:
+#  templateId:
 #  signature:
-#  status_call_back:
+#  statusCallBack:
 jwt:
-  use_default_secret: true
+  useDefaultSecret: true
 oauth:
   clients:
     appstore:
-      client_id: appstore-fe
-      client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-      client_url:
+      clientId: appstore-fe
+      clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
+      clientUrl:
     developer:
-      client_id: developer-fe
-      client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-      client_url:
+      clientId: developer-fe
+      clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
+      clientUrl:
     mecm:
-      client_id: mecm-fe
-      client_secret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-      client_url:
+      clientId: mecm-fe
+      clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
+      clientUrl:

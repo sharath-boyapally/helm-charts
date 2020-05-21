@@ -45,8 +45,8 @@ spec:
           value: -Xms64m -Xmx512m
         - name: PACKAGE_MGR_HOST
           value: 159.138.38.104
-        image: {{ .Values.images.meo_bpmn_infra.repository }}:{{ .Values.images.meo_bpmn_infra.tag }}
-        imagePullPolicy: {{ .Values.images.meo_bpmn_infra.pullPolicy }}
+        image: {{ .Values.images.meoBpmnInfra.repository }}:{{ .Values.images.meoBpmnInfra.tag }}
+        imagePullPolicy: {{ .Values.images.meoBpmnInfra.pullPolicy }}
         name: bpmn-infra
         ports:
         - containerPort: 8081

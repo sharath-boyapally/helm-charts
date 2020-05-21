@@ -1,6 +1,6 @@
 global:
   security:
-    auth_server_address:
+    authServerAddress:
 persistence:
   enabled: false
   type: nfs

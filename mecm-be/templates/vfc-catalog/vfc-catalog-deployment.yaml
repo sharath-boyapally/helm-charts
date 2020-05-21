@@ -33,8 +33,8 @@ spec:
           value: 159.138.61.155
         - name: AUTH_MOD_PORT
           value: "8067"
-        image: {{ .Values.images.mecm_catalog.repository }}:{{ .Values.images.mecm_catalog.tag }}
-        imagePullPolicy: {{ .Values.images.mecm_catalog.pullPolicy }}
+        image: {{ .Values.images.mecmCatalog.repository }}:{{ .Values.images.mecmCatalog.tag }}
+        imagePullPolicy: {{ .Values.images.mecmCatalog.pullPolicy }}
         name: meccatalog-container
         ports:
         - containerPort: 8806

@@ -109,7 +109,7 @@ spec:
                   name: developer-be-secret
                   key: postgresPassword
             - name: AUTH_SERVER_ADDRESS
-              value: {{ .Values.global.security.auth_server_address }}
+              value: {{ .Values.global.security.authServerAddress }}
           {{- if .Values.persistence.enabled }}
           volumeMounts:
             - name: developer-log
@@ -121,7 +121,7 @@ spec:
       volumes:
         - name: developer-log
           hostPath:
-            path: /edgegallery_datas/developer-be/log
+            path: /var/log/edgegallery/developer-be
       {{- end }}
   {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
   volumeClaimTemplates:

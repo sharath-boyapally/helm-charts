@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: service-center
-          image: edgegallery/service-center:latest
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
           ports:
             - containerPort: 30100
           env:

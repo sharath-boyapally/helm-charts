@@ -43,8 +43,8 @@ spec:
           value: so_admin
         - name: JVM_ARGS
           value: -Xms64m -Xmx512m
-        image: {{ .Values.images.api_handler_infra.repository }}:{{ .Values.images.api_handler_infra.tag }}
-        imagePullPolicy: {{ .Values.images.api_handler_infra.pullPolicy }}
+        image: {{ .Values.images.apiHandlerInfra.repository }}:{{ .Values.images.apiHandlerInfra.tag }}
+        imagePullPolicy: {{ .Values.images.apiHandlerInfra.pullPolicy }}
         name: api-handler-infra
         ports:
         - containerPort: 8080

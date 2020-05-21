@@ -47,8 +47,8 @@ spec:
           value: so_admin
         - name: JVM_ARGS
           value: -Xms64m -Xmx512m
-        image: {{ .Values.images.meo_request_db_adapter.repository }}:{{ .Values.images.meo_request_db_adapter.tag }}
-        imagePullPolicy: {{ .Values.images.meo_request_db_adapter.pullPolicy }}
+        image: {{ .Values.images.meoRequestDbAdapter.repository }}:{{ .Values.images.meoRequestDbAdapter.tag }}
+        imagePullPolicy: {{ .Values.images.meoRequestDbAdapter.pullPolicy }}
         name: request-db-adapter
         ports:
         - containerPort: 8083

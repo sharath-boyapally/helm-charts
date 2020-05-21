@@ -19,8 +19,8 @@ spec:
           command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
       containers:
         - name: toolchain
-          image: {{ .Values.images.tool_chain.repository }}:{{ .Values.images.tool_chain.tag }}
-          imagePullPolicy: {{ .Values.images.tool_chain.pullPolicy }}
+          image: {{ .Values.images.toolChain.repository }}:{{ .Values.images.toolChain.tag }}
+          imagePullPolicy: {{ .Values.images.toolChain.pullPolicy }}
           ports:
             - containerPort: 8059
           env:
@@ -40,8 +40,8 @@ spec:
             - name: tool-chain-pvc
               mountPath: /opt/portadv/portadmin
         - name: porting-advisor
-          image: {{ .Values.images.porting_advisor.repository }}:{{ .Values.images.porting_advisor.tag }}
-          imagePullPolicy: {{ .Values.images.porting_advisor.pullPolicy }}
+          image: {{ .Values.images.portingAdvisor.repository }}:{{ .Values.images.portingAdvisor.tag }}
+          imagePullPolicy: {{ .Values.images.portingAdvisor.pullPolicy }}
           ports:
             - containerPort: 8084
           securityContext:
@@ -53,7 +53,7 @@ spec:
         {{- if .Values.persistence.enabled }}
         - name: toolchain-log
           hostPath:
-            path: /edgegallery_datas/tool-chain/log
+            path: /var/log/edgegallery/tool-chain
         {{- else}}
         - name: tool-chain-pvc
           emptyDir: {}
