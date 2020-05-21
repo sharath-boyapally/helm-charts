@@ -47,8 +47,8 @@ spec:
           value: cataloguser
         - name: JVM_ARGS
           value: -Xms64m -Xmx512m
-        image: {{ .Values.images.meo_catalog_db_adapter.repository }}:{{ .Values.images.meo_catalog_db_adapter.tag }}
-        imagePullPolicy: {{ .Values.images.meo_catalog_db_adapter.pullPolicy }}
+        image: {{ .Values.images.meoCatalogDbAdapter.repository }}:{{ .Values.images.meoCatalogDbAdapter.tag }}
+        imagePullPolicy: {{ .Values.images.meoCatalogDbAdapter.pullPolicy }}
         name: catalog-db-adapter
         ports:
         - containerPort: 8082

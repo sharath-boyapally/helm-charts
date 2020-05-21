@@ -35,24 +35,24 @@ their default values. See values.yaml for all available options.
 | `expose.type`                           | Type of expose (ingress | nodePort | none)              | `none`     |
 | `expose.ingress.tls`                    | Enable TLS on the ingress host                          | `false`    |
 | `expose.ingress.secretName`             | TLS secret to use (must be manually created)            | ``         |
-| `expose.ingress.annotations.body_size`  | Upload body size of ingress                             | `20m`      |
+| `expose.ingress.annotations.bodySize`  | Upload body size of ingress                             | `20m`      |
 | `expose.ingress.hosts.auth`             | Domain name of auth                                     | ``         |
 | `expose.ingress.hosts.developer`        | Domain name of developer                                | ``         |
 | `expose.ingress.hosts.appstore`         | Domain name of appstore                                 | ``         |
 | `expose.ingress.hosts.mecm`             | Domain name of mecm                                     | ``         |
 | `expose.nodePort.ip`                    | IP of host (must set it if use nodePort as expose type) | ``         |
-| `expose.nodePort.appstore_fe.port`      | Internal port of appstore_fe                            | `8080`     |
+| `expose.nodePort.appstore_fe.port`      | Internal port of appstore_fe                            | `8443`     |
 | `expose.nodePort.appstore_fe.nodePort`  | NodePort of appstore_fe                                 | `30091`    |
-| `expose.nodePort.developer_fe.port`     | Internal port of developer_fe                           | `8080`     |
+| `expose.nodePort.developer_fe.port`     | Internal port of developer_fe                           | `8443`     |
 | `expose.nodePort.developer_fe.nodePort` | NodePort of developer_fe                                | `30092`    |
-| `expose.nodePort.mecm_fe.port`          | Internal port of mecm_fe                                | `8080`     |
+| `expose.nodePort.mecm_fe.port`          | Internal port of mecm_fe                                | `8443`     |
 | `expose.nodePort.mecm_fe.nodePort`      | NodePort of mecm_fe                                     | `30093`    |
 | `expose.nodePort.user_mgmt.port`        | Internal port of user_mgmt                              | `8067`     |
 | `expose.nodePort.user_mgmt.nodePort`    | NodePort of user_mgmt                                   | `30067`    |
 | `mecm.enabled`                          | Whether to deploy mecm                                  | `true`     |
 | `appstore.enabled`                      | Whether to deploy appstore                              | `true`     |
 | `developer.enabled`                     | Whether to deploy mecm                                  | `true`     |
-| `tool_chain.enabled`                    | Whether to deploy tool_chain                            | `true`     |
+| `toolChain.enabled`                    | Whether to deploy toolChain                            | `true`     |
 | `user_mgmt.enabled`                     | Whether to deploy user_mgmt                             | `true`     |
 | `user_mgmt.sms.enabled`                 | Whether to use sms (need to buy huawei cloud service)   | `false`    |
 | `service_center.enabled`                | Whether to deploy service_center                        | `true`     |

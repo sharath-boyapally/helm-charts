@@ -1,0 +1,34 @@
+# prepare postgres-db
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prepare-postgre-db
+  namespace: mep
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: check-db-ready
+          image: postgres:9.6
+          command: ['sh', '-c', 'until pg_isready -h postgres-db -p 5432; do echo waiting for database; sleep 2; done;']
+      containers:
+        - name: prepare-postgres-db
+          image: kong:1.5.1-alpine
+          env:
+            - name: KONG_DATABASE
+              value: "postgres"
+            - name: KONG_PG_DATABASE
+              value: kong
+            - name: KONG_PG_HOST
+              value: postgres-db
+            - name: KONG_PG_USER
+              value: kong
+            - name: KONG_PG_PASSWORD
+              value: kong
+          # - name: KONG_PG_PASSWORD_FILE
+          #   value: /run/secrets/kong_postgres_password
+          command: ['kong']
+          args: ['migrations', 'bootstrap']
+      restartPolicy: Never
+  backoffLimit: 4

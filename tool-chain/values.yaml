@@ -2,11 +2,11 @@ persistence:
   enabled: false
   type: nfs
 images:
-  tool_chain:
+  toolChain:
     repository: edgegallery/toolchain
     tag: stable
     pullPolicy: Always
-  porting_advisor:
+  portingAdvisor:
     repository: edgegallery/porting-advisor
     tag: stable
     pullPolicy: Always

@@ -27,6 +27,27 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/applcm
+            - name: SSL_ENABLED
+              value: {{ quote .Values.ssl.enabled }}
+            {{- if .Values.ssl.enabled }}
+            - name: SSL_KEY_STORE_PATH
+              value: /opt/mec/applcm/ssl/keystore.p12
+            - name: SSL_KEY_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: applcm-keystore-secret
+                  key: keystorePassword
+            - name: SSL_KEY_STORE_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: applcm-keystore-secret
+                  key: keystoreType
+            - name: SSL_KEY_ALIAS
+              valueFrom:
+                secretKeyRef:
+                  name: applcm-keystore-secret
+                  key: keyAlias
+            {{- end }}
             - name: JWT_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
@@ -41,6 +62,29 @@ spec:
           ports:
             - containerPort: 8282
           resources: {}
+          volumeMounts:
+            {{- if .Values.ssl.enabled }}
+            - mountPath: /opt/mec/applcm/ssl
+              name: applcm-keystore
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: applcm-log
+              mountPath: /var/log/applcm
+            {{- end }}
+      volumes:
+        {{- if .Values.ssl.enabled }}
+        - name: applcm-keystore
+          secret:
+            secretName: applcm-keystore-secret
+            items:
+              - key: keystore.p12
+                path: keystore.p12
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: applcm-log
+          hostPath:
+            path: /var/log/edgegallery/applcm
+        {{- end }}
       hostname: applcm
       restartPolicy: Always
 status: {}

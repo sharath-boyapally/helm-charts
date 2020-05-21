@@ -65,10 +65,10 @@ data:
     );
 
     insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, access_token_validity, additional_information, autoapprove)
-    values ('{{ .Values.oauth.clients.appstore.client_id }}', '{{ .Values.oauth.clients.appstore.client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.appstore.client_url }}/login', 3600, '{"logout_url":"{{ .Values.oauth.clients.appstore.client_url }}/auth/logout"}', 'true');
+    values ('{{ .Values.oauth.clients.appstore.clientId }}', '{{ .Values.oauth.clients.appstore.clientSecret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.appstore.clientUrl }}/login', 3600, '{"logout_url":"{{ .Values.oauth.clients.appstore.clientUrl }}/auth/logout"}', 'true');
 
     insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, access_token_validity, additional_information, autoapprove)
-    values ('{{ .Values.oauth.clients.developer.client_id }}', '{{ .Values.oauth.clients.developer.client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.developer.client_url }}/login', 3600, '{"logout_url":"{{ .Values.oauth.clients.developer.client_url }}/auth/logout"}', 'true');
+    values ('{{ .Values.oauth.clients.developer.clientId }}', '{{ .Values.oauth.clients.developer.clientSecret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.developer.clientUrl }}/login', 3600, '{"logout_url":"{{ .Values.oauth.clients.developer.clientUrl }}/auth/logout"}', 'true');
 
     insert into oauth_client_details (client_id, client_secret, scope, authorized_grant_types, web_server_redirect_uri, access_token_validity, additional_information, autoapprove)
-    values ('{{ .Values.oauth.clients.mecm.client_id }}', '{{ .Values.oauth.clients.mecm.client_secret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.mecm.client_url }}/login', 3600, '{"logout_url":"{{ .Values.oauth.clients.mecm.client_url }}/auth/logout"}', 'true');
+    values ('{{ .Values.oauth.clients.mecm.clientId }}', '{{ .Values.oauth.clients.mecm.clientSecret }}', 'all', 'authorization_code,refresh_token', '{{ .Values.oauth.clients.mecm.clientUrl }}/login', 3600, '{"logout_url":"{{ .Values.oauth.clients.mecm.clientUrl }}/auth/logout"}', 'true');

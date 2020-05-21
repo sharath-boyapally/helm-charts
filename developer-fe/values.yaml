@@ -1,18 +1,18 @@
 global:
   security:
-    auth_server_address:
+    authServerAddress:
   ingress:
     enabled: false
 persistence:
   enabled: false
 security:
   oauth2:
-    client_id: developer-fe
-    client_secret: Changeme_123
+    clientId: developer-fe
+    clientSecret: Changeme_123
 images:
   repository: edgegallery/developer-fe
   tag: stable
   pullPolicy: Always
 expose:
-  port: 8080
+  port: 8443
   nodePort: 30092

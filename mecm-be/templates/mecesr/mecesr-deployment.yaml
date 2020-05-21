@@ -26,8 +26,8 @@ spec:
           value: root123
         - name: AUTH_MODULE_ENDPOINT
           value: 159.138.61.155:8067
-        image: {{ .Values.images.mecm_esr.repository }}:{{ .Values.images.mecm_esr.tag }}
-        imagePullPolicy: {{ .Values.images.mecm_esr.pullPolicy }}
+        image: {{ .Values.images.mecmEsr.repository }}:{{ .Values.images.mecmEsr.tag }}
+        imagePullPolicy: {{ .Values.images.mecmEsr.pullPolicy }}
         name: mecesr-container
         ports:
         - containerPort: 8181

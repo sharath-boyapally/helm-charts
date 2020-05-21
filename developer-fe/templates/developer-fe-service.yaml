@@ -10,7 +10,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.expose.port }}
-      targetPort: 8080
+      targetPort: 8443
       protocol: TCP
       {{- if not .Values.global.ingress.enabled }}
       nodePort: {{ .Values.expose.nodePort }}

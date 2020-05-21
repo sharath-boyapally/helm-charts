@@ -1,5 +1,5 @@
 jwt:
-  use_default_secret: true
+  useDefaultSecret: true
 image:
   repository: edgegallery/mecm-applcm
   tag: stable
@@ -7,3 +7,6 @@ image:
 expose:
   port: 8282
   nodePort: 30101
+ssl:
+  enabled: false
+  useDefaultSecret: true

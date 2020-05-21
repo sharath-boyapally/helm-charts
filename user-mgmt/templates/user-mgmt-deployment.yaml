@@ -35,7 +35,7 @@ spec:
             - name: LOG_DIR
               value: /var/log/usermgmt
             - name: CORS_ALLOW_ORIGINS
-              value: {{ quote .Values.cors.allow_origins }}
+              value: {{ quote .Values.cors.allowOrigins }}
             - name: SC_ADDRESS
               value: https://service-center:30100
             - name: LISTEN_IP
@@ -65,13 +65,13 @@ spec:
             - name: REDIS_TIMEOUT
               value: {{ quote .Values.redis.timeout }}
             - name: REDIS_VERIFICATION_TIMEOUT
-              value: {{ quote .Values.redis.verification_timeout }}
+              value: {{ quote .Values.redis.verificationTimeout }}
             - name: REDIS_MAX_TOTAL
-              value: {{ quote .Values.redis.max_total }}
+              value: {{ quote .Values.redis.maxTotal }}
             - name: REDIS_MAX_IDLE
-              value: {{ quote .Values.redis.max_idle }}
+              value: {{ quote .Values.redis.maxIdle }}
             - name: REDIS_MAX_WAIT_MILLIS
-              value: {{ quote .Values.redis.max_wait_millis }}
+              value: {{ quote .Values.redis.maxWaitMillis }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -135,5 +135,5 @@ spec:
       volumes:
         - name: usermgmt-log
           hostPath:
-            path: /edgegallery_datas/usermgmt/log
+            path: /var/log/edgegallery/usermgmt
       {{- end }}
