@@ -3,7 +3,7 @@ persistence:
   type: nfs
 images:
   toolChain:
-    repository: edgegallery/toolchain
+    repository: edgegallery/tool-chain
     tag: stable
     pullPolicy: Always
   portingAdvisor:
