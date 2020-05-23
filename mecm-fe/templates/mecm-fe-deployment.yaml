@@ -17,8 +17,8 @@ spec:
     spec:
       initContainers:
         - name: init-usermgmt
-          image: busybox:1.28.3
-          command: ['sh', '-c', "until nslookup user-mgmt-svc; do echo waiting for user-mgmt-svc; sleep 2; done"]
+          image: curlimages/curl
+          command: ['sh', '-c', "until curl -k -f {{ .Values.global.security.authServerAddress }}; do echo waiting for auth server; sleep 2; done"]
       containers:
         - name: mecm-fe
           image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
