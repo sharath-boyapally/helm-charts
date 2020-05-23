@@ -27,6 +27,10 @@ spec:
           env:
             - name: LOG_DIR
               value: /var/log/applcm
+            - name: LISTEN_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: SSL_ENABLED
               value: {{ quote .Values.ssl.enabled }}
             {{- if .Values.ssl.enabled }}
