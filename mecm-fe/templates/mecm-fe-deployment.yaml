@@ -54,43 +54,43 @@ spec:
 #              value: {{ quote .Values.global.ssl.enabled }}
 #            - name: IS_SECURE_BACKEND
 #              value: {{ quote .Values.global.ssl.enabled }}
-            {{- if .Values.global.ssl.enabled }}
-            - name: SSL_KEY_STORE_PATH
-              value: /usr/app/ssl/keystore.p12
-            - name: SSL_KEY_STORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.ssl.secretName }}
-                  key: keystorePassword
-            - name: SSL_KEY_STORE_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.ssl.secretName }}
-                  key: keystoreType
-            - name: SSL_KEY_ALIAS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.ssl.secretName }}
-                  key: keyAlias
-            {{- end }}
+#            {{- if .Values.global.ssl.enabled }}
+#            - name: SSL_KEY_STORE_PATH
+#              value: /usr/app/ssl/keystore.p12
+#            - name: SSL_KEY_STORE_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ .Values.global.ssl.secretName }}
+#                  key: keystorePassword
+#            - name: SSL_KEY_STORE_TYPE
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ .Values.global.ssl.secretName }}
+#                  key: keystoreType
+#            - name: SSL_KEY_ALIAS
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ .Values.global.ssl.secretName }}
+#                  key: keyAlias
+#            {{- end }}
           volumeMounts:
-            {{- if .Values.global.ssl.enabled }}
-            - mountPath: /usr/app/ssl
-              name: mecm-fe-keystore
-            {{- end }}
+#            {{- if .Values.global.ssl.enabled }}
+#            - mountPath: /usr/app/ssl
+#              name: mecm-fe-keystore
+#            {{- end }}
             {{- if .Values.global.persistence.enabled }}
             - name: mecm-fe-log
               mountPath: /var/log/mecm-fe
             {{- end }}
       volumes:
-        {{- if .Values.global.ssl.enabled }}
-        - name: mecm-fe-keystore
-          secret:
-            secretName: {{ .Values.global.ssl.secretName }}
-            items:
-              - key: keystore.p12
-                path: keystore.p12
-        {{- end }}
+#        {{- if .Values.global.ssl.enabled }}
+#        - name: mecm-fe-keystore
+#          secret:
+#            secretName: {{ .Values.global.ssl.secretName }}
+#            items:
+#              - key: keystore.p12
+#                path: keystore.p12
+#        {{- end }}
         {{- if .Values.global.persistence.enabled }}
         - name: mecm-fe-log
           hostPath:
