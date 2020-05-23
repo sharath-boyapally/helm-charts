@@ -50,10 +50,10 @@ spec:
                 secretKeyRef:
                   name: mecm-fe-secret
                   key: clientSecret
-            - name: SSL_ENABLED
-              value: {{ quote .Values.global.ssl.enabled }}
-            - name: IS_SECURE_BACKEND
-              value: {{ quote .Values.global.ssl.enabled }}
+#            - name: SSL_ENABLED
+#              value: {{ quote .Values.global.ssl.enabled }}
+#            - name: IS_SECURE_BACKEND
+#              value: {{ quote .Values.global.ssl.enabled }}
             {{- if .Values.global.ssl.enabled }}
             - name: SSL_KEY_STORE_PATH
               value: /usr/app/ssl/keystore.p12

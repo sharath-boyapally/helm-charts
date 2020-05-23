@@ -20,6 +20,7 @@ spec:
           imagePullPolicy: {{ .Values.images.pullPolicy }}
           ports:
             - containerPort: 30100
+      {{- if .Values.global.ssl.enabled }}
           env:
             - name: SSL_ROOT
               value: /opt/service-center/ssl
@@ -37,3 +38,4 @@ spec:
         - name: service-center-ssl
           secret:
             secretName: service-center-ssl-secret
+      {{- end }}
