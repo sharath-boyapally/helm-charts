@@ -23,10 +23,11 @@ spec:
           command: ['sh', '-c', 'until pg_isready -h postgres-db -p 5432; do echo waiting for database; sleep 2; done;']
       containers:
         - name: kong-proxy
-          image: kong:1.5.1-alpine
+          image: {{ .Values.images.kong.repository }}:{{ .Values.images.kong.tag }}
+          imagePullPolicy: {{ .Values.images.kong.pullPolicy }}
           env:
             - name: KONG_DATABASE
-              value: "postgres"
+              value: postgres
             - name: KONG_NGINX_WORKER_PROCESSES
               value: "1"
             # - name: KONG_NGINX_HTTP_INCLUDE
@@ -46,13 +47,19 @@ spec:
             - name: KONG_ADMIN_LISTEN
               value: 0.0.0.0:8001
             - name: KONG_PG_DATABASE
-              value: kong
+              value: {{ .Values.postgres.dbname }}
             - name: KONG_PG_HOST
-              value: postgres-db
+              value: mep-postgres-svc
             - name: KONG_PG_USER
-              value: kong
+              valueFrom:
+                secretKeyRef:
+                  name: mep-secret
+                  key: postgresUsername
             - name: KONG_PG_PASSWORD
-              value: kong
+              valueFrom:
+                secretKeyRef:
+                  name: mep-secret
+                  key: postgresPassword
             # - name: KONG_PG_PASSWORD_FILE
             #   value: /run/secrets/kong_postgres_password
             - name: KONG_PROXY_ACCESS_LOG
@@ -110,44 +117,41 @@ spec:
         - name: kongssl
           secret:
             secretName: kongssl-secret
-# postgres database
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-db
+  name: mep
   namespace: mep
   labels:
-    app: postgres-db
+    app: mep
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: postgres-db
+      app: mep
+  replicas: 1
   template:
     metadata:
       labels:
-        app: postgres-db
+        app: mep
     spec:
-      volumes:
-        - name: postgres-data
-          persistentVolumeClaim:
-            claimName: postgres-pv-claim
       containers:
-        - name: postgres-db
-          image: postgres:9.6
-          imagePullPolicy: "IfNotPresent"
-          env:
-            - name: POSTGRES_DB
-              value: kong
-            - name: POSTGRES_USER
-              value: kong
-            - name: POSTGRES_PASSWORD
-              value: kong
-          # - name: POSTGRES_PASSWORD_FILE
-          #   value: /run/secrets/kong_postgres_password
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgres-data
+        - image: {{ .Values.images.mep.repository }}:{{ .Values.images.mep.tag }}
+          imagePullPolicy: {{ .Values.images.mep.pullPolicy }}
+          name: mep-pod
           ports:
-            - containerPort: 5432
+            - containerPort: 8088
+            - containerPort: 8443
+          env:
+            - name: SSL_ROOT
+              value: /etc/mepssl
+            - name: MEP_SSL_MODE
+              value: "0"
+          volumeMounts:
+            - name: mepssl
+              mountPath: /etc/mepssl
+              readOnly: true
+      volumes:
+        - name: mepssl
+          secret:
+            secretName: mep-ssl-secret

@@ -27,8 +27,8 @@ spec:
           command: ['sh', '-c', "until nslookup user-mgmt-redis-svc; do echo waiting for redis; sleep 2; done"]
       containers:
         - name: user-mgmt
-          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
-          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          image: {{ .Values.images.usermgmt.repository }}:{{ .Values.images.usermgmt.tag }}
+          imagePullPolicy: {{ .Values.images.usermgmt.pullPolicy }}
           ports:
             - containerPort: 8067
           env:
@@ -37,7 +37,7 @@ spec:
             - name: CORS_ALLOW_ORIGINS
               value: {{ quote .Values.cors.allowOrigins }}
             - name: SC_ADDRESS
-              value: https://service-center:30100
+              value: http{{ if .Values.global.ssl.enabled }}s{{ end }}://service-center:30100
             - name: LISTEN_IP
               valueFrom:
                 fieldRef:
@@ -126,14 +126,47 @@ spec:
                 secretKeyRef:
                   name: user-mgmt-jwt-secret
                   key: privateKey
-          {{- if .Values.persistence.enabled }}
+            - name: SSL_ENABLED
+              value: {{ quote .Values.global.ssl.enabled }}
+            {{- if .Values.global.ssl.enabled }}
+            - name: SSL_KEY_STORE_PATH
+              value: /usr/app/ssl/keystore.p12
+            - name: SSL_KEY_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keystorePassword
+            - name: SSL_KEY_STORE_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keystoreType
+            - name: SSL_KEY_ALIAS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keyAlias
+            {{- end }}
           volumeMounts:
+            {{- if .Values.global.ssl.enabled }}
+            - mountPath: /usr/app/ssl
+              name: developer-be-keystore
+            {{- end }}
+            {{- if .Values.global.persistence.enabled }}
             - mountPath: /var/log/usermgmt
               name: usermgmt-log
-          {{- end }}
-      {{- if .Values.persistence.enabled }}
+            {{- end }}
       volumes:
+        {{- if .Values.global.ssl.enabled }}
+        - name: developer-be-keystore
+          secret:
+            secretName: {{ .Values.global.ssl.secretName }}
+            items:
+              - key: keystore.p12
+                path: keystore.p12
+        {{- end }}
+        {{- if .Values.global.persistence.enabled }}
         - name: usermgmt-log
           hostPath:
             path: /var/log/edgegallery/usermgmt
-      {{- end }}
+        {{- end }}

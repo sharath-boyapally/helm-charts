@@ -1,13 +1,21 @@
 global:
   security:
     authServerAddress:
-persistence:
-  enabled: false
-  type: nfs
+  ssl:
+    enabled: false
+    secretName: edgegallery-keystore-secret
+  persistence:
+    enabled: false
+    type: nfs
 images:
-  repository: edgegallery/appstore-be
-  tag: stable
-  pullPolicy: Always
+  appstoreBe:
+    repository: edgegallery/appstore-be
+    tag: stable
+    pullPolicy: Always
+  postgres:
+    repository: postgres
+    tag: 9.6.15
+    pullPolicy: IfNotPresent
 postgres:
   username: appstore
   password: edgegallery

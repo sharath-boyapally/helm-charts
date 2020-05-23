@@ -1,6 +1,10 @@
-persistence:
-  enabled: false
-  type: nfs
+global:
+  ssl:
+    enabled: false
+    secretName: edgegallery-keystore-secret
+  persistence:
+    enabled: false
+    type: nfs
 images:
   toolChain:
     repository: edgegallery/tool-chain

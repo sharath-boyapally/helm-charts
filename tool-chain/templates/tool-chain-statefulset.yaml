@@ -27,13 +27,38 @@ spec:
             - name: LOG_DIR
               value: /var/log/tool-chain
             - name: SC_ADDRESS
-              value: https://service-center:30100
+              value: http{{ if .Values.global.ssl.enabled }}s{{ end }}://service-center:30100
             - name: LISTEN_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SSL_ENABLED
+              value: {{ quote .Values.global.ssl.enabled }}
+            {{- if .Values.global.ssl.enabled }}
+            - name: SSL_KEY_STORE_PATH
+              value: /usr/app/ssl/keystore.p12
+            - name: SSL_KEY_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keystorePassword
+            - name: SSL_KEY_STORE_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keystoreType
+            - name: SSL_KEY_ALIAS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keyAlias
+            {{- end }}
           volumeMounts:
-            {{- if .Values.persistence.enabled }}
+            {{- if .Values.global.ssl.enabled }}
+            - mountPath: /usr/app/ssl
+              name: tool-chain-keystore
+            {{- end }}
+            {{- if .Values.global.persistence.enabled }}
             - name: toolchain-log
               mountPath: /var/log/toolchain
             {{- end }}
@@ -50,7 +75,15 @@ spec:
             - name: tool-chain-pvc
               mountPath: /opt/portadv/portadmin
       volumes:
-        {{- if .Values.persistence.enabled }}
+        {{- if .Values.global.ssl.enabled }}
+        - name: tool-chain-keystore
+          secret:
+            secretName: {{ .Values.global.ssl.secretName }}
+            items:
+              - key: keystore.p12
+                path: keystore.p12
+        {{- end }}
+        {{- if .Values.global.persistence.enabled }}
         - name: toolchain-log
           hostPath:
             path: /var/log/edgegallery/tool-chain
@@ -58,7 +91,7 @@ spec:
         - name: tool-chain-pvc
           emptyDir: {}
         {{- end }}
-  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
         name: tool-chain-pvc

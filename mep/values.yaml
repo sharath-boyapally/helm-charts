@@ -1,4 +1,20 @@
 images:
-  repository: edgegallery/service-center
-  tag: stable
-  pullPolicy: Always
+  mep:
+    repository: edgegallery/mep
+    tag: stable
+    pullPolicy: Always
+  kong:
+    repository: kong
+    tag: 1.5.1-alpine
+    pullPolicy: IfNotPresent
+  postgres:
+    repository: postgres
+    tag: 9.6
+    pullPolicy: IfNotPresent
+persistence:
+  enabled: false
+  type: nfs
+postgres:
+  username: kong
+  password: edgegallery
+  dbname: kongdb

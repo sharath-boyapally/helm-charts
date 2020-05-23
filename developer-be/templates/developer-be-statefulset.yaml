@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: developer-be-postgres
-          image: postgres:9.6.15
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.images.postgres.repository }}:{{ .Values.images.postgres.tag }}
+          imagePullPolicy: {{ .Values.images.postgres.pullPolicy }}
           ports:
             - containerPort: 5432
           env:
@@ -33,7 +33,7 @@ spec:
             - name: POSTGRES_DB
               value: {{ .Values.postgres.dbname }}
           volumeMounts:
-            {{- if .Values.persistence.enabled }}
+            {{- if .Values.global.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
               name: developer-be-postgres-pvc
             {{- end }}
@@ -43,7 +43,7 @@ spec:
         - name: developer-be-postgres-initdb
           configMap:
             name: developer-be-postgres-initdb-configmap
-  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
         name: developer-be-postgres-pvc
@@ -79,8 +79,8 @@ spec:
           command: ['sh', '-c', "until nslookup developer-be-postgres-svc; do echo waiting for developer-be-postgres-svc; sleep 2; done"]
       containers:
         - name: developer-be
-          image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
-          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          image: {{ .Values.images.developerBe.repository }}:{{ .Values.images.developerBe.tag }}
+          imagePullPolicy: {{ .Values.images.developerBe.pullPolicy }}
           ports:
             - containerPort: 9080
           env:
@@ -91,7 +91,9 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: SC_ADDRESS
-              value: https://service-center:30100
+              value: http{{ if .Values.global.ssl.enabled }}s{{ end }}://service-center:30100
+            - name: APPSTORE_ADDRESS
+              value: http{{ if .Values.global.ssl.enabled }}s{{ end }}://appstore-be-svc:8099
             - name: POSTGRES_IP
               value: developer-be-postgres-svc
             - name: POSTGRES_PORT
@@ -110,20 +112,53 @@ spec:
                   key: postgresPassword
             - name: AUTH_SERVER_ADDRESS
               value: {{ .Values.global.security.authServerAddress }}
-          {{- if .Values.persistence.enabled }}
+            - name: SSL_ENABLED
+              value: {{ quote .Values.global.ssl.enabled }}
+            {{- if .Values.global.ssl.enabled }}
+            - name: SSL_KEY_STORE_PATH
+              value: /usr/app/ssl/keystore.p12
+            - name: SSL_KEY_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keystorePassword
+            - name: SSL_KEY_STORE_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keystoreType
+            - name: SSL_KEY_ALIAS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.ssl.secretName }}
+                  key: keyAlias
+            {{- end }}
           volumeMounts:
+            {{- if .Values.global.ssl.enabled }}
+            - mountPath: /usr/app/ssl
+              name: developer-be-keystore
+            {{- end }}
+            {{- if .Values.global.persistence.enabled }}
             - name: developer-log
               mountPath: /var/log/developer-be
             - name: developer-be-workspace-pvc
               mountPath: /home/mec-developer/user
-          {{- end }}
-      {{- if .Values.persistence.enabled }}
+            {{- end }}
       volumes:
+        {{- if .Values.global.ssl.enabled }}
+        - name: developer-be-keystore
+          secret:
+            secretName: {{ .Values.global.ssl.secretName }}
+            items:
+              - key: keystore.p12
+                path: keystore.p12
+        {{- end }}
+        {{- if .Values.global.persistence.enabled }}
         - name: developer-log
           hostPath:
             path: /var/log/edgegallery/developer-be
-      {{- end }}
-  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+        {{- end }}
+  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
         name: developer-be-workspace-pvc

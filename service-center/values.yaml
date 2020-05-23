@@ -1,3 +1,6 @@
+global:
+  ssl:
+    enabled: false
 images:
   repository: edgegallery/service-center
   tag: stable

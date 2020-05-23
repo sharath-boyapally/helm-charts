@@ -3,8 +3,11 @@ global:
     authServerAddress:
   ingress:
     enabled: false
-persistence:
-  enabled: false
+  ssl:
+    enabled: false
+    secretName: edgegallery-keystore-secret
+  persistence:
+    enabled: false
 security:
   oauth2:
     clientId: developer-fe

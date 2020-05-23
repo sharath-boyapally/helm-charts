@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mep-postgres
+  namespace: mep
+spec:
+  serviceName: "developer-be-postgres-svc"
+  selector:
+    matchLabels:
+      app: mep-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mep-postgres
+    spec:
+      containers:
+        - image: {{ .Values.images.postgres.repository }}:{{ .Values.images.postgres.tag }}
+          imagePullPolicy: {{ .Values.images.postgres.pullPolicy }}
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: {{ .Values.postgres.dbname }}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mep-secret
+                  key: postgresUsername
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mep-secret
+                  key: postgresPassword
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: mep-postgres-pvc
+  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  volumeClaimTemplates:
+    - metadata:
+        name: mep-postgres-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 1Gi
+  {{- end }}

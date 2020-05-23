@@ -1,16 +1,28 @@
 global:
   ingress:
     enabled: false
-persistence:
-  enabled: false
-  type: nfs
+  ssl:
+    enabled: false
+    secretName: edgegallery-keystore-secret
+  persistence:
+    enabled: false
+    type: nfs
 expose:
   port: 8067
   nodePort: 30067
 images:
-  repository: edgegallery/user-mgmt
-  tag: stable
-  pullPolicy: Always
+  usermgmt:
+    repository: edgegallery/user-mgmt
+    tag: stable
+    pullPolicy: Always
+  postgres:
+    repository: postgres
+    tag: 9.6.15
+    pullPolicy: IfNotPresent
+  redis:
+    repository: redis
+    tag: 6.0.3
+    pullPolicy: IfNotPresent
 postgres:
   username: usermgmt
   password: edgegallery

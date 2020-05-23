@@ -4,6 +4,8 @@ image:
   repository: edgegallery/mecm-applcm
   tag: stable
   pullPolicy: Always
+persistence:
+  enabled: false
 expose:
   port: 8282
   nodePort: 30101
