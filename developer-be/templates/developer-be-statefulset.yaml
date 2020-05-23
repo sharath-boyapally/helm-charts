@@ -77,6 +77,9 @@ spec:
         - name: init-postgres
           image: busybox:1.28.3
           command: ['sh', '-c', "until nslookup developer-be-postgres-svc; do echo waiting for developer-be-postgres-svc; sleep 2; done"]
+        - name: init-usermgmt
+          image: curlimages/curl
+          command: ['sh', '-c', "until curl -k -f {{ .Values.global.security.authServerAddress }}; do echo waiting for auth server; sleep 2; done"]
       containers:
         - name: developer-be
           image: {{ .Values.images.developerBe.repository }}:{{ .Values.images.developerBe.tag }}
