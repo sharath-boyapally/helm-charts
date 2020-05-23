@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: user-mgmt-postgres
-          image: postgres:9.6.15
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.images.postgres.repository }}:{{ .Values.images.postgres.tag }}
+          imagePullPolicy: {{ .Values.images.postgres.pullPolicy }}
           ports:
             - containerPort: 5432
           env:
@@ -33,7 +33,7 @@ spec:
             - name: POSTGRES_DB
               value: {{ .Values.postgres.dbname }}
           volumeMounts:
-            {{- if .Values.persistence.enabled }}
+            {{- if .Values.global.persistence.enabled }}
             - mountPath: /var/lib/postgresql/data
               name: usermgmt-postgres-pvc
             {{- end }}
@@ -43,7 +43,7 @@ spec:
         - name: usermgmt-postgres-initdb
           configMap:
             name: usermgmt-postgres-initdb-configmap
-  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
         name: usermgmt-postgres-pvc
@@ -72,8 +72,8 @@ spec:
     spec:
       containers:
         - name: user-mgmt-redis
-          image: redis
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.images.redis.repository }}:{{ .Values.images.redis.tag }}
+          imagePullPolicy: {{ .Values.images.redis.pullPolicy }}
           command:
             - "redis-server"
           args:
@@ -83,7 +83,7 @@ spec:
           volumeMounts:
             - mountPath: /etc/redis
               name: user-mgmt-redis-config
-          {{- if .Values.persistence.enabled }}
+          {{- if .Values.global.persistence.enabled }}
             - mountPath: /data
               name: usermgmt-redis-pvc
           {{- end }}
@@ -91,7 +91,7 @@ spec:
         - name: user-mgmt-redis-config
           secret:
             secretName: user-mgmt-redis-secret
-  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:
         name: usermgmt-redis-pvc

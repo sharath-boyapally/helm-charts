@@ -20,6 +20,9 @@ global:
     enabled: true
   security:
     authServerAddress:
+  persistence:
+    enabled: false
+    type: nfs
   ingress:
     enabled: false
     tls:
@@ -32,18 +35,31 @@ global:
       developer:
       appstore:
       mecm:
+  ssl:
+    enabled: false
+    useDefaultSecret: true
+    secretName: edgegallery-keystore-secret
 
 # Sub charts
 ## Configuration values for the user-mgmt dependency
 ##
 user-mgmt:
-#  persistence:
-#    enabled: false
-#    type: nfs
+#  expose:
+#    port: 8067
+#    nodePort: 30067
 #  images:
-#    repository: edgegallery/user-mgmt
-#    tag: stable
-#    pullPolicy: Always
+#    usermgmt:
+#      repository: edgegallery/user-mgmt
+#      tag: stable
+#      pullPolicy: Always
+#    postgres:
+#      repository: postgres
+#      tag: 9.6.15
+#      pullPolicy: IfNotPresent
+#    redis:
+#      repository: redis
+#      tag: 6.0.3
+#      pullPolicy: IfNotPresent
 #  postgres:
 #    username: usermgmt
 #    password: edgegallery
@@ -59,13 +75,13 @@ user-mgmt:
 #    maxWaitMillis: 100000
 #  sms:
 #    enabled: false
-#    url:
-#    appKey:
-#    appSecret:
-#    sender:
-#    templateId:
-#    signature:
-#    statusCallBack:
+#  #  url:
+#  #  appKey:
+#  #  appSecret:
+#  #  sender:
+#  #  templateId:
+#  #  signature:
+#  #  statusCallBack:
 #  jwt:
 #    useDefaultSecret: true
   oauth:
@@ -87,13 +103,15 @@ user-mgmt:
 ## Configuration values for the appstore-be dependency
 ##
 #appstore-be:
-#  persistence:
-#    enabled: false
-#  type: nfs
 #  images:
-#    repository: edgegallery/appstore-be
-#    tag: stable
-#    pullPolicy: Always
+#    appstoreBe:
+#      repository: edgegallery/appstore-be
+#      tag: stable
+#      pullPolicy: Always
+#    postgres:
+#      repository: postgres
+#      tag: 9.6.15
+#      pullPolicy: IfNotPresent
 #  postgres:
 #    username: appstore
 #    password: edgegallery
@@ -106,6 +124,7 @@ user-mgmt:
 #appstore-fe:
 #  persistence:
 #    enabled: false
+#  security:
 #    oauth2:
 #      clientId: appstore-fe
 #      clientSecret: Changeme_123
@@ -121,13 +140,15 @@ user-mgmt:
 ## Configuration values for the developer-be dependency
 ##
 #developer-be:
-#  persistence:
-#    enabled: false
-#    type: nfs
 #  images:
-#    repository: edgegallery/developer-be
-#    tag: stable
-#    pullPolicy: Always
+#    developerBe:
+#      repository: edgegallery/developer-be
+#      tag: stable
+#      pullPolicy: Always
+#    postgres:
+#      repository: postgres
+#      tag: 9.6.15
+#      pullPolicy: IfNotPresent
 #  postgres:
 #    username: developer
 #    password: edgegallery
@@ -139,6 +160,7 @@ user-mgmt:
 #developer-fe:
 #  persistence:
 #    enabled: false
+#  security:
 #    oauth2:
 #      clientId: developer-fe
 #      clientSecret: Changeme_123
@@ -190,6 +212,7 @@ user-mgmt:
 #mecm-fe:
 #  persistence:
 #    enabled: false
+#  security:
 #    oauth2:
 #      clientId: mecm-fe
 #      clientSecret: Changeme_123
@@ -205,9 +228,6 @@ user-mgmt:
 ## Configuration values for the tool-chain dependency
 ##
 #tool-chain:
-#  persistence:
-#    enabled: false
-#    type: nfs
 #  images:
 #    toolChain:
 #      repository: edgegallery/tool-chain
@@ -217,3 +237,12 @@ user-mgmt:
 #      repository: edgegallery/porting-advisor
 #      tag: stable
 #      pullPolicy: Always
+
+# Sub charts
+## Configuration values for the service-center dependency
+##
+#service-center:
+#  images:
+#    repository: edgegallery/service-center
+#    tag: stable
+#    pullPolicy: Always
