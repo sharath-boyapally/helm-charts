@@ -40,6 +40,15 @@ spec:
             backend:
               serviceName: appstore-fe-svc
               servicePort: 8443
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: edgegallery-ingress-mecm
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
     - host: {{ .Values.global.ingress.hosts.mecm }}
       http:
         paths:
