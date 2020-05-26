@@ -37,5 +37,6 @@ spec:
             defaultMode: 0500
         - name: service-center-ssl
           secret:
-            secretName: service-center-ssl-secret
+            secretName: {{ .Values.ssl.secretName }}
+            defaultMode: 0600
       {{- end }}

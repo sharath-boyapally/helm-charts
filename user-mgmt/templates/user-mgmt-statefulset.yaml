@@ -91,6 +91,7 @@ spec:
         - name: user-mgmt-redis-config
           secret:
             secretName: user-mgmt-redis-secret
+            defaultMode: 0600
   {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
   volumeClaimTemplates:
     - metadata:

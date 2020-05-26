@@ -79,10 +79,11 @@ spec:
         {{- if .Values.ssl.enabled }}
         - name: applcm-keystore
           secret:
-            secretName: applcm-keystore-secret
+            secretName: {{ .Values.ssl.keystoreSecretName }}
             items:
               - key: keystore.p12
                 path: keystore.p12
+                mode: 0600
         {{- end }}
         {{- if .Values.persistence.enabled }}
         - name: applcm-log

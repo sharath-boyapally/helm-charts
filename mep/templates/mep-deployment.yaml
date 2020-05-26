@@ -30,8 +30,6 @@ spec:
               value: postgres
             - name: KONG_NGINX_WORKER_PROCESSES
               value: "1"
-            # - name: KONG_NGINX_HTTP_INCLUDE
-            #   value: /kong/servers.conf
             - name: KONG_ADMIN_ACCESS_LOG
               value: /dev/stdout
             - name: KONG_ADMIN_ERROR_LOG
@@ -60,27 +58,10 @@ spec:
                 secretKeyRef:
                   name: mep-secret
                   key: postgresPassword
-            # - name: KONG_PG_PASSWORD_FILE
-            #   value: /run/secrets/kong_postgres_password
             - name: KONG_PROXY_ACCESS_LOG
               value: /dev/stdout
             - name: KONG_PROXY_ERROR_LOG
               value: /dev/stderr
-          # - name: KONG_SSL_CERT
-          #   value: /run/secrets/kong.crt
-          # - name: KONG_SSL_CERT_KEY
-          #   value: /run/secrets/kong.key
-
-          # livenessProbe:
-          #   failureThreshold: 3
-          #   httpGet:
-          #     path: /health
-          #     port: 9001
-          #     scheme: HTTP
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-          #   successThreshold: 1
-          #   timeoutSeconds: 1
           ports:
             - containerPort: 8000
               name: proxy
@@ -94,29 +75,6 @@ spec:
             - containerPort: 8444
               name: admin-api-ssl
               protocol: TCP
-          # readinessProbe:
-          #   failureThreshold: 3
-          #   httpGet:
-          #     path: /health
-          #     port: 9001
-          #     scheme: HTTP
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-          #   successThreshold: 1
-          #   timeoutSeconds: 1
-          # securityContext:
-          #   runAsUser: 1000
-          # volumeMounts:
-          # - mountPath: /kong
-          #   name: kong-server-blocks
-          volumeMounts:
-            - name: kongssl
-              mountPath: "/run/kongssl"
-              readOnly: true
-      volumes:
-        - name: kongssl
-          secret:
-            secretName: kongssl-secret
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -144,14 +102,15 @@ spec:
             - containerPort: 8443
           env:
             - name: SSL_ROOT
-              value: /etc/mepssl
+              value: /etc/mep/ssl
             - name: MEP_SSL_MODE
-              value: "0"
+              value: {{ if .Values.ssl.enabled }}1{{ else }}0{{ end }}
           volumeMounts:
             - name: mepssl
-              mountPath: /etc/mepssl
+              mountPath: /etc/mep/ssl
               readOnly: true
       volumes:
         - name: mepssl
           secret:
-            secretName: mep-ssl-secret
+            secretName: {{ .Values.ssl.secretName }}
+            defaultMode: 0600
