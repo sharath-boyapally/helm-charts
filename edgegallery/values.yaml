@@ -160,7 +160,7 @@ user-mgmt:
 # Sub charts
 ## Configuration values for the mecm dependency
 ##
-#mecm-be:
+#mecm:
 #  images:
 #    mecmFe:
 #      repository: edgegallery/mecm-fe
