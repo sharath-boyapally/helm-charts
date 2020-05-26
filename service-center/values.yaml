@@ -5,3 +5,5 @@ images:
   repository: edgegallery/service-center
   tag: stable
   pullPolicy: Always
+ssl:
+  secretName:

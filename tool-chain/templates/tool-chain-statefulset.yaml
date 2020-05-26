@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: toolchain
+  name: tool-chain
 spec:
-  serviceName: "toolchain-svc"
+  serviceName: "tool-chain-svc"
   selector:
     matchLabels:
-      app: toolchain
+      app: tool-chain
   replicas: 1
   template:
     metadata:
       labels:
-        app: toolchain
+        app: tool-chain
     spec:
       initContainers:
         - name: init-service-center
           image: busybox:1.28.3
           command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
       containers:
-        - name: toolchain
+        - name: tool-chain
           image: {{ .Values.images.toolChain.repository }}:{{ .Values.images.toolChain.tag }}
           imagePullPolicy: {{ .Values.images.toolChain.pullPolicy }}
           ports:
@@ -59,8 +59,8 @@ spec:
               name: tool-chain-keystore
             {{- end }}
             {{- if .Values.global.persistence.enabled }}
-            - name: toolchain-log
-              mountPath: /var/log/toolchain
+            - name: tool-chain-log
+              mountPath: /var/log/tool-chain
             {{- end }}
             - name: tool-chain-pvc
               mountPath: /opt/portadv/portadmin
@@ -82,9 +82,10 @@ spec:
             items:
               - key: keystore.p12
                 path: keystore.p12
+                mode: 0600
         {{- end }}
         {{- if .Values.global.persistence.enabled }}
-        - name: toolchain-log
+        - name: tool-chain-log
           hostPath:
             path: /var/log/edgegallery/tool-chain
         {{- else}}

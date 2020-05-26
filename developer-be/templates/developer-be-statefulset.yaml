@@ -155,6 +155,7 @@ spec:
             items:
               - key: keystore.p12
                 path: keystore.p12
+                mode: 0600
         {{- end }}
         {{- if .Values.global.persistence.enabled }}
         - name: developer-log

@@ -16,7 +16,7 @@ spec:
         - {{ .Values.global.ingress.hosts.auth }}
         - {{ .Values.global.ingress.hosts.developer }}
         - {{ .Values.global.ingress.hosts.appstore }}
-      secretName: {{ .Values.global.ingress.tls.secret_name }}
+      secretName: {{ .Values.global.ingress.tls.secretName }}
   {{- end }}
   rules:
     - host: {{ .Values.global.ingress.hosts.auth }}

@@ -1,5 +1,3 @@
-jwt:
-  useDefaultSecret: true
 image:
   repository: edgegallery/mecm-applcm
   tag: stable
@@ -9,6 +7,11 @@ persistence:
 expose:
   port: 8282
   nodePort: 30101
+jwt:
+  useDefaultSecret: true
 ssl:
   enabled: false
-  useDefaultSecret: true
+  keystoreSecretName:
+  keystorePassword:
+  keystoreType:
+  keyAlias:

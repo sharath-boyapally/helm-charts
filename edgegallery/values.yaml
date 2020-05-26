@@ -27,7 +27,7 @@ global:
     enabled: false
     tls:
       enabled: false
-      useDefaultSecret: true
+      secretName:
     annotations:
       bodySize: 20m
     hosts:
@@ -37,8 +37,7 @@ global:
       mecm:
   ssl:
     enabled: false
-    useDefaultSecret: true
-    secretName: edgegallery-keystore-secret
+    secretName:
 
 # Sub charts
 ## Configuration values for the user-mgmt dependency
