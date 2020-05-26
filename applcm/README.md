@@ -2,7 +2,7 @@
 
 Deploy your own private AppLCM.
 
-## How Do I Enable the Edgegallery Repository for Helm 3?
+## How Do I Enable the Edgegallery Repository for Helm 2?
 
 To add the Helm Edgegallery Charts for your local client, run `helm repo add`:
 
@@ -33,12 +33,9 @@ their default values. See values.yaml for all available options.
 | `persistence.enabled`                   | Whether to use persistent storage             | `false`                  |
 | `expose.port`                           | Expose port                                   | `8282`                   |
 | `expose.nodePort`                       | Expose nodePort                               | `30101`                  |
-| `jwt.useDefaultSecret`                  | Whether to use default jwt public key         | `true`                   |
+| `jwt.publicKeySecretName`               | JWT public key secret                         | ``                       |
 | `ssl.enabled`                           | Whether to enable ssl                         | `false`                  |
 | `ssl.keystoreSecretName`                | SSL keystore secret name                      | ``                       |
-| `ssl.keystorePassword`                  | SSL keystore password                         | ``                       |
-| `ssl.keystoreType`                      | SSL keystore type                             | ``                       |
-| `ssl.keyAlias`                          | SSL key alias                                 | ``                       |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to
 `helm install`.
@@ -50,25 +47,25 @@ helm install --name my-applcm edgegallery/applcm
 
 ### JWT configuration
 
-AppLCM use jwt to authenticate HTTP(S) request from meo and developer, need to config public key to verify jwt, the
-public key should be the same as the public key of user-mgmt. This chart will provide a default secret of public key, 
+AppLCM use jwt to authenticate HTTP(S) request from meo and developer, need to config public key to verify jwt, **the
+public key should be the same as the public key of user-mgmt**. This chart will provide a default secret of public key, 
 If you want to change it, create your secret like this:
 ```shell
-## Generate a keystore.p12 through keytool
+## Generate a RSA keypair through openssl
 
-// TODO
+openssl genrsa -out rsa_private_key.pem 2048
+openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 
-## Create a keystore secret
+## Create a jwt public key secret
 
-kubectl create secret generic applcm-jwt-secret \
-  --from-file=publicKey=publickey.pem \
-  --from-file=privateKey=privatekey.pem
+kubectl create secret generic applcm-jwt-public-secret \
+  --from-file=publicKey=rsa_public_key.pem
 
 ## Installation
 
-helm install --name my-applcm edgegallery/applcm --set jwt.useDefaultSecret=false
+helm install --name my-applcm edgegallery/applcm \
+  --set jwt.publicKeySecretName=applcm-jwt-public-secret
 ```
-Note that the secret name should be **applcm-jwt-secret**
 
 #### SSL configuration
 
@@ -82,17 +79,17 @@ keytool -genkey -alias edgegallery \
 
 ## Create a keystore secret
 
-kubectl create secret generic my-applcm-keystore-secret \
-  --from-file=keystore.p12=keystore.p12
+kubectl create secret generic applcm-keystore-secret \
+  --from-file=keystore.p12=keystore.p12 \
+  --from-literal=keystorePassword=Changeme_123 \
+  --from-literal=keystoreType=PKCS12 \
+  --from-literal=keyAlias=edgegallery
 
 ## Installation
 
 helm install --name my-applcm edgegallery/applcm \
   --set ssl.enabled=true \
-  --set ssl.keystoreSecretName=my-applcm-keystore-secret \
-  --set ssl.keystorePassword=Changeme_123 \
-  --set ssl.keystoreType=PKCS12 \
-  --set ssl.keyAlias=edgegallery
+  --set ssl.keystoreSecretName=applcm-keystore-secret
 ```
 
 #### Example NodePort configuration

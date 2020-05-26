@@ -1,0 +1,52 @@
+global:
+  ingress:
+    enabled: false
+  ssl:
+    enabled: false
+    keystoreSecretName:
+  persistence:
+    enabled: false
+    type: nfs
+  oauth2:
+    authServerAddress:
+    clients:
+      mecm:
+        clientId: mecm-fe
+        clientSecret: te9Fmv%qaq
+images:
+  mecmFe:
+    repository: edgegallery/mecm-fe
+    tag: stable
+    pullPolicy: Always
+  apiHandlerInfra:
+    repository: edgegallery/api-handler-infra
+    tag: stable
+    pullPolicy: Always
+  meoBpmnInfra:
+    repository: edgegallery/bpmn-infra
+    tag: stable
+    pullPolicy: Always
+  meoCatalogDbAdapter:
+    repository: edgegallery/catalog-db-adapter
+    tag: stable
+    pullPolicy: Always
+  mecmEsr:
+    repository: edgegallery/mecm-esr
+    tag: stable
+    pullPolicy: Always
+  meoRequestDbAdapter:
+    repository: edgegallery/request-db-adapter
+    tag: stable
+    pullPolicy: Always
+  mecmCatalog:
+    repository: edgegallery/mecm-catalog
+    tag: stable
+    pullPolicy: Always
+  mariadb:
+    repository: mariadb
+    tag: 10.1
+    pullPolicy: Always
+expose:
+  mecmFe:
+    port: 8443
+    nodePort: 30093

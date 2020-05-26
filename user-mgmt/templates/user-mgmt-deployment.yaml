@@ -119,13 +119,63 @@ spec:
             - name: JWT_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
-                  name: user-mgmt-jwt-secret
+                  name: {{ .Values.jwt.secretName }}
                   key: publicKey
-            - name: JWT_PRIVATE_KEY
+            - name: JWT_ENCRYPTED_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: user-mgmt-jwt-secret
-                  key: privateKey
+                  name: {{ .Values.jwt.secretName }}
+                  key: encryptedPrivateKey
+            - name: JWT_ENCRYPT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.jwt.secretName }}
+                  key: encryptPassword
+            - name: OAUTH_APPSTORE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: appstoreClientId
+            - name: OAUTH_DEVELOPER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: developerClientId
+            - name: OAUTH_MECM_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: mecmClientId
+            - name: OAUTH_APPSTORE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: appstoreClientSecret
+            - name: OAUTH_DEVELOPER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: developerClientSecret
+            - name: OAUTH_MECM_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: mecmClientSecret
+            - name: OAUTH_APPSTORE_CLIENT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: appstoreClientUrl
+            - name: OAUTH_DEVELOPER_CLIENT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: developerClientUrl
+            - name: OAUTH_MECM_CLIENT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-mgmt-secret
+                  key: mecmClientUrl
             - name: SSL_ENABLED
               value: {{ quote .Values.global.ssl.enabled }}
             {{- if .Values.global.ssl.enabled }}
@@ -134,17 +184,17 @@ spec:
             - name: SSL_KEY_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.ssl.secretName }}
+                  name: {{ .Values.global.ssl.keystoreSecretName }}
                   key: keystorePassword
             - name: SSL_KEY_STORE_TYPE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.ssl.secretName }}
+                  name: {{ .Values.global.ssl.keystoreSecretName }}
                   key: keystoreType
             - name: SSL_KEY_ALIAS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.ssl.secretName }}
+                  name: {{ .Values.global.ssl.keystoreSecretName }}
                   key: keyAlias
             {{- end }}
           volumeMounts:
@@ -160,7 +210,7 @@ spec:
         {{- if .Values.global.ssl.enabled }}
         - name: developer-be-keystore
           secret:
-            secretName: {{ .Values.global.ssl.secretName }}
+            secretName: {{ .Values.global.ssl.keystoreSecretName }}
             items:
               - key: keystore.p12
                 path: keystore.p12

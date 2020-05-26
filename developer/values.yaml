@@ -1,0 +1,46 @@
+global:
+  ingress:
+    enabled: false
+  ssl:
+    enabled: false
+    keystoreSecretName:
+  persistence:
+    enabled: false
+    type: nfs
+  oauth2:
+    authServerAddress:
+    clients:
+      developer:
+        clientId: developer-fe
+        clientSecret: te9Fmv%qaq
+images:
+  developerFe:
+    repository: edgegallery/developer-fe
+    tag: stable
+    pullPolicy: Always
+  developerBe:
+    repository: edgegallery/developer-be
+    tag: stable
+    pullPolicy: Always
+  postgres:
+    repository: postgres
+    tag: 9.6.15
+    pullPolicy: IfNotPresent
+  toolChain:
+    repository: edgegallery/tool-chain
+    tag: stable
+    pullPolicy: Always
+  portingAdvisor:
+    repository: edgegallery/porting-advisor
+    tag: stable
+    pullPolicy: Always
+postgres:
+  username: developer
+  password: te9Fmv%qaq
+  dbname: developerdb
+expose:
+  developerFe:
+    port: 8443
+    nodePort: 30092
+  postgres:
+    port: 5432

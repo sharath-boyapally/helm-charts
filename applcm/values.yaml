@@ -8,10 +8,7 @@ expose:
   port: 8282
   nodePort: 30101
 jwt:
-  useDefaultSecret: true
+  publicKeySecretName:
 ssl:
   enabled: false
   keystoreSecretName:
-  keystorePassword:
-  keystoreType:
-  keyAlias:

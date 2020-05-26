@@ -3,10 +3,26 @@ global:
     enabled: false
   ssl:
     enabled: false
-    secretName: edgegallery-keystore-secret
+    keystoreSecretName:
   persistence:
     enabled: false
     type: nfs
+  oauth2:
+    clients:
+      appstore:
+        clientId: appstore-fe
+        clientSecret: te9Fmv%qaq
+        clientUrl:
+      developer:
+        clientId: developer-fe
+        clientSecret: te9Fmv%qaq
+        clientUrl:
+      mecm:
+        clientId: mecm-fe
+        clientSecret: te9Fmv%qaq
+        clientUrl:
+jwt:
+  secretName:
 expose:
   port: 8067
   nodePort: 30067
@@ -25,12 +41,12 @@ images:
     pullPolicy: IfNotPresent
 postgres:
   username: usermgmt
-  password: edgegallery
+  password: te9Fmv%qaq
   dbname: usermgmtdb
 cors:
   allowOrigins: "*"
 redis:
-  password: edgegallery
+  password: te9Fmv%qaq
   timeout: 1800
   verificationTimeout: 60
   maxTotal: 1000
@@ -38,26 +54,10 @@ redis:
   maxWaitMillis: 100000
 sms:
   enabled: false
-#  url:
-#  appKey:
-#  appSecret:
-#  sender:
-#  templateId:
-#  signature:
-#  statusCallBack:
-jwt:
-  useDefaultSecret: true
-oauth:
-  clients:
-    appstore:
-      clientId: appstore-fe
-      clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-      clientUrl:
-    developer:
-      clientId: developer-fe
-      clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-      clientUrl:
-    mecm:
-      clientId: mecm-fe
-      clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-      clientUrl:
+  url:
+  appKey:
+  appSecret:
+  sender:
+  templateId:
+  signature:
+  statusCallBack:

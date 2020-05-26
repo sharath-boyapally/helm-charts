@@ -16,8 +16,8 @@ persistence:
   type: nfs
 postgres:
   username: kong
-  password: edgegallery
+  password: te9Fmv%qaq
   dbname: kongdb
 ssl:
   enabled: false
-  secretName:
+  keystoreSecretName:
