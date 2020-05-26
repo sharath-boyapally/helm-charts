@@ -4,22 +4,12 @@ global:
     enabled: true
   user-mgmt:
     enabled: true
-  appstore-be:
+  appstore:
     enabled: true
-  appstore-fe:
+  developer:
     enabled: true
-  developer-be:
+  mecm:
     enabled: true
-  developer-fe:
-    enabled: true
-  mecm-be:
-    enabled: true
-  mecm-fe:
-    enabled: true
-  tool-chain:
-    enabled: true
-  security:
-    authServerAddress:
   persistence:
     enabled: false
     type: nfs
@@ -37,12 +27,30 @@ global:
       mecm:
   ssl:
     enabled: false
-    secretName:
+    scSecretName:
+    keystoreSecretName:
+  oauth2:
+    authServerAddress:
+    clients:
+      appstore:
+        clientId: appstore-fe
+        clientSecret: te9Fmv%qaq
+        clientUrl:
+      developer:
+        clientId: developer-fe
+        clientSecret: te9Fmv%qaq
+        clientUrl:
+      mecm:
+        clientId: mecm-fe
+        clientSecret: te9Fmv%qaq
+        clientUrl:
 
 # Sub charts
 ## Configuration values for the user-mgmt dependency
 ##
 user-mgmt:
+  jwt:
+    secretName:
 #  expose:
 #    port: 8067
 #    nodePort: 30067
@@ -61,12 +69,12 @@ user-mgmt:
 #      pullPolicy: IfNotPresent
 #  postgres:
 #    username: usermgmt
-#    password: edgegallery
+#    password: te9Fmv%qaq
 #    dbname: usermgmtdb
 #  cors:
 #    allowOrigins: "*"
 #  redis:
-#    password: edgegallery
+#    password: te9Fmv%qaq
 #    timeout: 1800
 #    verificationTimeout: 60
 #    maxTotal: 1000
@@ -74,35 +82,23 @@ user-mgmt:
 #    maxWaitMillis: 100000
 #  sms:
 #    enabled: false
-#  #  url:
-#  #  appKey:
-#  #  appSecret:
-#  #  sender:
-#  #  templateId:
-#  #  signature:
-#  #  statusCallBack:
-#  jwt:
-#    useDefaultSecret: true
-  oauth:
-    clients:
-      appstore:
-#        clientId: appstore-fe
-#        clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-        clientUrl:
-      developer:
-#        clientId: developer-fe
-#        clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-        clientUrl:
-      mecm:
-#        clientId: mecm-fe
-#        clientSecret: c5c94984df13697132641b84cf728aed16f06d83908bfe2781f405591697230b29c3199f31e74d9a
-        clientUrl:
+#    url:
+#    appKey:
+#    appSecret:
+#    sender:
+#    templateId:
+#    signature:
+#    statusCallBack:
 
 # Sub charts
-## Configuration values for the appstore-be dependency
+## Configuration values for the appstore dependency
 ##
-#appstore-be:
+#appstore:
 #  images:
+#    appstoreFe:
+#      repository: edgegallery/appstore-fe
+#      tag: stable
+#      pullPolicy: Always
 #    appstoreBe:
 #      repository: edgegallery/appstore-be
 #      tag: stable
@@ -113,33 +109,27 @@ user-mgmt:
 #      pullPolicy: IfNotPresent
 #  postgres:
 #    username: appstore
-#    password: edgegallery
+#    password: te9Fmv%qaq
 #    dbname: appstoredb
-
-
-# Sub charts
-## Configuration values for the appstore-fe dependency
-##
-#appstore-fe:
-#  persistence:
-#    enabled: false
-#  security:
-#    oauth2:
-#      clientId: appstore-fe
-#      clientSecret: Changeme_123
-#  images:
-#    repository: edgegallery/appstore-fe
-#    tag: stable
-#    pullPolicy: Always
 #  expose:
-#    port: 8443
-#    nodePort: 30091
+#    appstoreFe:
+#      port: 8443
+#      nodePort: 30091
+#    appstoreBe:
+#      port: 8099
+#      nodePort: 30099
+#    postgres:
+#      port: 5432
 
 # Sub charts
-## Configuration values for the developer-be dependency
+## Configuration values for the developer dependency
 ##
-#developer-be:
+#developer:
 #  images:
+#    developerFe:
+#      repository: edgegallery/developer-fe
+#      tag: stable
+#      pullPolicy: Always
 #    developerBe:
 #      repository: edgegallery/developer-be
 #      tag: stable
@@ -148,34 +138,34 @@ user-mgmt:
 #      repository: postgres
 #      tag: 9.6.15
 #      pullPolicy: IfNotPresent
+#    toolChain:
+#      repository: edgegallery/tool-chain
+#      tag: stable
+#      pullPolicy: Always
+#    portingAdvisor:
+#      repository: edgegallery/porting-advisor
+#      tag: stable
+#      pullPolicy: Always
 #  postgres:
 #    username: developer
-#    password: edgegallery
+#    password: te9Fmv%qaq
 #    dbname: developerdb
-
-# Sub charts
-## Configuration values for the developer-fe dependency
-##
-#developer-fe:
-#  persistence:
-#    enabled: false
-#  security:
-#    oauth2:
-#      clientId: developer-fe
-#      clientSecret: Changeme_123
-#  images:
-#    repository: edgegallery/developer-fe
-#    tag: stable
-#    pullPolicy: Always
 #  expose:
-#    port: 8443
-#    nodePort: 30092
+#    developerFe:
+#      port: 8443
+#      nodePort: 30092
+#    postgres:
+#      port: 5432
 
 # Sub charts
-## Configuration values for the mecm-be dependency
+## Configuration values for the mecm dependency
 ##
-#mecm-be:
+#mecm:
 #  images:
+#    mecmFe:
+#      repository: edgegallery/mecm-fe
+#      tag: stable
+#      pullPolicy: Always
 #    apiHandlerInfra:
 #      repository: edgegallery/api-handler-infra
 #      tag: stable
@@ -204,38 +194,10 @@ user-mgmt:
 #      repository: mariadb
 #      tag: 10.1
 #      pullPolicy: Always
-
-# Sub charts
-## Configuration values for the mecm-fe dependency
-##
-#mecm-fe:
-#  persistence:
-#    enabled: false
-#  security:
-#    oauth2:
-#      clientId: mecm-fe
-#      clientSecret: Changeme_123
-#  images:
-#    repository: edgegallery/mecm-fe
-#    tag: stable
-#    pullPolicy: Always
 #  expose:
-#    port: 8443
-#    nodePort: 30093
-
-# Sub charts
-## Configuration values for the tool-chain dependency
-##
-#tool-chain:
-#  images:
-#    toolChain:
-#      repository: edgegallery/tool-chain
-#      tag: stable
-#      pullPolicy: Always
-#    portingAdvisor:
-#      repository: edgegallery/porting-advisor
-#      tag: stable
-#      pullPolicy: Always
+#    mecmFe:
+#      port: 8443
+#      nodePort: 30093
 
 # Sub charts
 ## Configuration values for the service-center dependency

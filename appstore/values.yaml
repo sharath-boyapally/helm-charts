@@ -1,0 +1,41 @@
+global:
+  ingress:
+    enabled: false
+  ssl:
+    enabled: false
+    keystoreSecretName:
+  persistence:
+    enabled: false
+    type: nfs
+  oauth2:
+    authServerAddress:
+    clients:
+      appstore:
+        clientId: appstore-fe
+        clientSecret: te9Fmv%qaq
+images:
+  appstoreFe:
+    repository: edgegallery/appstore-fe
+    tag: stable
+    pullPolicy: Always
+  appstoreBe:
+    repository: edgegallery/appstore-be
+    tag: stable
+    pullPolicy: Always
+  postgres:
+    repository: postgres
+    tag: 9.6.15
+    pullPolicy: IfNotPresent
+postgres:
+  username: appstore
+  password: te9Fmv%qaq
+  dbname: appstoredb
+expose:
+  appstoreFe:
+    port: 8443
+    nodePort: 30091
+  appstoreBe:
+    port: 8099
+    nodePort: 30099
+  postgres:
+    port: 5432

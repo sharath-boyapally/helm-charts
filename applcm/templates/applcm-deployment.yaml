@@ -39,23 +39,23 @@ spec:
             - name: SSL_KEY_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: applcm-keystore-secret
+                  name: {{ .Values.ssl.keystoreSecretName }}
                   key: keystorePassword
             - name: SSL_KEY_STORE_TYPE
               valueFrom:
                 secretKeyRef:
-                  name: applcm-keystore-secret
+                  name: {{ .Values.ssl.keystoreSecretName }}
                   key: keystoreType
             - name: SSL_KEY_ALIAS
               valueFrom:
                 secretKeyRef:
-                  name: applcm-keystore-secret
+                  name: {{ .Values.ssl.keystoreSecretName }}
                   key: keyAlias
             {{- end }}
             - name: JWT_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
-                  name: applcm-jwt-secret
+                  name: {{ .Values.jwt.publicKeySecretName }}
                   key: publicKey
             - name: DEPLOY_TYPE
               value: helm

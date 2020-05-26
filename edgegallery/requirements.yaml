@@ -7,31 +7,15 @@ dependencies:
     version: 1.0.0
     repository: https://edgegallery.github.io/helm-charts
     condition: global.user-mgmt.enabled
-  - name: appstore-be
+  - name: appstore
     version: 1.0.0
     repository: https://edgegallery.github.io/helm-charts
-    condition: global.appstore-be.enabled
-  - name: appstore-fe
+    condition: global.appstore.enabled
+  - name: developer
     version: 1.0.0
     repository: https://edgegallery.github.io/helm-charts
-    condition: global.appstore-fe.enabled
-  - name: developer-be
+    condition: global.developer.enabled
+  - name: mecm
     version: 1.0.0
     repository: https://edgegallery.github.io/helm-charts
-    condition: global.developer-be.enabled
-  - name: developer-fe
-    version: 1.0.0
-    repository: https://edgegallery.github.io/helm-charts
-    condition: global.developer-fe.enabled
-  - name: mecm-be
-    version: 1.0.0
-    repository: https://edgegallery.github.io/helm-charts
-    condition: global.mecm-be.enabled
-  - name: mecm-fe
-    version: 1.0.0
-    repository: https://edgegallery.github.io/helm-charts
-    condition: global.mecm-fe.enabled
-  - name: tool-chain
-    version: 1.0.0
-    repository: https://edgegallery.github.io/helm-charts
-    condition: global.tool-chain.enabled
+    condition: global.mecm.enabled

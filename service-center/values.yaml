@@ -1,9 +1,8 @@
 global:
   ssl:
     enabled: false
+    scSecretName:
 images:
   repository: edgegallery/service-center
   tag: stable
   pullPolicy: Always
-ssl:
-  secretName:
