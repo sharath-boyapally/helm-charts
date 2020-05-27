@@ -43,13 +43,13 @@ spec:
         - name: usermgmt-postgres-initdb
           configMap:
             name: usermgmt-postgres-initdb-configmap
-  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
+  {{- if .Values.global.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
         name: usermgmt-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "nfs-client"
+        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
         resources:
           requests:
             storage: 5Gi
@@ -92,13 +92,13 @@ spec:
           secret:
             secretName: user-mgmt-redis-secret
             defaultMode: 0600
-  {{- if and .Values.global.persistence.enabled (eq .Values.global.persistence.type "nfs") }}
+  {{- if .Values.global.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
         name: usermgmt-redis-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "nfs-client"
+        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
         resources:
           requests:
             storage: 1Gi

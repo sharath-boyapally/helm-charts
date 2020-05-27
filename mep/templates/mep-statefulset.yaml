@@ -35,13 +35,13 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: mep-postgres-pvc
-  {{- if and .Values.persistence.enabled (eq .Values.persistence.type "nfs") }}
+  {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
         name: mep-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "nfs-client"
+        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
         resources:
           requests:
             storage: 1Gi

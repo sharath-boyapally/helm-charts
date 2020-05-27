@@ -1,8 +1,8 @@
 ## Global configuration
 global:
-  service-center:
+  servicecenter:
     enabled: true
-  user-mgmt:
+  usermgmt:
     enabled: true
   appstore:
     enabled: true
@@ -12,7 +12,7 @@ global:
     enabled: true
   persistence:
     enabled: false
-    type: nfs
+    storageClassName: nfs-client
   ingress:
     enabled: false
     tls:
@@ -27,8 +27,7 @@ global:
       mecm:
   ssl:
     enabled: false
-    scSecretName:
-    keystoreSecretName:
+    secretName:
   oauth2:
     authServerAddress:
     clients:
@@ -48,7 +47,7 @@ global:
 # Sub charts
 ## Configuration values for the user-mgmt dependency
 ##
-user-mgmt:
+usermgmt:
   jwt:
     secretName:
 #  expose:
@@ -202,7 +201,7 @@ user-mgmt:
 # Sub charts
 ## Configuration values for the service-center dependency
 ##
-#service-center:
+#servicecenter:
 #  images:
 #    repository: edgegallery/service-center
 #    tag: stable
