@@ -3,10 +3,10 @@ global:
     enabled: false
   ssl:
     enabled: false
-    keystoreSecretName:
+    secretName:
   persistence:
     enabled: false
-    type: nfs
+    storageClassName: nfs-client
   oauth2:
     authServerAddress:
     clients:

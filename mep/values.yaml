@@ -13,11 +13,11 @@ images:
     pullPolicy: IfNotPresent
 persistence:
   enabled: false
-  type: nfs
+  storageClassName: nfs-client
 postgres:
   username: kong
   password: te9Fmv%qaq
   dbname: kongdb
 ssl:
   enabled: false
-  keystoreSecretName:
+  secretName:

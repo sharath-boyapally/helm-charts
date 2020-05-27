@@ -39,17 +39,17 @@ spec:
             - name: SSL_KEY_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ssl.keystoreSecretName }}
+                  name: {{ .Values.ssl.secretName }}
                   key: keystorePassword
             - name: SSL_KEY_STORE_TYPE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ssl.keystoreSecretName }}
+                  name: {{ .Values.ssl.secretName }}
                   key: keystoreType
             - name: SSL_KEY_ALIAS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ssl.keystoreSecretName }}
+                  name: {{ .Values.ssl.secretName }}
                   key: keyAlias
             {{- end }}
             - name: JWT_PUBLIC_KEY
@@ -79,7 +79,7 @@ spec:
         {{- if .Values.ssl.enabled }}
         - name: applcm-keystore
           secret:
-            secretName: {{ .Values.ssl.keystoreSecretName }}
+            secretName: {{ .Values.ssl.secretName }}
             items:
               - key: keystore.p12
                 path: keystore.p12

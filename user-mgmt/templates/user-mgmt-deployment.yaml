@@ -184,17 +184,17 @@ spec:
             - name: SSL_KEY_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.ssl.keystoreSecretName }}
+                  name: {{ .Values.global.ssl.secretName }}
                   key: keystorePassword
             - name: SSL_KEY_STORE_TYPE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.ssl.keystoreSecretName }}
+                  name: {{ .Values.global.ssl.secretName }}
                   key: keystoreType
             - name: SSL_KEY_ALIAS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.ssl.keystoreSecretName }}
+                  name: {{ .Values.global.ssl.secretName }}
                   key: keyAlias
             {{- end }}
           volumeMounts:
@@ -210,7 +210,7 @@ spec:
         {{- if .Values.global.ssl.enabled }}
         - name: developer-be-keystore
           secret:
-            secretName: {{ .Values.global.ssl.keystoreSecretName }}
+            secretName: {{ .Values.global.ssl.secretName }}
             items:
               - key: keystore.p12
                 path: keystore.p12
