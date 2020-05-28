@@ -90,7 +90,7 @@ spec:
 #            items:
 #              - key: keystore.p12
 #                path: keystore.p12
-#                mode: 0600
+#                mode: 0644
 #        {{- end }}
         {{- if .Values.global.persistence.enabled }}
         - name: mecm-fe-log

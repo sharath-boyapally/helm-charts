@@ -82,7 +82,6 @@ spec:
             items:
               - key: keystore.p12
                 path: keystore.p12
-                mode: 0600
         {{- end }}
         {{- if .Values.global.persistence.enabled }}
         - name: tool-chain-log
@@ -98,7 +97,7 @@ spec:
         name: tool-chain-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
         resources:
           requests:
             storage: 1Gi

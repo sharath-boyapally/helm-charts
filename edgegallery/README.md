@@ -119,7 +119,6 @@ If you want to enable ssl for ingress,need to provide certificates,and create a 
 ```shell
 ## Generate ca certificate
 openssl genrsa -out ca.key 2048
-openssl rsa -in ca.key -aes256 -passout pass:te9Fmv%qaq -out encryptedca.key
 openssl req -new -key ca.key -subj /C=CN/ST=Beijing/L=Biejing/O=edgegallery/CN=edgegallery.org -out ca.csr
 openssl x509 -req -days 365 -in ca.csr -extensions v3_ca -signkey ca.key -out ca.crt
 

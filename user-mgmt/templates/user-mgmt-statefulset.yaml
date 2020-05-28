@@ -49,7 +49,7 @@ spec:
         name: usermgmt-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
         resources:
           requests:
             storage: 5Gi
@@ -91,14 +91,14 @@ spec:
         - name: user-mgmt-redis-config
           secret:
             secretName: user-mgmt-redis-secret
-            defaultMode: 0600
+            defaultMode: 0644
   {{- if .Values.global.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
         name: usermgmt-redis-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
         resources:
           requests:
             storage: 1Gi
