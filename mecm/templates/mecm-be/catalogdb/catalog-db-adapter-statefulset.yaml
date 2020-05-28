@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: catalog-db-adapter
+spec:
+  serviceName: catalog-db-adapter
+  selector:
+    matchLabels:
+      app: catalog-db-adapter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: catalog-db-adapter
+    spec:
+      containers:
+        - name: catalog-db-adapter
+          image: {{ .Values.images.meoCatalogDbAdapter.repository }}:{{ .Values.images.meoCatalogDbAdapter.tag }}
+          imagePullPolicy: {{ .Values.images.meoCatalogDbAdapter.pullPolicy }}
+          ports:
+            - containerPort: 8082
+          args:
+            - /app/wait-for.sh
+            - -q
+            - -t
+            - "300"
+            - dbhost:3306
+            - --
+            - /app/start-app.sh
+          env:
+            - name: APP
+              value: catalog-db-adapter
+            - name: DB_ADMIN_PASSWORD
+              value: so_Admin123
+            - name: DB_ADMIN_USERNAME
+              value: so_admin
+            - name: DB_HOST
+              value: mariadb
+            - name: DB_PASSWORD
+              value: catalog123
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USERNAME
+              value: cataloguser
+            - name: JVM_ARGS
+              value: -Xms64m -Xmx512m
+          volumeMounts:
+            {{- if .Values.global.persistence.enabled }}
+            - mountPath: /app/ca-certificates
+              name: common-ca-certificates-pvc
+            - mountPath: /app/config
+              name: catalog-db-adapter-pvc
+            {{- end }}
+  {{- if .Values.global.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: common-ca-certificates-pvc
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
+        resources:
+          requests:
+            storage: 100Mi
+    - metadata:
+        name: catalog-db-adapter-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
+        resources:
+          requests:
+            storage: 100Mi
+  {{- end }}
