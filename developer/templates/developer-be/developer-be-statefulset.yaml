@@ -49,7 +49,7 @@ spec:
         name: developer-be-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
         resources:
           requests:
             storage: 1Gi
@@ -155,7 +155,6 @@ spec:
             items:
               - key: keystore.p12
                 path: keystore.p12
-                mode: 0600
         {{- end }}
         {{- if .Values.global.persistence.enabled }}
         - name: developer-log
@@ -168,7 +167,7 @@ spec:
         name: developer-be-workspace-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
         resources:
           requests:
             storage: 5Gi

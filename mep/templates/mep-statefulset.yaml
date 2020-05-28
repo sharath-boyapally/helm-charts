@@ -41,7 +41,7 @@ spec:
         name: mep-postgres-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storgeClassName }}
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
         resources:
           requests:
             storage: 1Gi
