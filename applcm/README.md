@@ -69,7 +69,7 @@ helm install --name my-applcm edgegallery/applcm \
   --set jwt.publicKeySecretName=applcm-jwt-public-secret
 ```
 
-#### SSL configuration
+### SSL configuration
 If you want to enable SSL of applcm, need to provide a keystore secret:
 ```shell
 ## Generate a keystore.p12 through keytool
@@ -91,14 +91,14 @@ helm install --name my-applcm edgegallery/applcm \
   --set ssl.secretName=applcm-keystore-secret
 ```
 
-#### Example NodePort configuration
+### Example NodePort configuration
 ```shell
 helm install --name my-applcm edgegallery/applcm \
   --set jwt.publicKeySecretName=applcm-jwt-public-secret \
   --set expose.nodePort=30103
 ```
 
-#### Example persistence configuration
+### Example persistence configuration
 ```shell
 helm install --name my-applcm edgegallery/applcm \
   --set jwt.publicKeySecretName=applcm-jwt-public-secret \

@@ -21,17 +21,6 @@ data:
       	ROLEID              INTEGER           NOT NULL
     );
 
-    CREATE TABLE if not exists tbl_admin (
-      	TENANTID            VARCHAR(100)      PRIMARY KEY NOT NULL,
-      	USERNAME            VARCHAR(50)       NOT NULL,
-      	PASSWORD            VARCHAR(100)      NOT NULL,
-      	COMPANY             VARCHAR(50)       NULL,
-      	TELEPHONENUMBER     VARCHAR(20)       NOT NULL,
-      	GENDER              VARCHAR(10)       NULL,
-      	PERMISSIONS         VARCHAR(500)      NULL
-    );
-
-
     CREATE TABLE if not exists tbl_role (
         ID                   INTEGER                PRIMARY KEY NOT NULL,
     	PLATFORM             VARCHAR(50)            NOT NULL,

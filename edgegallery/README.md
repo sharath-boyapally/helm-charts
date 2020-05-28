@@ -103,7 +103,7 @@ helm install my-edgegallery edgegallery/edgegallery \
   --set usermgmt.jwt.secretName=user-mgmt-jwt-secret
 ```
 
-#### Ingress configuration
+### Ingress configuration
 Edgegallery use nodeport to expose UI by default,If you want to use ingress to access UI, need to provide four domain names:
 ```shell
 ## Installation
@@ -119,13 +119,12 @@ If you want to enable ssl for ingress,need to provide certificates,and create a 
 ```shell
 ## Generate ca certificate
 openssl genrsa -out ca.key 2048
-openssl rsa -in ca.key -des3 -passout pass:te9Fmv%qaq -out encryptedca.key
 openssl req -new -key ca.key -subj /C=CN/ST=Beijing/L=Biejing/O=edgegallery/CN=edgegallery.org -out ca.csr
 openssl x509 -req -days 365 -in ca.csr -extensions v3_ca -signkey ca.key -out ca.crt
 
 ## Generate tls certificate
 openssl genrsa -out tls.key 2048
-openssl rsa -in tls.key -des3 -passout pass:te9Fmv%qaq -out encryptedtls.key
+openssl rsa -in tls.key -aes256 -passout pass:te9Fmv%qaq -out encryptedtls.key
 openssl req -new -key tls.key -subj /C=CN/ST=Beijing/L=Biejing/O=edgegallery/CN=edgegallery.org -out tls.csr
 openssl x509 -req -in tls.csr -extensions v3_usr -CA ca.crt -CAkey ca.key -CAcreateserial -out tls.crt
 
@@ -147,7 +146,7 @@ helm install my-edgegallery edgegallery/edgegallery \
   --set global.ingress.tls.secretName=edgegallery-ingress-secret
 ```
 
-#### SSL configuration
+### SSL configuration
 If you want to enable SSL of internal service, need to provide a keystore secret:
 ```shell
 ## Generate a keystore.p12 through keytool
@@ -177,7 +176,7 @@ helm install my-edgegallery edgegallery/edgegallery \
   --set global.ssl.secret=edgegallery-ssl-secret
 ```
 
-#### Example NodePort configuration
+### Example NodePort configuration
 If you want to change expose nodePort,you can install edgegallery like this:
 ```shell
 helm install my-edgegallery edgegallery/edgegallery \
@@ -192,7 +191,7 @@ helm install my-edgegallery edgegallery/edgegallery \
   --set mecm.expose.mecmFe.nodePort=<mecm-nodeport>
 ```
 
-#### Example persistence configuration
+### Example persistence configuration
 ```shell
 helm install my-edgegallery edgegallery/edgegallery \
   --set global.oauth2.authServerAddress=https://<ip>:30067 \

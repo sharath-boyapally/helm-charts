@@ -200,7 +200,7 @@ spec:
           volumeMounts:
             {{- if .Values.global.ssl.enabled }}
             - mountPath: /usr/app/ssl
-              name: developer-be-keystore
+              name: user-mgmt-keystore
             {{- end }}
             {{- if .Values.global.persistence.enabled }}
             - mountPath: /var/log/usermgmt
@@ -208,13 +208,12 @@ spec:
             {{- end }}
       volumes:
         {{- if .Values.global.ssl.enabled }}
-        - name: developer-be-keystore
+        - name: user-mgmt-keystore
           secret:
             secretName: {{ .Values.global.ssl.secretName }}
             items:
               - key: keystore.p12
                 path: keystore.p12
-                mode: 0600
         {{- end }}
         {{- if .Values.global.persistence.enabled }}
         - name: usermgmt-log
