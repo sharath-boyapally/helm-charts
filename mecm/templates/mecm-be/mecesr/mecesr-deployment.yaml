@@ -1,36 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: mecesr
   name: mecesr
+  namespace: default
+  labels:
+    app: mecesr
 spec:
   selector:
     matchLabels:
-      io.kompose.service: mecesr
+      app: mecesr
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: mecesr
+        app: mecesr
     spec:
       containers:
-      - env:
-        - name: MYSQL_PASSWD
-          value: root123
-        - name: AUTH_MODULE_ENDPOINT
-          value: 159.138.61.155:8067
-        image: {{ .Values.images.mecmEsr.repository }}:{{ .Values.images.mecmEsr.tag }}
-        imagePullPolicy: {{ .Values.images.mecmEsr.pullPolicy }}
-        name: mecesr-container
-        ports:
-        - containerPort: 8181
-        resources: {}
-      restartPolicy: Always
-status: {}
+        - name: mecesr
+          image: {{ .Values.images.mecmEsr.repository }}:{{ .Values.images.mecmEsr.tag }}
+          imagePullPolicy: {{ .Values.images.mecmEsr.pullPolicy }}
+          ports:
+            - containerPort: 8181
+          env:
+            - name: MYSQL_PASSWD
+              value: root123
+            - name: AUTH_MODULE_ENDPOINT
+              value: 159.138.61.155:8067

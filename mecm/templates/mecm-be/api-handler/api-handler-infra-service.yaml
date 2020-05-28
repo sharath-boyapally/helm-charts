@@ -1,13 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: api-handler-infra
   name: api-handler-infra
+  labels:
+    svc: api-handler-infra
 spec:
   type: NodePort
   ports:
@@ -16,6 +12,4 @@ spec:
     port: 8080
     targetPort: 8080
   selector:
-    io.kompose.service: api-handler-infra
-status:
-  loadBalancer: {}
+    app: api-handler-infra

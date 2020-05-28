@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  serviceName: mariadb
+  selector:
+    matchLabels:
+      app: mariadb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - name: mariadb
+          image: {{ .Values.images.mariadb.repository }}:{{ .Values.images.mariadb.tag }}
+          imagePullPolicy: {{ .Values.images.mariadb.pullPolicy }}
+          ports:
+            - containerPort: 3306
+          args:
+            - mysqld
+            - --character-set-server=utf8
+            - --collation-server=utf8_unicode_ci
+            - --innodb-flush-log-at-trx-commit=0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root123
+          volumeMounts:
+            {{- if .Values.global.persistence.enabled }}
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mariadb-init-pvc
+            - mountPath: /etc/mysql/conf.d
+              name: mariadb-conf-pvc
+            {{- end }}
+  {{- if .Values.global.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: mariadb-init-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
+        resources:
+          requests:
+            storage: 100Mi
+    - metadata:
+        name: mariadb-conf-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
+        resources:
+          requests:
+            storage: 100Mi
+  {{- end }}
