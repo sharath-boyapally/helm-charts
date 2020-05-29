@@ -46,3 +46,7 @@ spec:
               value: cataloguser
             - name: JVM_ARGS
               value: -Xms64m -Xmx512m
+            - name: LISTEN_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
