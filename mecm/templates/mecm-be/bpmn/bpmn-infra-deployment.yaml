@@ -1,9 +1,11 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: bpmn-infra
+  namespace: default
+  labels:
+    app: bpmn-infra
 spec:
-  serviceName: bpmn-infra
   selector:
     matchLabels:
       app: bpmn-infra
@@ -42,29 +44,3 @@ spec:
               value: -Xms64m -Xmx512m
             - name: PACKAGE_MGR_HOST
               value: 159.138.38.104
-          volumeMounts:
-            {{- if .Values.global.persistence.enabled }}
-            - mountPath: /app/ca-certificates
-              name: common-ca-certificates-pvc
-            - mountPath: /app/config
-              name: bpmn-infra-pvc
-            {{- end }}
-  {{- if .Values.global.persistence.enabled }}
-  volumeClaimTemplates:
-    - metadata:
-        name: common-ca-certificates-pvc
-      spec:
-        accessModes: [ "ReadWriteMany" ]
-        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
-        resources:
-          requests:
-            storage: 100Mi
-    - metadata:
-        name: bpmn-infra-pvc
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
-        resources:
-          requests:
-            storage: 100Mi
-  {{- end }}

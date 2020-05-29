@@ -19,10 +19,8 @@ metadata:
   labels:
     svc: mariadb
 spec:
-  type: NodePort
   ports:
     - name: "3306"
-      nodePort: 30104
       port: 3306
       targetPort: 3306
   selector:

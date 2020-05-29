@@ -5,10 +5,8 @@ metadata:
   labels:
     svc: bpmn-infra
 spec:
-  type: NodePort
   ports:
     - name: "8081"
-      nodePort: 30102
       port: 8081
       targetPort: 8081
   selector:

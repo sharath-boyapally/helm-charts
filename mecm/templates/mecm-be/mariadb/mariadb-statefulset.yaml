@@ -29,31 +29,11 @@ spec:
               value: root123
           volumeMounts:
             {{- if .Values.global.persistence.enabled }}
-            - mountPath: /docker-entrypoint-initdb.d
-              name: mariadb-init-pvc
-            - mountPath: /etc/mysql/conf.d
-              name: mariadb-conf-pvc
             - mountPath: /var/lib/mysql
               name: mariadb-data-pvc
             {{- end }}
   {{- if .Values.global.persistence.enabled }}
   volumeClaimTemplates:
-    - metadata:
-        name: mariadb-init-pvc
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
-        resources:
-          requests:
-            storage: 100Mi
-    - metadata:
-        name: mariadb-conf-pvc
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ quote .Values.global.persistence.storageClassName }}
-        resources:
-          requests:
-            storage: 100Mi
     - metadata:
         name: mariadb-data-pvc
       spec:
