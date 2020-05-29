@@ -5,10 +5,8 @@ metadata:
   labels:
     svc: catalog-db-adapter
 spec:
-  type: NodePort
   ports:
     - name: "8082"
-      nodePort: 30103
       port: 8082
       targetPort: 8082
   selector:

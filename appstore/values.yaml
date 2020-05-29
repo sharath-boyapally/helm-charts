@@ -24,7 +24,7 @@ images:
     pullPolicy: Always
   postgres:
     repository: postgres
-    tag: 9.6.15
+    tag: 12.2
     pullPolicy: IfNotPresent
 postgres:
   username: appstore

@@ -9,7 +9,7 @@ images:
     pullPolicy: IfNotPresent
   postgres:
     repository: postgres
-    tag: 9.6
+    tag: 12.2
     pullPolicy: IfNotPresent
 persistence:
   enabled: false
