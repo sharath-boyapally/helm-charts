@@ -38,5 +38,17 @@ spec:
         - name: service-center-ssl
           secret:
             secretName: {{ .Values.global.ssl.secretName }}
-            defaultMode: 0644
+            items:
+              - key: trust.cer
+                path: trust.cer
+                mode: 0644
+              - key: server.cer
+                path: server.cer
+                mode: 0644
+              - key: server_key.pem
+                path: server_key.pem
+                mode: 0644
+              - key: cert_pwd
+                path: cert_pwd
+                mode: 0644
       {{- end }}
