@@ -17,14 +17,8 @@ spec:
     spec:
       initContainers:
         - name: init-service-center
-          image: busybox:1.28.3
-          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
-        - name: init-postgres
-          image: busybox:1.28.3
-          command: ['sh', '-c', "until nslookup user-mgmt-postgres-svc; do echo waiting for postgres; sleep 2; done"]
-        - name: init-redis
-          image: busybox:1.28.3
-          command: ['sh', '-c', "until nslookup user-mgmt-redis-svc; do echo waiting for redis; sleep 2; done"]
+          image: curlimages/curl
+          command: ['sh', '-c', "until curl -k -f http{{ if .Values.global.ssl.enabled }}s{{ end }}://service-center:30100/v4/default/registry/health; do echo waiting for service center; sleep 2; done"]
       containers:
         - name: user-mgmt
           image: {{ .Values.images.usermgmt.repository }}:{{ .Values.images.usermgmt.tag }}

@@ -15,8 +15,8 @@ spec:
     spec:
       initContainers:
         - name: init-service-center
-          image: busybox:1.28.3
-          command: ['sh', '-c', "until nslookup service-center; do echo waiting for service-center; sleep 2; done"]
+          image: curlimages/curl
+          command: ['sh', '-c', "until curl -k -f http{{ if .Values.global.ssl.enabled }}s{{ end }}://service-center:30100/v4/default/registry/health; do echo waiting for service center; sleep 2; done"]
       containers:
         - name: tool-chain
           image: {{ .Values.images.toolChain.repository }}:{{ .Values.images.toolChain.tag }}
