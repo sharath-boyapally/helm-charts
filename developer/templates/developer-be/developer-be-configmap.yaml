@@ -229,6 +229,7 @@ data:
       "address" varchar(255) COLLATE "pg_catalog"."default" DEFAULT NULL::character varying,
       "architecture" varchar(100) COLLATE "pg_catalog"."default" DEFAULT NULL::character varying,
       "status" varchar(20) COLLATE "pg_catalog"."default" DEFAULT NULL::character varying,
+      "protocol" varchar(20) COLLATE "pg_catalog"."default" DEFAULT NULL::character varying,
       "ip" varchar(20) COLLATE "pg_catalog"."default" DEFAULT NULL::character varying,
       "os" varchar(255) COLLATE "pg_catalog"."default" DEFAULT NULL::character varying,
       "port_range_min" int DEFAULT '-1'::integer,
@@ -277,6 +278,6 @@ data:
 
     -- workspace mep host init --
 
-    INSERT INTO tbl_service_host (host_id, name, address, architecture, status, ip, os, port_range_min, port_range_max, port, delete) VALUES ('3c55ac26-60e9-42c0-958b-1bf7ea4da60a', 'Node1', 'XIAN', 'X86', 'NORMAL', '159.138.63.8', 'Ubuntu', 30000, 32767, 30101, null);
+    INSERT INTO tbl_service_host (host_id, name, address, architecture, status, protocol, ip, os, port_range_min, port_range_max, port, delete) VALUES ('3c55ac26-60e9-42c0-958b-1bf7ea4da60a', 'Node1', 'XIAN', 'X86', 'NORMAL', 'http{{ if .Values.global.ssl.enabled }}s{{ end }}', '159.138.63.8', 'Ubuntu', 30000, 32767, 30101, null);
 
     -- workspace mep host init end--
