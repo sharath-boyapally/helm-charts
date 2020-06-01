@@ -3,9 +3,9 @@ entries:
   applcm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.496993269+08:00"
+    created: "2020-06-01T20:04:38.084025068+08:00"
     description: A Helm chart for Kubernetes
-    digest: 1e085ed59125c7a02667543e04b5e3ac39d23388fbd5df8c025e1367c50e6847
+    digest: ec6429d128928eb2759a81ba92cd1df19b3db0fa9f48279f020b49f3ecc4310b
     name: applcm
     urls:
     - https://edgegallery.github.io/helm-charts/applcm-1.0.0.tgz
@@ -13,9 +13,9 @@ entries:
   appstore:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.49746796+08:00"
+    created: "2020-06-01T20:04:38.084530301+08:00"
     description: A Helm chart for Kubernetes
-    digest: 43be5e029cd32da1fbae38a259946880123c82b181731221f45889972fcbb4f4
+    digest: 7f41eebbc5b1b1947e4c94b3f845f3bd8e24895cde3c0f4f756a11e1df676ecb
     name: appstore
     urls:
     - https://edgegallery.github.io/helm-charts/appstore-1.0.0.tgz
@@ -23,9 +23,9 @@ entries:
   developer:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.498153274+08:00"
+    created: "2020-06-01T20:04:38.085648358+08:00"
     description: A Helm chart for Kubernetes
-    digest: a0bfd41c9b799e1e8316b03b1d70c7ebb982be0e2a225cd3ee0dab8307821294
+    digest: 50f093ed7b1115da66b4042288d2d334e5f2ab0dea27ae6fbfcc1c42ee4735c4
     name: developer
     urls:
     - https://edgegallery.github.io/helm-charts/developer-1.0.0.tgz
@@ -33,7 +33,7 @@ entries:
   edgegallery:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.501815066+08:00"
+    created: "2020-06-01T20:04:38.090409684+08:00"
     dependencies:
     - condition: global.servicecenter.enabled
       name: servicecenter
@@ -56,7 +56,7 @@ entries:
       repository: https://edgegallery.github.io/helm-charts
       version: 1.0.0
     description: A Helm chart for Kubernetes
-    digest: 441ffb66b3bd8fd4cede7194aec2784b7c68c22d2d14751615cc5f5943a459a5
+    digest: a727f6e038fd9544921b4fb56a6b1f5654c66283bf81428288827a4bc9ac5a22
     name: edgegallery
     urls:
     - https://edgegallery.github.io/helm-charts/edgegallery-1.0.0.tgz
@@ -64,9 +64,9 @@ entries:
   mecm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.502833673+08:00"
+    created: "2020-06-01T20:04:38.091375184+08:00"
     description: A Helm chart for Kubernetes
-    digest: d1890ce7e5b51abcc4b30226487df3d8d54a6ea54e0748f600f99639062bcfd7
+    digest: 661ae087abf88a6f003c36f46e89ee52261f179471aa9066d447694d489d880b
     name: mecm
     urls:
     - https://edgegallery.github.io/helm-charts/mecm-1.0.0.tgz
@@ -74,9 +74,9 @@ entries:
   mep:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.503271926+08:00"
+    created: "2020-06-01T20:04:38.091894921+08:00"
     description: A Helm chart for Kubernetes
-    digest: 912be843d334d266fa031249307fdf70e02ea8c14f00b306d524815c2cbe1610
+    digest: 723266ba5946098bec998b95a29927592aca2eb59d9c25ecef8ed106fe88d57e
     name: mep
     urls:
     - https://edgegallery.github.io/helm-charts/mep-1.0.0.tgz
@@ -84,9 +84,9 @@ entries:
   servicecenter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.503503614+08:00"
+    created: "2020-06-01T20:04:38.092301093+08:00"
     description: A Helm chart for Kubernetes
-    digest: ec1eaec89ce56fb6ff05bec7521a2adb0754340f09471c333262deec09f90fc3
+    digest: 8fdfbaa0b87555dd813aca99d4c8d82f4d77288d6f10f12534b27608298d5b9a
     name: servicecenter
     urls:
     - https://edgegallery.github.io/helm-charts/servicecenter-1.0.0.tgz
@@ -94,11 +94,11 @@ entries:
   usermgmt:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-30T16:11:01.50405556+08:00"
+    created: "2020-06-01T20:04:38.093184228+08:00"
     description: A Helm chart for Kubernetes
-    digest: cb5851e524b7342995a31beeb38536359bb0a0ee8a5f5ffe9b21e6f424c9f51d
+    digest: 781cbd7af16f0b20a7f35bf9c4078abe155c211e497a3da8c73b36ae651139a8
     name: usermgmt
     urls:
     - https://edgegallery.github.io/helm-charts/usermgmt-1.0.0.tgz
     version: 1.0.0
-generated: "2020-05-30T16:11:01.496453704+08:00"
+generated: "2020-06-01T20:04:38.083484413+08:00"

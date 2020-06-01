@@ -44,3 +44,5 @@ spec:
               value: -Xms64m -Xmx512m
             - name: PACKAGE_MGR_HOST
               value: 159.138.38.104
+            - name: SSL_ENABLED
+              value: {{ quote .Values.global.ssl.enabled }}
