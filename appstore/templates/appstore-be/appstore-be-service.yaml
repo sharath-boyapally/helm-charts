@@ -5,12 +5,10 @@ metadata:
   labels:
     svc: appstore-be-svc
 spec:
-  type: NodePort
   ports:
     - port: {{ .Values.expose.appstoreBe.port }}
       targetPort: 8099
       protocol: TCP
-      nodePort: {{ .Values.expose.appstoreBe.nodePort }}
   selector:
     app: appstore-be
 ---

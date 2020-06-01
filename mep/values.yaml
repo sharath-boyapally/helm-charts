@@ -1,7 +1,7 @@
 images:
   mep:
     repository: edgegallery/mep
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   kong:
     repository: kong

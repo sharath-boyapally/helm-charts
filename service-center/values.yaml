@@ -4,5 +4,5 @@ global:
     secretName:
 images:
   repository: edgegallery/service-center
-  tag: stable
+  tag: 0.2
   pullPolicy: Always
