@@ -32,7 +32,7 @@ their default values. See values.yaml for all available options.
 | Parameter                               | Description                                   | Default                  |
 |-----------------------------------------|-----------------------------------------------|--------------------------|
 | `image.repository`                      | Image repository                              | `edgegallery/mecm-applcm`|
-| `image.tag`                             | Image tag                                     | `stable`                 |
+| `image.tag`                             | Image tag                                     | `0.2`                 |
 | `image.pullPolicy`                      | Image pullPolicy                              | `Always`                 |
 | `persistence.enabled`                   | Whether to use persistent storage             | `false`                  |
 | `expose.port`                           | Expose port                                   | `8282`                   |
