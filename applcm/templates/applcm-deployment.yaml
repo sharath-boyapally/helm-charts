@@ -63,6 +63,8 @@ spec:
               value: "30088"
             - name: PROMETHEUS_PORT
               value: "30000"
+            - name: PACKAGE_BASE_PATH
+              value: /usr/app/packages
           ports:
             - containerPort: 8282
           resources: {}

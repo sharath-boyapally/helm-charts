@@ -1,21 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: bpmn-infra
   name: bpmn-infra
+  labels:
+    svc: bpmn-infra
 spec:
-  type: NodePort
   ports:
-  - name: "8081"
-    nodePort: 30102
-    port: 8081
-    targetPort: 8081
+    - name: "8081"
+      port: 8081
+      targetPort: 8081
   selector:
-    io.kompose.service: bpmn-infra
-status:
-  loadBalancer: {}
+    app: bpmn-infra

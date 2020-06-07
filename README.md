@@ -17,7 +17,7 @@ $ helm repo add edgegallery https://edgegallery.github.io/helm-charts
 * [If enabled] nfs server and RW access to it
 * [If enabled] nfs-client-provisioner for dynamic provisioning
 ```
-helm install nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.path=/nfs/data --set image.tag=v2.0.1 stable/nfs-client-provisioner 
+helm install nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.path=<nfs_server_directory> stable/nfs-client-provisioner 
 ```
 * [If enabled] nginx-ingress-controller for ingress
 ```

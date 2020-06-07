@@ -15,7 +15,7 @@ $ helm repo add edgegallery https://edgegallery.github.io/helm-charts
 * [If enabled] nfs server and RW access to it
 * [If enabled] nfs-client-provisioner for dynamic provisioning
 ```
-helm install nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.path=/nfs/data --set image.tag=v2.0.1 stable/nfs-client-provisioner 
+helm install nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.path=<nfs_server_directory> stable/nfs-client-provisioner 
 ```
 * [If enabled] nginx-ingress-controller for ingress
 ```
@@ -50,26 +50,26 @@ their default values. See values.yaml for all available options.
 | `usermgmt.postgres.username`                   | Auth server postgres database username        | `usermgmt`               |
 | `usermgmt.postgres.password`                   | Auth server postgres database password        | `te9Fmv%qaq`             |
 | `usermgmt.expose.nodePort`                     | Auth server expose NodePort                   | `30067`                  |
-| `usermgmt.images.usermgmt.tag`                 | Auth server image tag                         | `stable`                 |
+| `usermgmt.images.usermgmt.tag`                 | Auth server image tag                         | `0.2`                 |
 | `appstore.postgres.username`                   | Appstore postgres database username           | `appstore`               |
 | `appstore.postgres.password`                   | Appstore postgres database password           | `te9Fmv%qaq`             |
 | `appstore.expose.appstoreFe.nodePort`          | Appstore front end expose NodePort            | `30091`                  |
-| `appstore.images.appstoreFe.tag`               | Appstore front end image tag                  | `stable`                 |
-| `appstore.images.appstoreBe.tag`               | Appstore back end image tag                   | `stable`                 |
+| `appstore.images.appstoreFe.tag`               | Appstore front end image tag                  | `0.2`                 |
+| `appstore.images.appstoreBe.tag`               | Appstore back end image tag                   | `0.2`                 |
 | `developer.postgres.username`                  | Developer postgres database username          | `developer`              |
 | `developer.postgres.password`                  | Developer postgres database password          | `te9Fmv%qaq`             |
 | `developer.expose.developerFe.nodePort`        | Developer front end expose NodePort           | `30092`                  |
-| `developer.images.developerFe.tag`             | Developer front end image tag                 | `stable`                 |
-| `developer.images.developerBe.tag`             | Developer back end image tag                  | `stable`                 |
+| `developer.images.developerFe.tag`             | Developer front end image tag                 | `0.2`                 |
+| `developer.images.developerBe.tag`             | Developer back end image tag                  | `0.2`                 |
 | `mecm.expose.mecmFe.nodePort`                  | MECM front end expose NodePort                | `30093`                  |
-| `mecm.images.mecmFe.tag`                       | MECM front end image tag                      | `stable`                 |
-| `mecm.images.apiHandlerInfra.tag`              | MECM apiHandlerInfra image tag                | `stable`                 |
-| `mecm.images.meoBpmnInfra.tag`                 | MECM meoBpmnInfra image tag                   | `stable`                 |
-| `mecm.images.meoCatalogDbAdapter.tag`          | MECM meoCatalogDbAdapter image tag            | `stable`                 |
-| `mecm.images.mecmEsr.tag`                      | MECM mecmEsr image tag                        | `stable`                 |
-| `mecm.images.meoRequestDbAdapter.tag`          | MECM meoRequestDbAdapter image tag            | `stable`                 |
-| `mecm.images.mecmCatalog.tag`                  | MECM mecmCatalog image tag                    | `stable`                 |
-| `servicecenter.images.tag`                     | Service center mecmCatalog image tag          | `stable`                 |
+| `mecm.images.mecmFe.tag`                       | MECM front end image tag                      | `0.2`                 |
+| `mecm.images.apiHandlerInfra.tag`              | MECM apiHandlerInfra image tag                | `0.2`                 |
+| `mecm.images.meoBpmnInfra.tag`                 | MECM meoBpmnInfra image tag                   | `0.2`                 |
+| `mecm.images.meoCatalogDbAdapter.tag`          | MECM meoCatalogDbAdapter image tag            | `0.2`                 |
+| `mecm.images.mecmEsr.tag`                      | MECM mecmEsr image tag                        | `0.2`                 |
+| `mecm.images.meoRequestDbAdapter.tag`          | MECM meoRequestDbAdapter image tag            | `0.2`                 |
+| `mecm.images.mecmCatalog.tag`                  | MECM mecmCatalog image tag                    | `0.2`                 |
+| `servicecenter.images.tag`                     | Service center mecmCatalog image tag          | `0.2`                 |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to
 `helm install`.

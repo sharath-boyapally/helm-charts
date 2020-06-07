@@ -16,15 +16,15 @@ global:
 images:
   appstoreFe:
     repository: edgegallery/appstore-fe
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   appstoreBe:
     repository: edgegallery/appstore-be
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   postgres:
     repository: postgres
-    tag: 9.6.15
+    tag: 12.2
     pullPolicy: IfNotPresent
 postgres:
   username: appstore

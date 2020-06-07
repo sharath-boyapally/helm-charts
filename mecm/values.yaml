@@ -16,31 +16,31 @@ global:
 images:
   mecmFe:
     repository: edgegallery/mecm-fe
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   apiHandlerInfra:
     repository: edgegallery/api-handler-infra
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   meoBpmnInfra:
     repository: edgegallery/bpmn-infra
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   meoCatalogDbAdapter:
     repository: edgegallery/catalog-db-adapter
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   mecmEsr:
     repository: edgegallery/mecm-esr
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   meoRequestDbAdapter:
     repository: edgegallery/request-db-adapter
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   mecmCatalog:
     repository: edgegallery/mecm-catalog
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   mariadb:
     repository: mariadb

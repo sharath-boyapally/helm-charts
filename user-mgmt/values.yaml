@@ -29,11 +29,11 @@ expose:
 images:
   usermgmt:
     repository: edgegallery/user-mgmt
-    tag: stable
+    tag: 0.2
     pullPolicy: Always
   postgres:
     repository: postgres
-    tag: 9.6.15
+    tag: 12.2
     pullPolicy: IfNotPresent
   redis:
     repository: redis

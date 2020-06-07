@@ -1,6 +1,6 @@
 image:
   repository: edgegallery/mecm-applcm
-  tag: stable
+  tag: 0.2
   pullPolicy: Always
 persistence:
   enabled: false

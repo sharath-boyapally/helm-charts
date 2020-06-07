@@ -15,7 +15,7 @@ $ helm repo add edgegallery https://edgegallery.github.io/helm-charts
 * [If enabled] nfs server and RW access to it
 * [If enabled] nfs-client-provisioner for dynamic provisioning
 ```
-helm install --name nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.path=/nfs/data --set image.tag=v2.0.1 stable/nfs-client-provisioner 
+helm install --name nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.path=<nfs_server_directory> stable/nfs-client-provisioner 
 ```
 * [If enabled] nginx-ingress-controller for ingress
 ```
@@ -32,7 +32,7 @@ their default values. See values.yaml for all available options.
 | Parameter                               | Description                                   | Default                  |
 |-----------------------------------------|-----------------------------------------------|--------------------------|
 | `image.repository`                      | Image repository                              | `edgegallery/mecm-applcm`|
-| `image.tag`                             | Image tag                                     | `stable`                 |
+| `image.tag`                             | Image tag                                     | `0.2`                 |
 | `image.pullPolicy`                      | Image pullPolicy                              | `Always`                 |
 | `persistence.enabled`                   | Whether to use persistent storage             | `false`                  |
 | `expose.port`                           | Expose port                                   | `8282`                   |
