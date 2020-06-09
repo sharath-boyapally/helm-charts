@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: applcm
+  name: api-emulator
   namespace: default
   labels:
-    app: applcm
+    app: api-emulator
 spec:
   selector:
     matchLabels:
-      app: applcm
+      app: api-emulator
   replicas: 1
   template:
     metadata:
       labels:
-        app: applcm
+        app: api-emulator
     spec:
       containers:
         - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          name: applcm
+          name: api-emulator
           env:
             - name: LOG_DIR
-              value: /var/log/applcm
+              value: /usr/edgegallery/log
             - name: LISTEN_IP
               valueFrom:
                 fieldRef:
@@ -30,7 +30,7 @@ spec:
               value: {{ quote .Values.ssl.enabled }}
             {{- if .Values.ssl.enabled }}
             - name: SSL_KEY_STORE_PATH
-              value: /opt/mec/applcm/ssl/keystore.p12
+              value: /usr/edgegallery/ssl/keystore.p12
             - name: SSL_KEY_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -47,34 +47,20 @@ spec:
                   name: {{ .Values.ssl.secretName }}
                   key: keyAlias
             {{- end }}
-            - name: JWT_PUBLIC_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.jwt.publicKeySecretName }}
-                  key: publicKey
-            - name: DEPLOY_TYPE
-              value: helm
-            - name: MEP_PORT
-              value: "30088"
-            - name: PROMETHEUS_PORT
-              value: "30000"
-            - name: PACKAGE_BASE_PATH
-              value: /usr/app/packages
           ports:
             - containerPort: 8282
-          resources: {}
           volumeMounts:
             {{- if .Values.ssl.enabled }}
-            - mountPath: /opt/mec/applcm/ssl
-              name: applcm-keystore
+            - mountPath: /usr/edgegallery/ssl
+              name: api-emulator-keystore
             {{- end }}
             {{- if .Values.persistence.enabled }}
-            - name: applcm-log
-              mountPath: /var/log/applcm
+            - name: api-emulator-log
+              mountPath: /usr/edgegallery/log
             {{- end }}
       volumes:
         {{- if .Values.ssl.enabled }}
-        - name: applcm-keystore
+        - name: api-emulator-keystore
           secret:
             secretName: {{ .Values.ssl.secretName }}
             items:
@@ -82,7 +68,7 @@ spec:
                 path: keystore.p12
         {{- end }}
         {{- if .Values.persistence.enabled }}
-        - name: applcm-log
+        - name: api-emulator-log
           hostPath:
-            path: /var/log/edgegallery/applcm
+            path: /var/log/edgegallery/api-emulator
         {{- end }}
