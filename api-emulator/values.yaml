@@ -1,0 +1,12 @@
+image:
+  repository: edgegallery/api-emulator
+  tag: 0.2
+  pullPolicy: Always
+persistence:
+  enabled: false
+expose:
+  port: 8089
+  nodePort: 30089
+ssl:
+  enabled: false
+  secretName:

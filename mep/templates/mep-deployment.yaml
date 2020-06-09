@@ -104,7 +104,7 @@ spec:
             - name: SSL_ROOT
               value: /etc/mep/ssl
             - name: MEP_SSL_MODE
-              value: {{ if .Values.ssl.enabled }}1{{ else }}0{{ end }}
+              value: {{ if .Values.ssl.enabled }}"1"{{ else }}"0"{{ end }}
           volumeMounts:
             - name: mepssl
               mountPath: /etc/mep/ssl
