@@ -3,7 +3,7 @@ entries:
   api-emualtor:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.395445089+08:00"
+    created: "2020-06-12T17:00:34.581425296+05:30"
     description: A Helm chart for Kubernetes
     digest: dedaaec9d299bf7977d857b90ec1197f692776a1f86b7812f1f9db2a91975a2c
     name: api-emualtor
@@ -13,9 +13,9 @@ entries:
   applcm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.395831021+08:00"
+    created: "2020-06-12T17:00:34.58228181+05:30"
     description: A Helm chart for Kubernetes
-    digest: 7637b3cd1eed85bfe1fb7c78d14a29410c083f0c857414f3e5676ceebcbd903a
+    digest: 44827f71b5c746c12c35717b74c695432e121f90291449ba2a2b11803fdf5ec9
     name: applcm
     urls:
     - https://edgegallery.github.io/helm-charts/applcm-1.0.0.tgz
@@ -23,7 +23,7 @@ entries:
   appstore:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.396345372+08:00"
+    created: "2020-06-12T17:00:34.583304695+05:30"
     description: A Helm chart for Kubernetes
     digest: cd91122e4a85e9b4d13c73fc02ecaaf92d0260ef4f9f52c0edd79e0d5a4b7905
     name: appstore
@@ -33,7 +33,7 @@ entries:
   developer:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.397018619+08:00"
+    created: "2020-06-12T17:00:34.584384845+05:30"
     description: A Helm chart for Kubernetes
     digest: adf90bd6918450974fe53374f792ea8ca09498b8cb49d5c293264a1cac5bff5b
     name: developer
@@ -43,7 +43,7 @@ entries:
   edgegallery:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.401608989+08:00"
+    created: "2020-06-12T17:00:34.592170336+05:30"
     dependencies:
     - condition: global.servicecenter.enabled
       name: servicecenter
@@ -74,7 +74,7 @@ entries:
   mecm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.402410605+08:00"
+    created: "2020-06-12T17:00:34.593107735+05:30"
     description: A Helm chart for Kubernetes
     digest: 5f797fba8f1bcd503e49795481af372328cfaef576828728279c0ed7157bde0c
     name: mecm
@@ -84,7 +84,7 @@ entries:
   mep:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.40275271+08:00"
+    created: "2020-06-12T17:00:34.593626728+05:30"
     description: A Helm chart for Kubernetes
     digest: 5a2e1f093d85dec0cc712a174371a66f50936fc6e00bd84b8ee610a9cf01ac00
     name: mep
@@ -94,7 +94,7 @@ entries:
   servicecenter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.402983227+08:00"
+    created: "2020-06-12T17:00:34.594078016+05:30"
     description: A Helm chart for Kubernetes
     digest: 385999d5973d676c4a9f54888d7ca5ed7d22040b5280952008a3a74dbaa23d0c
     name: servicecenter
@@ -104,11 +104,11 @@ entries:
   usermgmt:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-09T14:36:01.403570173+08:00"
+    created: "2020-06-12T17:00:34.595067603+05:30"
     description: A Helm chart for Kubernetes
     digest: c830a6468cf90229e0c0fac21635129a5aa4db82be8e0a99544b56db2834874d
     name: usermgmt
     urls:
     - https://edgegallery.github.io/helm-charts/usermgmt-1.0.0.tgz
     version: 1.0.0
-generated: "2020-06-09T14:36:01.394895395+08:00"
+generated: "2020-06-12T17:00:34.579880396+05:30"

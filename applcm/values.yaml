@@ -1,12 +1,21 @@
-image:
-  repository: edgegallery/mecm-applcm
-  tag: 0.2
-  pullPolicy: Always
+images:
+  applcm:
+    repository: edgegallery/mecm-applcm
+    tag: 0.2
+    pullPolicy: Always
+  helmplugin:
+    repository: edgegallery/mecm-helm-plugin
+    tag: 0.2
+    pullPolicy: Always
 persistence:
-  enabled: false
+  enabled: true
 expose:
-  port: 8282
-  nodePort: 30101
+  applcm:
+    port: 8282
+    nodePort: 30101
+  helmplugin:
+    port: 8081
+    nodePort: 30201
 jwt:
   publicKeySecretName:
 ssl:

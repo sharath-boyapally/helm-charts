@@ -9,6 +9,6 @@ spec:
     app: applcm
   type: NodePort
   ports:
-    - port: {{ .Values.expose.port }}
+    - port: {{ .Values.expose.applcm.port }}
       targetPort: 8282
-      nodePort: {{ .Values.expose.nodePort }}
+      nodePort: {{ .Values.expose.applcm.nodePort }}

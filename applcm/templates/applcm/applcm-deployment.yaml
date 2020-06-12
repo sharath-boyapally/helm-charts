@@ -16,8 +16,8 @@ spec:
         app: applcm
     spec:
       containers:
-        - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - image: {{ .Values.images.applcm.repository }}:{{ .Values.images.applcm.tag }}
+          imagePullPolicy: {{ .Values.images.applcm.pullPolicy }}
           name: applcm
           env:
             - name: LOG_DIR
@@ -60,6 +60,14 @@ spec:
               value: "30000"
             - name: PACKAGE_BASE_PATH
               value: /usr/app/packages
+            - name: HELM_PLUGIN_PORT
+              value: "8081"
+            - name: HELM_PLUGIN_ADDRESS
+              value: helm-plugin
+            - name: TRUSTSTORE_FILE_PATH
+              value: /usr/app/edgegallery.client.jks
+            - name: TRUSTSTORE_PASSWORD
+              value: adminadmin
           ports:
             - containerPort: 8282
           resources: {}
@@ -71,6 +79,10 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: applcm-log
               mountPath: /var/log/applcm
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: ca-certificates
+              mountPath: /usr/app/ca-certificates
             {{- end }}
       volumes:
         {{- if .Values.ssl.enabled }}
@@ -85,4 +97,9 @@ spec:
         - name: applcm-log
           hostPath:
             path: /var/log/edgegallery/applcm
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: ca-certificates
+          hostPath:
+            path: /tmp/applcm/ca-certificates
         {{- end }}
