@@ -1,0 +1,79 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helm-plugin
+  namespace: default
+  labels:
+    app: helm-plugin
+spec:
+  selector:
+    matchLabels:
+      app: helm-plugin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: helm-plugin
+    spec:
+      containers:
+        - name: mecm-helm-plugin
+          image: {{ .Values.images.helmplugin.repository }}:{{ .Values.images.helmplugin.tag }}
+          env:
+            - name: LOGFILE_PATH
+              value: /usr/helmplugin/logfile
+            - name: LOGGER_LEVEL
+              value: info
+            - name: ADDRESS
+              value: 0.0.0.0:8081
+            - name: PACKAGE_PATH
+              value: /usr/helmplugin/packages/
+            - name: PACKAGE_ARTIFACT_PATH
+              value: /Artifacts/Deployment/
+            - name: CERTIFICATE_PATH
+              value: /usr/helmplugin/application/ca-certificates/applcm_server_tls.crt
+            - name: KEY_PATH
+              value: /usr/helmplugin/application/ca-certificates/applcm_server_tls.key
+            - name: CHART_PATH
+              value: /usr/helmplugin/charts/
+            - name: KUBECONFIG_DIR_PATH
+              value: /usr/helmplugin/kubeconfig/
+            - name: RELEASE_NAMESPACE
+              value: default
+            - name: SECRET_KEYPATH
+              value: /usr/helmplugin/application/ca-certificates/jwt_publickey
+          ports:
+          - containerPort: 8081
+          volumeMounts:
+            {{- if .Values.ssl.enabled }}
+            - mountPath: /opt/mec/helm-plugin/ssl
+              name: helm-plugin-keystore
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: helm-plugin-log
+              mountPath: /var/log/helm-plugin
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: ca-certificates
+              mountPath: /usr/helmplugin/application/ca-certificates
+            {{- end }}
+
+      volumes:
+        {{- if .Values.ssl.enabled }}
+        - name: helm-plugin-keystore
+          secret:
+            secretName: {{ .Values.ssl.secretName }}
+            items:
+              - key: keystore.p12
+                path: keystore.p12
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: helm-plugin-log
+          hostPath:
+            path: /var/log/edgegallery/helmplugin
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: ca-certificates
+          hostPath:
+            path: /tmp/applcm/ca-certificates
+        {{- end }}
