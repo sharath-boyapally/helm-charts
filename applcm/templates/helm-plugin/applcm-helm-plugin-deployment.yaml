@@ -26,6 +26,8 @@ spec:
               value: info
             - name: ADDRESS
               value: 0.0.0.0:8081
+            - name: SSL_ENABLED
+              value: {{ quote .Values.ssl.enabled }}   
             - name: PACKAGE_PATH
               value: /usr/helmplugin/packages/
             - name: PACKAGE_ARTIFACT_PATH
@@ -40,8 +42,11 @@ spec:
               value: /usr/helmplugin/kubeconfig/
             - name: RELEASE_NAMESPACE
               value: default
-            - name: SECRET_KEYPATH
-              value: /usr/helmplugin/application/ca-certificates/jwt_publickey
+            - name: JWT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.jwt.publicKeySecretName }}
+                  key: publicKey
           ports:
           - containerPort: 8081
           volumeMounts:
