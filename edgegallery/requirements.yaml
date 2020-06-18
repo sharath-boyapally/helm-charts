@@ -1,21 +1,21 @@
 dependencies:
   - name: servicecenter
-    version: 1.0.0
+    version: 1.0.1
     repository: https://edgegallery.github.io/helm-charts
     condition: global.servicecenter.enabled
   - name: usermgmt
-    version: 1.0.0
+    version: 1.0.1
     repository: https://edgegallery.github.io/helm-charts
     condition: global.usermgmt.enabled
   - name: appstore
-    version: 1.0.0
+    version: 1.0.1
     repository: https://edgegallery.github.io/helm-charts
     condition: global.appstore.enabled
   - name: developer
-    version: 1.0.0
+    version: 1.0.1
     repository: https://edgegallery.github.io/helm-charts
     condition: global.developer.enabled
   - name: mecm
-    version: 1.0.0
+    version: 1.0.1
     repository: https://edgegallery.github.io/helm-charts
     condition: global.mecm.enabled
