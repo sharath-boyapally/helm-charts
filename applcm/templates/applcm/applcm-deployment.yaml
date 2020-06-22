@@ -46,6 +46,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.ssl.secretName }}
                   key: keyAlias
+            - name: CA_CRT
+              value: /opt/mec/applcm/ssl/trust.cer
+            - name: TRUSTSTORE_PASSWORD
+              value: adminadmin
             {{- end }}
             - name: JWT_PUBLIC_KEY
               valueFrom:
@@ -64,10 +68,6 @@ spec:
               value: "8081"
             - name: HELM_PLUGIN_ADDRESS
               value: helm-plugin
-            - name: TRUSTSTORE_FILE_PATH
-              value: /usr/app/edgegallery.client.jks
-            - name: TRUSTSTORE_PASSWORD
-              value: adminadmin
           ports:
             - containerPort: 8282
           resources: {}
@@ -80,10 +80,6 @@ spec:
             - name: applcm-log
               mountPath: /var/log/applcm
             {{- end }}
-            {{- if .Values.persistence.enabled }}
-            - name: ca-certificates
-              mountPath: /usr/app/ca-certificates
-            {{- end }}
       volumes:
         {{- if .Values.ssl.enabled }}
         - name: applcm-keystore
@@ -92,14 +88,13 @@ spec:
             items:
               - key: keystore.p12
                 path: keystore.p12
+              - key: trust.cer
+                path: trust.cer
         {{- end }}
         {{- if .Values.persistence.enabled }}
         - name: applcm-log
           hostPath:
             path: /var/log/edgegallery/applcm
         {{- end }}
-        {{- if .Values.persistence.enabled }}
-        - name: ca-certificates
-          hostPath:
-            path: /tmp/applcm/ca-certificates
-        {{- end }}
+
+
