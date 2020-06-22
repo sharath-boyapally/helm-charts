@@ -1,4 +1,5 @@
 # Edgegallery Helm Chart
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Deploy your own private Edgegallery.
 
@@ -24,3 +25,7 @@ helm install nfs-client-provisioner --set nfs.server=<nfs_sever_ip> --set nfs.pa
 kubectl label node <node_name> node=edge
 helm install nginx-ingress-controller stable/nginx-ingress --set controller.kind=DaemonSet --set controller.nodeSelector.node=edge --set controller.hostNetwork=true
 ```
+## Edgegallery Installation
+* Center Node: [Edgegallery](https://github.com/EdgeGallery/helm-charts/tree/master/edgegallery)
+
+* Edge Node: [AppLCM](https://github.com/EdgeGallery/helm-charts/tree/master/applcm)
