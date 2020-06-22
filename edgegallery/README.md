@@ -1,4 +1,6 @@
 # Edgegallery Helm Chart
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 Deploy your own private Edgegallery.
 
 ## How Do I Enable the Edgegallery Repository for Helm 3?
@@ -113,7 +115,11 @@ helm install my-edgegallery edgegallery/edgegallery \
   --set global.oauth2.clients.developer.clientUrl=http://<developer-domain-name> \
   --set global.oauth2.clients.mecm.clientUrl=http://<mecm-domain-name> \
   --set usermgmt.jwt.secretName=user-mgmt-jwt-secret \
-  --set global.ingress.enabled=true
+  --set global.ingress.enabled=true \
+  --set global.ingress.hosts.auth=<auth-server-domain-name> \
+  --set global.ingress.hosts.appstore=<appstore-domain-name> \
+  --set global.ingress.hosts.developer=<developer-domain-name> \
+  --set global.ingress.hosts.mecm=<mecm-domain-name>
 ```
 If you want to enable ssl for ingress,need to provide certificates,and create a tls secret:
 ```shell
@@ -139,9 +145,13 @@ helm install my-edgegallery edgegallery/edgegallery \
   --set global.oauth2.authServerAddress=https://<auth-server-domain-name> \
   --set global.oauth2.clients.appstore.clientUrl=https://<appstore-domain-name> \
   --set global.oauth2.clients.developer.clientUrl=https://<developer-domain-name> \
-  --set global.oauth2.clients.mecm.clientUrl=https://<mecm-domain-name> \
+  --set global.oauth2.clients.mecm.clientUrl=http://<mecm-domain-name> \
   --set usermgmt.jwt.secretName=user-mgmt-jwt-secret \
   --set global.ingress.enabled=true \
+  --set global.ingress.hosts.auth=<auth-server-domain-name> \
+  --set global.ingress.hosts.appstore=<appstore-domain-name> \
+  --set global.ingress.hosts.developer=<developer-domain-name> \
+  --set global.ingress.hosts.mecm=<mecm-domain-name> \
   --set global.ingress.tls.enabled=true \
   --set global.ingress.tls.secretName=edgegallery-ingress-secret
 ```
