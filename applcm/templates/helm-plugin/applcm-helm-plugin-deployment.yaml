@@ -19,6 +19,7 @@ spec:
       containers:
         - name: mecm-helm-plugin
           image: {{ .Values.images.helmplugin.repository }}:{{ .Values.images.helmplugin.tag }}
+          imagePullPolicy: {{ .Values.images.helmplugin.pullPolicy }}
           env:
             - name: LOGFILE_PATH
               value: /usr/helmplugin/logfile
@@ -27,15 +28,17 @@ spec:
             - name: ADDRESS
               value: 0.0.0.0:8081
             - name: SSL_ENABLED
-              value: {{ quote .Values.ssl.enabled }}   
+              value: {{ quote .Values.ssl.enabled }}
+            {{- if .Values.ssl.enabled }}
+            - name: CERTIFICATE_PATH
+              value: /usr/helmplugin/ca-certificates/server.cer
+            - name: KEY_PATH
+              value: /usr/helmplugin/ca-certificates/server_key.pem
+            {{- end }}
             - name: PACKAGE_PATH
               value: /usr/helmplugin/packages/
             - name: PACKAGE_ARTIFACT_PATH
               value: /Artifacts/Deployment/
-            - name: CERTIFICATE_PATH
-              value: /usr/helmplugin/application/ca-certificates/applcm_server_tls.crt
-            - name: KEY_PATH
-              value: /usr/helmplugin/application/ca-certificates/applcm_server_tls.key
             - name: CHART_PATH
               value: /usr/helmplugin/charts/
             - name: KUBECONFIG_DIR_PATH
@@ -51,34 +54,30 @@ spec:
           - containerPort: 8081
           volumeMounts:
             {{- if .Values.ssl.enabled }}
-            - mountPath: /opt/mec/helm-plugin/ssl
-              name: helm-plugin-keystore
+            - mountPath: /usr/helmplugin/ca-certificates
+              name: helm-plugin-server-cert
             {{- end }}
             {{- if .Values.persistence.enabled }}
             - name: helm-plugin-log
               mountPath: /var/log/helm-plugin
             {{- end }}
-            {{- if .Values.persistence.enabled }}
-            - name: ca-certificates
-              mountPath: /usr/helmplugin/application/ca-certificates
-            {{- end }}
+
 
       volumes:
         {{- if .Values.ssl.enabled }}
-        - name: helm-plugin-keystore
+        - name: helm-plugin-server-cert
           secret:
             secretName: {{ .Values.ssl.secretName }}
             items:
-              - key: keystore.p12
-                path: keystore.p12
+              - key: server.cer
+                path: server.cer
+              - key: server_key.pem
+                path: server_key.pem
         {{- end }}
         {{- if .Values.persistence.enabled }}
         - name: helm-plugin-log
           hostPath:
             path: /var/log/edgegallery/helmplugin
         {{- end }}
-        {{- if .Values.persistence.enabled }}
-        - name: ca-certificates
-          hostPath:
-            path: /tmp/applcm/ca-certificates
-        {{- end }}
+
+
