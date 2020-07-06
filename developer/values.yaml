@@ -16,11 +16,11 @@ global:
 images:
   developerFe:
     repository: edgegallery/developer-fe
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   developerBe:
     repository: edgegallery/developer-be
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   postgres:
     repository: postgres
@@ -28,11 +28,11 @@ images:
     pullPolicy: IfNotPresent
   toolChain:
     repository: edgegallery/tool-chain
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   portingAdvisor:
     repository: edgegallery/porting-advisor
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
 postgres:
   username: developer

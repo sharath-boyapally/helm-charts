@@ -16,11 +16,11 @@ global:
 images:
   appstoreFe:
     repository: edgegallery/appstore-fe
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   appstoreBe:
     repository: edgegallery/appstore-be
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   postgres:
     repository: postgres

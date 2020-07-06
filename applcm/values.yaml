@@ -1,11 +1,11 @@
 images:
   applcm:
     repository: edgegallery/mecm-applcm
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   helmplugin:
     repository: edgegallery/mecm-helm-plugin
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
 persistence:
   enabled: true
