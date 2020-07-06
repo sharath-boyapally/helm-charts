@@ -29,7 +29,7 @@ expose:
 images:
   usermgmt:
     repository: edgegallery/user-mgmt
-    tag: 0.2
+    tag: latest
     pullPolicy: Always
   postgres:
     repository: postgres
