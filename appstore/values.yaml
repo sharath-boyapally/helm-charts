@@ -26,6 +26,9 @@ images:
     repository: postgres
     tag: 12.2
     pullPolicy: IfNotPresent
+  initservicecenter:
+    repository: curlimages/curl
+    tag: latest
 postgres:
   username: appstore
   password: te9Fmv%qaq

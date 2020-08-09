@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
         - name: init-usermgmt
-          image: curlimages/curl
+          image: {{ .Values.images.initservicecenter.repository }}:{{ .Values.images.initservicecenter.tag }}
           command: ['sh', '-c', "until curl -k -f {{ .Values.global.oauth2.authServerAddress }}; do echo waiting for auth server; sleep 2; done"]
       containers:
         - name: appstore-fe

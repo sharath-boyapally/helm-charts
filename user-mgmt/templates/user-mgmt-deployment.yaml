@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
         - name: init-service-center
-          image: curlimages/curl
+          image: {{ .Values.images.initservicecenter.repository }}:{{ .Values.images.initservicecenter.tag }}
           command: ['sh', '-c', "until curl -k -f http{{ if .Values.global.ssl.enabled }}s{{ end }}://service-center:30100/v4/default/registry/health; do echo waiting for service center; sleep 2; done"]
       containers:
         - name: user-mgmt

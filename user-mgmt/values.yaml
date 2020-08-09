@@ -39,6 +39,9 @@ images:
     repository: redis
     tag: 6.0.3
     pullPolicy: IfNotPresent
+  initservicecenter:
+    repository: curlimages/curl
+    tag: latest
 postgres:
   username: usermgmt
   password: te9Fmv%qaq
