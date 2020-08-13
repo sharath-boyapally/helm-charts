@@ -82,7 +82,7 @@ spec:
           image: {{ .Values.images.developerBe.repository }}:{{ .Values.images.developerBe.tag }}
           imagePullPolicy: {{ .Values.images.developerBe.pullPolicy }}
           ports:
-            - containerPort: 9080
+            - containerPort: 9082
           env:
             - name: LOG_DIR
               value: /var/log/developer-be
