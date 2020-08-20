@@ -46,9 +46,10 @@ images:
     repository: mariadb
     tag: 10.1
     pullPolicy: Always
-  initservicecenter:
+  curl:
     repository: curlimages/curl
     tag: latest
+    pullPolicy: IfNotPresent
 expose:
   mecmFe:
     port: 8443
