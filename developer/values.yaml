@@ -34,9 +34,10 @@ images:
     repository: edgegallery/porting-advisor
     tag: latest
     pullPolicy: Always
-  initservicecenter:
+  curl:
     repository: curlimages/curl
     tag: latest
+    pullPolicy: IfNotPresent
 postgres:
   username: developer
   password: te9Fmv%qaq
