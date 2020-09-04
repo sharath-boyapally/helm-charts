@@ -15,39 +15,39 @@ global:
         clientSecret: te9Fmv%qaq
 images:
   mecmFe:
-    repository: edgegallery/mecm-fe
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mecm-fe
     tag: latest
     pullPolicy: Always
   apiHandlerInfra:
-    repository: edgegallery/api-handler-infra
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/api-handler-infra
     tag: latest
     pullPolicy: Always
   meoBpmnInfra:
-    repository: edgegallery/bpmn-infra
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/bpmn-infra
     tag: latest
     pullPolicy: Always
   meoCatalogDbAdapter:
-    repository: edgegallery/catalog-db-adapter
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/catalog-db-adapter
     tag: latest
     pullPolicy: Always
   mecmEsr:
-    repository: edgegallery/mecm-esr
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mecm-esr
     tag: latest
     pullPolicy: Always
   meoRequestDbAdapter:
-    repository: edgegallery/request-db-adapter
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/request-db-adapter
     tag: latest
     pullPolicy: Always
   mecmCatalog:
-    repository: edgegallery/mecm-catalog
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mecm-catalog
     tag: latest
     pullPolicy: Always
   mariadb:
-    repository: mariadb
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mariadb
     tag: 10.1
     pullPolicy: Always
   curl:
-    repository: curlimages/curl
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/curl
     tag: latest
     pullPolicy: IfNotPresent
 expose:

@@ -15,27 +15,27 @@ global:
         clientSecret: te9Fmv%qaq
 images:
   developerFe:
-    repository: edgegallery/developer-fe
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/developer-fe
     tag: latest
     pullPolicy: Always
   developerBe:
-    repository: edgegallery/developer-be
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/developer-be
     tag: latest
     pullPolicy: Always
   postgres:
-    repository: postgres
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/postgres
     tag: 12.2
     pullPolicy: IfNotPresent
   toolChain:
-    repository: edgegallery/tool-chain
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/tool-chain
     tag: latest
     pullPolicy: Always
   portingAdvisor:
-    repository: edgegallery/porting-advisor
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/porting-advisor
     tag: latest
     pullPolicy: Always
   curl:
-    repository: curlimages/curl
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/curl
     tag: latest
     pullPolicy: IfNotPresent
 postgres:

@@ -1,10 +1,10 @@
 images:
   applcm:
-    repository: edgegallery/mecm-applcm
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mecm-applcm
     tag: latest
     pullPolicy: Always
   helmplugin:
-    repository: edgegallery/mecm-helm-plugin
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mecm-helm-plugin
     tag: latest
     pullPolicy: Always
 persistence:

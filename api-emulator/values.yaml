@@ -1,5 +1,5 @@
 image:
-  repository: edgegallery/api-emulator
+  repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/api-emulator
   tag: latest
   pullPolicy: Always
 persistence:

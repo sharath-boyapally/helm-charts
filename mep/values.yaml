@@ -1,19 +1,19 @@
 images:
   mep:
-    repository: edgegallery/mep
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/mep
     tag: latest
     pullPolicy: Always
   kong:
-    repository: kong
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/kong
     tag: 1.5.1-alpine
     pullPolicy: IfNotPresent
   postgres:
-    repository: postgres
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/postgres
     tag: 12.2
     pullPolicy: IfNotPresent
 persistence:
   enabled: false
-  storageClassName: nfs-client
+  storageClassName: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/nfs-client
 postgres:
   username: kong
   password: te9Fmv%qaq

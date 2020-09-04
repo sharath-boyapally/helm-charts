@@ -28,19 +28,19 @@ expose:
   nodePort: 30067
 images:
   usermgmt:
-    repository: edgegallery/user-mgmt
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/user-mgmt
     tag: latest
     pullPolicy: Always
   postgres:
-    repository: postgres
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/postgres
     tag: 12.2
     pullPolicy: IfNotPresent
   redis:
-    repository: redis
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/redis
     tag: 6.0.3
     pullPolicy: IfNotPresent
   curl:
-    repository: curlimages/curl
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/curl
     tag: latest
     pullPolicy: IfNotPresent
 postgres:

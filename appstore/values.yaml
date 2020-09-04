@@ -15,19 +15,19 @@ global:
         clientSecret: te9Fmv%qaq
 images:
   appstoreFe:
-    repository: edgegallery/appstore-fe
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/appstore-fe
     tag: latest
     pullPolicy: Always
   appstoreBe:
-    repository: edgegallery/appstore-be
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/appstore-be
     tag: latest
     pullPolicy: Always
   postgres:
-    repository: postgres
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/postgres
     tag: 12.2
     pullPolicy: IfNotPresent
   curl:
-    repository: curlimages/curl
+    repository: swr.ap-southeast-1.myhuaweicloud.com/edgegallery/curl
     tag: latest
     pullPolicy: IfNotPresent
 postgres:
